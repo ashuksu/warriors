@@ -1,8 +1,10 @@
-<footer id="footer" class="footer">
+	</div>
+	<footer id="footer" class="footer">
 
-	FOOTER
+		FOOTER
 
-</footer>
+	</footer>
+</div>
 
 <script src="<?=APP_PATH?>assets/js/script.js"></script>
 

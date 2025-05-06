@@ -22,4 +22,8 @@ define("APP_PATH", "/");
 </head>
 
 <body data-style="default" class="<?=$bodyClass?>">
+	<div class="wrapper">
+		<div class="content">
+
+
 
