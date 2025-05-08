@@ -1,0 +1,1 @@
+<script type="module" src="<?= APP_PATH ?>assets/js/script.js"></script>

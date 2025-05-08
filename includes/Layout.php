@@ -2,6 +2,9 @@
 $dir = $dir ?? '';
 
 include $dir . 'includes/head.php';
+
+/helpers
+include $dir . 'includes/components/button.php';
 ?>
 
 <body data-style="default" class="<?= $bodyClass ?>">
@@ -24,5 +27,17 @@ include $dir . 'includes/head.php';
 	include $dir . 'includes/footer.php';
 	?>
 </div>
+
+<?php
+render_button([
+	'url' => "#",
+	'class' => 'link',
+	'attr' => 'target="_blank"',
+	'content' => 'Link',
+]);
+
+include $dir . 'includes/footer-links.php';
+?>
+
 </body>
 </html>
