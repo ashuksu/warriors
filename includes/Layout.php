@@ -14,6 +14,8 @@ include $dir . 'includes/components/button.php';
 <div class="wrapper">
 
 	<?php
+	include $dir . 'includes/components/preloader.php';
+
 	include $dir . 'includes/header.php';
 	?>
 
