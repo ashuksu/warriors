@@ -1,0 +1,25 @@
+.about__card {
+	margin: 0 0 3rem;
+	background: var(--gradient-lihgt);
+	box-shadow: 0 -5px 20px 0 rgba(51, 51, 51, 0.2);
+}
+
+.about__card:last-child {
+	margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+	.about__card {
+		margin-bottom: 5rem;
+	}
+
+	[data-reverse="1"].about__card > .row {
+		flex-direction: row-reverse;
+	}
+}
+
+.about__card-inner {
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+}
