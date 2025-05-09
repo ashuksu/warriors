@@ -1,0 +1,26 @@
+.modal-content {
+	border-radius: 2rem;
+	background: var(--gradient-lihgt);
+}
+
+.modal-header {
+	border: none;
+	padding: 1rem 2rem;
+	background: var(--gray-light);
+	border-top-right-radius: 2rem;
+	border-top-left-radius: 2rem;
+}
+
+.modal-body {
+	padding: 2rem;
+}
+
+.modal-content {
+	border: none;
+	border-bottom-right-radius: 2rem;
+	border-bottom-left-radius: 2rem;
+}
+
+.modal-footer {
+	border: none;
+}
