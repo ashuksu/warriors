@@ -6,10 +6,11 @@ if (!function_exists('render_button')) {
      * This function generates HTML markup for a button element based on the provided options.
      *
      * @param array $options An associative array containing options for the button:
-     *                      - 'button_url' (string): The URL the button should link to. Default is '#'.
-     *                      - 'button_class' (string): Additional CSS classes for the button. Default is ''.
-     *                      - 'button_attr' (string): Additional HTML attributes for the button. Default is ''.
-     *                      - 'button_content' (string): The content/text of the button. Default is ''.
+     *                      - 'url' (string): The URL the button should link to. Default is '#'.
+     *                      - 'class' (string): Additional CSS classes for the button. Default is ''.
+     *                         $class = 'button--close'; $class = 'button--menu' with $content = '<i></i>'
+     *                      - 'attr' (string): Additional HTML attributes for the button. Default is ''.
+     *                      - 'content' (string): The content/text of the button. Default is ''.
      *
      * @return string The HTML markup for the button.
      */
@@ -21,10 +22,10 @@ if (!function_exists('render_button')) {
         $attr = $options['attr'] ?? '';
         $content = $options['content'] ?? '';
 
-        $html = '<a href="' . $url . '" class="btn ' . $class . '" ' . $attr . '>';
-        $html .= $content . '</a>';
+        $button_html = '<a href="' . $url . '" class="button ' . $class . '" ' . $attr . '>';
+        $button_html .= $content . '</a>';
 
-        echo $html;
+        echo $button_html;
     }
 }
 ?>

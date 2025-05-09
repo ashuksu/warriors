@@ -1,9 +1,11 @@
 <?php
 $dir = $dir ?? '';
 
+include $dir . 'config.php';
+
 include $dir . 'includes/head.php';
 
-/helpers
+//helpers
 include $dir . 'includes/components/button.php';
 ?>
 
