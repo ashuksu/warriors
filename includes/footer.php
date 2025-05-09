@@ -7,7 +7,7 @@
 			<p class="footer__text">
 				Copyright © <?= date("Y"); ?>
 			</p>
-			<a href="#" class="footer__link link" target="_blank">
+			<a href="<?= $LINK ?>" class="footer__link link" target="_blank">
 				ASHUKSU
 			</a>
 		</div>
