@@ -35,3 +35,27 @@
     color: var(--white);
     font-size: 2rem;
 }
+
+/*=======================================================*/
+
+.footer__link {
+    color: var(--white);
+    background: none;
+}
+
+.footer__link:focus,
+.footer__link:active {
+    color: var(--bs-form-invalid-color);
+}
+
+@media (hover: hover) {
+    .footer__link:hover {
+        color: var(--red-dark);
+    }
+}
+
+@media (min-width: 768px) {
+    .footer__link {
+        font-size: 3rem;
+    }
+}
