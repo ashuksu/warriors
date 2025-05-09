@@ -12,7 +12,8 @@
 
 					<?php
 					render_button([
-						'content' => 'Go',
+						'attr' => 'data-toggle="modal" data-target="#modal"',
+						'content' => 'Open MODAL',
 					]);
 					?>
 				</div>
