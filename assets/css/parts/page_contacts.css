@@ -1,0 +1,11 @@
+.contacts__title {
+	margin-bottom: 3rem;
+}
+
+.contacts__inner {
+	gap: 3rem 0;
+}
+
+.contacts__list {
+	gap: 3rem 0;
+}
