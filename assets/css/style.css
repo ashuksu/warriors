@@ -1,3 +1,5 @@
 @import "parts/_common.css";
+@import "parts/components/logo.css";
+
 @import "parts/header.css";
 @import "parts/footer.css";

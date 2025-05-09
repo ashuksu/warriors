@@ -1,0 +1,16 @@
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+}
+
+.logo img {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .logo {
+        width: 5rem;
+    }
+}

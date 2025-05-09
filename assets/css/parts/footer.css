@@ -19,6 +19,18 @@
 
 /*=======================================================*/
 
+.footer .logo {
+    width: 7rem;
+}
+
+@media (min-width: 768px) {
+    .footer .logo {
+        width: 10rem;
+    }
+}
+
+/*=======================================================*/
+
 .footer__text {
     color: var(--white);
     font-size: 2rem;
