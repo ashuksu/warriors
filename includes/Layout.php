@@ -34,10 +34,9 @@ include $dir . 'includes/components/button.php';
 
 <?php
 render_button([
-	'url' => "#",
-	'class' => 'link',
-	'attr' => 'target="_blank"',
-	'content' => 'Link',
+	'url' => '#content',
+	'class' => 'button--top',
+	'attr' => 'data-menu="link" data-button="top"',
 ]);
 
 include $dir . 'includes/footer-links.php';

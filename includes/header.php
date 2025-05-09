@@ -6,6 +6,12 @@
 			</a>
 
 			<?php
+			render_button([
+				'class' => 'button button--menu',
+				'attr' => 'data-button="menu-open"',
+				'content' => '<i></i>',
+			]);
+
 			include $dir . 'includes/components/menu.php'
 			?>
 		</div>
