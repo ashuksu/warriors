@@ -4,6 +4,10 @@
 			<a href="<?= APP_PATH ?>" class="logo">
 				<img src="<?= APP_PATH ?>assets/images/logo/logo-1.png" width="30" height="30" alt="logo">
 			</a>
+
+			<?php
+			include $dir . 'includes/components/menu.php'
+			?>
 		</div>
 	</div>
 </header>
