@@ -1,0 +1,14 @@
+.page-error {
+    background: var(--gray-dark);
+}
+
+.error__inner {
+    align-items: center;
+    gap: 0;
+    color: var(--white);
+}
+
+.error__text,
+.error__image {
+    max-width: 60rem;
+}
