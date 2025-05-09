@@ -1,0 +1,25 @@
+.footer__inner {
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 3rem 3rem 0 0;
+    background: var(--gradient-vertical);
+}
+
+@media (min-width: 575px) {
+    .footer__inner {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer__inner {
+        border-radius: 5rem 5rem 0 0;
+    }
+}
+
+/*=======================================================*/
+
+.footer__text {
+    color: var(--white);
+    font-size: 2rem;
+}
