@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "serve": "live-server",
+    "start": "php -S localhost:8000"
+  }
+}
