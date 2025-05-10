@@ -22,7 +22,7 @@ include $dir . 'includes/components/button.php';
 	<main id="content" class="content">
 		<?php
 		foreach ($sections as $section) {
-			include $dir . 'includes/sections/' . $section . '.php';
+			include $dir . 'includes/sections/' . $section . '/template.php';
 		}
 		?>
 	</main>

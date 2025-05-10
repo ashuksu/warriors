@@ -15,7 +15,7 @@
 				foreach ($catalog as $item) {
 					$imageUrl = APP_PATH . 'assets/images/items/' . $item['image'];
 
-					include $dir . 'includes/components/catalog-item.php';
+					include $dir . 'includes/sections/catalog/item.php';
 				}
 				?>
 			</div>

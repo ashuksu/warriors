@@ -26,7 +26,7 @@
 			$imageUrl = APP_PATH . 'assets/images/' . $item['image'];
 			$isReverse = $index % 2 !== 0;
 
-			include $dir . 'includes/components/about-card.php';
+			include $dir . 'includes/sections/about/item.php';
 		}
 		?>
 	</div>

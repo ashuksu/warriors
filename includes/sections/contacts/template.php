@@ -19,7 +19,7 @@
 					]
 				];
 				foreach ($contacts as $index => $item) {
-					include $dir . 'includes/components/contacts-card.php';
+					include $dir . 'includes/sections/contacts/item.php';
 				}
 				?>
 			</div>
