@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	wow.init();
 
 	ScrollEvents.init();
-	Menu.init();
+
+	const menu = new Menu();
+
 	ToggleButton.init();
 });

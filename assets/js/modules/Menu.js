@@ -1,61 +1,87 @@
 import Overlay from './Overlay.js';
 export default class Menu {
-	static init() {
+	constructor() {
 		this.overlay = new Overlay();
 
-		const html = document.documentElement;
-		const menu = document.getElementById('menu');
-		const menuLinks = document.querySelectorAll('[data-menu="link"]');
+		this.html = document.documentElement;
+		this.menu = document.getElementById('menu');
+		this.menuLinks = document.querySelectorAll('[data-menu="link"]');
+		this.header = document.getElementById('header');
+		this.content = document.getElementById('content');
 
-		function openMenu() {
-			this.overlay.create('menu-opened');
-		};
+		this.handleClick = this.handleClick.bind(this);
+		this.handleLinkClick = this.handleLinkClick.bind(this);
 
-		function closeMenu() {
-			this.overlay.destroy('menu-opened');
-		};
+		if (!this.menu) return;
 
-		document.addEventListener('click', e => {
-			const onButtonOpen = e.target.closest('[data-button="menu-open"]');
-			const onMenuOpened = html.classList.contains('menu-opened');
-			const onButtonClose = e.target.closest('[data-button="menu-close"]');
-			const onNotMenu = !e.target.closest('#menu');
+		this.init();
+	}
 
-			if (onButtonOpen) {
-				openMenu();
-				return;
-			}
+	init() {
+		document.addEventListener('click', this.handleClick);
+		this.menuLinks.forEach(link => link.addEventListener('click', this.handleLinkClick));
+	}
 
-			if (onMenuOpened && (onButtonClose || onNotMenu)) {
-				closeMenu();
-			}
+	openMenu() {
+		this.overlay.create('menu-opened');
+	}
+
+	closeMenu() {
+		this.overlay.destroy('menu-opened');
+	}
+
+	/**
+	 * Smoothly scrolls to specified element
+	 * @param {HTMLElement} element - Target element to scroll to
+	 * @param {number} [offset=0] - Offset from element's top in pixels
+	 * @param {('smooth'|'auto'|'instant')} [behavior='smooth'] - Scroll behavior type
+	 */
+
+	scrollToElement(element, offset = 0, behavior = 'smooth') {
+		if (!element) return;
+
+		const top = element.offsetTop - offset;
+
+		window.scrollTo({
+			top,
+			behavior
 		});
+	}
 
-		menuLinks.forEach(link => {
-			link.addEventListener('click', e => {
-				if (link.href === window.location.href) {
-					e.preventDefault();
+	handleClick(e) {
+		const onButtonOpen = e.target.closest('[data-button="menu-open"]');
+		const onMenuOpened = this.html.classList.contains('menu-opened');
+		const onButtonClose = e.target.closest('[data-button="menu-close"]');
+		const onNotMenu = !e.target.closest('#menu');
 
-					window.scrollTo({
-						top: document.getElementById('content').offsetTop,
-						behavior: 'smooth',
-					});
-				}
+		if (onButtonOpen) {
+			this.openMenu();
+			return;
+		}
 
-				if (link.hash) {
-					const target = document.getElementById(link.hash.substring(1));
+		//miss-click
+		if (onMenuOpened && (onButtonClose || onNotMenu)) {
+			this.closeMenu();
+		}
+	}
 
-					if (target) {
-						window.scrollTo({
-							top: target.offsetTop - document.getElementById('header').offsetHeight / 2,
-							behavior: 'smooth',
-						});
+	handleLinkClick(e) {
+		const link = e.currentTarget;
+		const selector = link.hash.substring(1) || 'content';
+		const target = document.getElementById(selector);
 
-						closeMenu();
-						e.preventDefault();
-					}
-				}
-			});
-		});
+		if (link.href === window.location.href) {
+			e.preventDefault();
+			this.scrollToElement(target);
+			return;
+		}
+
+		if (link.hash) {
+			if (target) {
+				this.scrollToElement(target, this.header.offsetHeight / 2);
+				this.closeMenu();
+				e.preventDefault();
+			}
+		}
 	}
 }
