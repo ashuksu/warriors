@@ -12,7 +12,7 @@
 
 					<?php
 					render_button([
-						'attr' => 'data-toggle="modal" data-target="#modal"',
+						'attr' => 'data-bs-toggle="modal" data-bs-target="#modal"',
 						'content' => 'Open MODAL',
 					]);
 					?>
