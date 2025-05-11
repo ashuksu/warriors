@@ -1,21 +1,22 @@
-
 # [WARRIORS](https://ashuksu.github.io/warriors/public)
 
 <details>
   <summary>Click, to show Preview</summary>
 
 
-  ![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
+![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
 </details>
 
 
 ---
 
 ## Live Server
+
 (установить: sudo npm install -g live-server)
 npm run sere
 
-## встроенным PHP 
+## встроенным PHP
+
 (8000 port)
 npm run start
 
@@ -23,23 +24,26 @@ npm run start
 
 ## Docker
 
-
 имя: warriors (должно быть уникальным myapp, render-test-project
 )
 (если нужно изменить: стопнуть, удалить старый образ, переименовать, перебилдить)
 
 ### Собрать образ
+
 npm run docker:build
 
 ### Запустить контейнер
+
 (изменения в локальных файлах НЕ будут видны в контейнере)
 (для проверки production-версии)
 npm run docker:start
 
 ### Проверить работу контейнера
+
 curl http://localhost:8080
 
-## Запустить в режиме разработки 
+## Запустить в режиме разработки
+
 (- изменения сразу видны в контейнере)
 npm run docker:dev
 
@@ -48,14 +52,29 @@ npm run docker:dev
 ## Дополнительно
 
 ### Остановить контейнер
+
 npm run docker:stop
 
 ### Удалить старый образ
+
 docker rmi myapp
+
+### Посмотреть список запущенных контейнеров
+
+docker ps
+
+### Остановить контейнер по имени
+
+docker stop warriors
+
+### Или остановить все контейнеры
+
+docker stop $(docker ps -a -q)
 
 ---
 
 ## valet
+
 (альтернатива на nginx)
 
 установить valet, перейти в проект, имя проекта без _
