@@ -41,6 +41,7 @@
 }
 
 .button--top,
+.button--plus,
 .button--menu,
 .button--close {
     flex-shrink: 0;
@@ -56,6 +57,12 @@
     line-height: 0;
 }
 
+.button--plus {
+    min-height: 5rem;
+    height: 5rem;
+    width: 5rem;
+}
+
 .button--top {
     border-radius: 50%;
     position: fixed;
@@ -69,7 +76,7 @@
 .button--top.active {
     bottom: 5rem;
     opacity: 1;
-    visibility: visible ;
+    visibility: visible;
     display: block;
 }
 
@@ -80,6 +87,8 @@
 }
 
 .button--menu i,
+.button--plus::before,
+.button--plus::after,
 .button--menu::before,
 .button--menu::after,
 .button--top::before,
@@ -90,11 +99,25 @@
 }
 
 .button--top::before,
+.button--plus::before,
+.button--plus::after,
 .button--close::before,
 .button--close::after {
     position: absolute;
     top: 50%;
     left: 50%;
+}
+
+.button--plus::before {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.button--plus.active::before {
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.button--plus::after {
+    transform: translate(-50%, -50%);
 }
 
 .button--close::before {
@@ -146,18 +169,14 @@
     }
 }
 
-.button--menu,
-.button--menu:focus,
-.button--menu:active,
-.button--close,
-.button--close:focus,
-.button--close:active {
+.button--transparent,
+.button--transparent:focus,
+.button--transparent:active {
     background: none;
 }
 
 @media (hover: hover) {
-    .button--menu:hover,
-    .button--close:hover {
+    .button--transparent:hover {
         background: none;
     }
 }
