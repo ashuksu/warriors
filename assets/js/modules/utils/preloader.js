@@ -1,6 +1,5 @@
 /**
- * Handles the fading and hiding of a preloader element once the page has fully loaded.
- * The preloader element is identified by the ID 'preloader'.
+ * Handles preloader fade out after page load
  */
 export default function preloader() {
     const preloader = document.getElementById('preloader');

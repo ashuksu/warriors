@@ -1,10 +1,9 @@
 /**
- * Smoothly scrolls to specified element
- * @param {HTMLElement} element - A target element to scroll to
- * @param {number} [offset=0] - Offset from element's top in pixels
- * @param {('smooth'|'auto'|'instant')} [behavior='smooth'] - Scroll behavior type
+ * Scrolls page to specified element
+ * @param {HTMLElement} element - Target element
+ * @param {number} [offset=0] - Top offset in pixels
+ * @param {('smooth'|'auto'|'instant')} [behavior='smooth'] - Scroll behavior
  */
-
 export function scrollToElement(element, offset = 0, behavior = 'smooth') {
     if (!element) return;
 
@@ -17,21 +16,8 @@ export function scrollToElement(element, offset = 0, behavior = 'smooth') {
 }
 
 /**
- * Sets up click event delegation for toggle buttons in the document.
- * Handles elements with [data-button="toggle"] attribute.
- * When clicked:
- * - Toggles 'active' class on the button
- * - Toggles 'active' class on the target element (specified by button's href attribute)
- * - Prevents default click behavior
- *
- * @example
- * // HTML structure:
- * // <button data-button="toggle" href="target-id">Toggle Button</button>
- * // <div id="target-id">Target Content</div>
- *
- * toggleButton(); // Initialize toggle functionality
+ * Initializes toggle buttons functionality
  */
-
 export function toggleButton() {
     document.addEventListener('click', e => {
         const button = e.target.closest('[data-button="toggle"]');
@@ -50,21 +36,13 @@ export function toggleButton() {
 }
 
 /**
- * Handles navigation link clicks with smooth scrolling and menu integration
- * @param {Event} e - Click event object
- * @param {HTMLAnchorElement} link - The clicked navigation link
- * @param {Object} options - Configuration options
- * @param {Function} [options.targetCallback] - Optional callback function to execute after navigation (e.g., closing a menu)
- * @param {number} [options.offsetHeight=0] - Header height in pixels to offset scroll position
- * @returns {void}
- *
- * @description
- * - Handles both same-page and cross-page navigation with hash links
- * - Provides smooth scrolling to target elements
- * - Supports offset for fixed headers
- * - Can trigger a callback after navigation (useful for mobile menu closing)
+ * Handles navigation link click event
+ * @param {Event} e - Click event
+ * @param {HTMLAnchorElement} link - Clicked link
+ * @param {Object} options - Configuration
+ * @param {Function} [options.targetCallback] - Callback after navigation
+ * @param {number} [options.offsetHeight=0] - Header offset
  */
-
 export function handleNavigationClick(e, link, {targetCallback = null, offsetHeight = 0} = {}) {
     const selector = link.hash.substring(1);
     const target = document.getElementById(selector);
@@ -86,21 +64,10 @@ export function handleNavigationClick(e, link, {targetCallback = null, offsetHei
 }
 
 /**
- * Initializes click handlers for navigation links matching the specified selector
- * @param {string} selector - CSS selector for navigation links
- * @param {Object} [options={}] - Configuration options passed to handleNavigationClick
- * @param {Function} [options.targetCallback] - Optional callback after navigation
- * @param {number} [options.offsetHeight] - Header height for scroll offset
- * @returns {void}
- *
- * @example
- * // Initialize navigation for all links with class 'nav-link'
- * initNavigationLinks('.nav-link', {
- *   offsetHeight: 60, // 60px header offset
- *   targetCallback: () => closeMenu()
- * });
+ * Sets up navigation links click handlers
+ * @param {string} selector - Links selector
+ * @param {Object} [options={}] - Configuration options
  */
-
 export function initNavigationLinks(selector, options = {}) {
     document.addEventListener('click', (e) => {
         const link = e.target.closest(selector);
@@ -111,10 +78,10 @@ export function initNavigationLinks(selector, options = {}) {
 }
 
 /**
- * Represents the height of an object, element, or measurement
- * @type {number}
+ * Checks if window scroll exceeds height
+ * @param {number} height - Threshold in pixels
+ * @returns {boolean}
  */
-
 export function isWindowScroll(height) {
     return window.scrollY > height;
 }

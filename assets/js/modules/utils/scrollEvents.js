@@ -1,7 +1,7 @@
 import {isWindowScroll} from "./helpers.js";
 
 /**
- * Attaches a scroll event listener to the window to trigger specific actions.
+ * Initializes scroll event handlers
  */
 export default function scrollEvents() {
     window.addEventListener('scroll', () => {
@@ -9,9 +9,9 @@ export default function scrollEvents() {
         buttonTopActivator(300);
     });
 }
+
 /**
- * Sets the scrolled state for the header based on the window's scroll position.
- * Updates a `data-scrolled` attribute on the HTML element.
+ * Updates header scroll state
  */
 export function setHeaderScrolledState() {
     const html = document.documentElement;
@@ -20,8 +20,8 @@ export function setHeaderScrolledState() {
 }
 
 /**
- * Toggles the "active" state of the "back to top" button based on the window scroll position.
- * @param {number} height - The scroll position threshold (in pixels) to activate the button.
+ * Controls "back to top" button visibility
+ * @param {number} height - Activation threshold
  */
 export function buttonTopActivator(height) {
     const buttonTop = document.querySelector('[data-button="top"]');

@@ -1,5 +1,5 @@
 /**
- * Utility class for managing overlay and document states
+ * Manages overlay element and document states for modals, menus etc.
  */
 export default class Overlay {
 	constructor() {
@@ -7,8 +7,8 @@ export default class Overlay {
 	}
 
 	/**
-	 * Creates overlay and adds state class to html
-	 * @param {string} [stateClass='className'] - Class indicating what's currently opened (menu/popup/etc)
+	 * Creates overlay element and adds state classes
+	 * @param {string} [stateClass=''] - Class name for opened state (e.g. 'menu-opened')
 	 */
 	create(stateClass = '') {
 		const overlay = document.createElement('div');
@@ -19,9 +19,8 @@ export default class Overlay {
 	}
 
 	/**
-	 * Destroys overlay and removes state class from html
-	 * Removes overlay and state classes from html
-	 * @param {string} [stateClass='className'] - Class to be removed
+	 * Removes overlay element and state classes
+	 * @param {string} [stateClass=''] - Class name to remove
 	 */
 	destroy(stateClass = '') {
 		this.html.classList.remove('no-scroll', stateClass);
