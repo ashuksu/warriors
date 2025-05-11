@@ -1,20 +1,18 @@
+import Overlay from './Overlay.js';
 export default class Menu {
 	static init() {
+		this.overlay = new Overlay();
+
 		const html = document.documentElement;
 		const menu = document.getElementById('menu');
 		const menuLinks = document.querySelectorAll('[data-menu="link"]');
 
 		function openMenu() {
-			const overlay = document.createElement('div');
-			overlay.className = 'overlay';
-			document.body.appendChild(overlay);
-			html.classList.add('no-scroll', 'menu-opened');
+			this.overlay.create('menu-opened');
 		};
 
 		function closeMenu() {
-			html.classList.remove('no-scroll', 'menu-opened');
-			const overlay = document.querySelector('.overlay');
-			if (overlay) overlay.remove();
+			this.overlay.destroy('menu-opened');
 		};
 
 		document.addEventListener('click', e => {
