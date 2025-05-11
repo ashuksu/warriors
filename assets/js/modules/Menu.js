@@ -1,5 +1,5 @@
 import Overlay from './Overlay.js';
-import {initNavigationLinks} from './helpers.js';
+import {initNavigationLinks} from './utils/helpers.js';
 
 /**
  * Represents a Menu component that manages mobile/responsive menu functionality

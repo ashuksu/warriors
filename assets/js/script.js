@@ -1,15 +1,15 @@
-import Preloader from '/assets/js/modules/Preloader.js';
-import Menu from '/assets/js/modules/Menu.js';
-import {toggleButton} from '/assets/js/modules/helpers.js';
-import ScrollToTopButton from "/assets/js/modules/ScrollToTopButton.js";
+import preloader from './modules/utils/preloader.js';
+import Menu from './modules/Menu.js';
+import {toggleButton} from './modules/utils/helpers.js';
+import scrollEvents from "./modules/utils/scrollEvents.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-	Preloader.init();
+	preloader();
 	toggleButton();
+	scrollEvents();
 
 	const wow = new WOW({mobile: true});
 	wow.init();
 
-	ScrollToTopButton.init();
 	new Menu();
 });

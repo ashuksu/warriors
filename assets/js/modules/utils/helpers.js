@@ -106,7 +106,15 @@ export function initNavigationLinks(selector, options = {}) {
         const link = e.target.closest(selector);
         if (!link) return;
 
-        // e.preventDefault;
         handleNavigationClick(e, link, options);
     });
+}
+
+/**
+ * Represents the height of an object, element, or measurement
+ * @type {number}
+ */
+
+export function isWindowScroll(height) {
+    return window.scrollY > height;
 }
