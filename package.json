@@ -1,6 +1,12 @@
 {
   "scripts": {
     "serve": "live-server",
-    "start": "php -S localhost:8000"
+    "start": "php -S localhost:8000",
+    "build": "echo 'Build completed successfully'",
+    "docker:build": "docker build -t warriors .",
+    "docker:start": "docker run -p 8080:80 warriors",
+    "docker:stop": "docker stop $(docker ps -q --filter ancestor=warriors)",
+    "docker:dev": "docker run -p 8080:80 -v ${PWD}:/var/www/html warriors"
+
   }
 }
