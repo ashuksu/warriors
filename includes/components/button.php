@@ -1,24 +1,23 @@
 <?php
 if (!function_exists('render_button')) {
     /**
-     * Renders an HTML button using anchor tag.
+     * Renders a button using an anchor tag with configurable options
      *
-     * @param array $options {
-     *     Button configuration options.
+     * @param array{
+     *     url?: string,
+     *     class?: string,
+     *     attr?: string,
+     *     content?: string
+     * } $options Button configuration
      *
-     * @type string $url ID or URL for the button link (default: '#')
-     * @type string $class CSS modifier classes. Base 'button' class is auto-included.
-     *      Common modifiers: button--plus, button--close, button--menu,
-     *      button--transparent (default: '')
-     * @type string $attr Additional HTML attributes, e.g. data-button="toggle" (default: '')
-     * @type string $content Button inner content - text or HTML (default: '')
+     * @return void Echoes HTML button
      *
      * @example
      * render_button([
-     *     'url' => 'faq-content-',
-     *     'class' => 'button--plus button--transparent',
+     *     'url' => '#section',
+     *     'class' => 'button--primary',
      *     'attr' => 'data-button="toggle"',
-     *     'content' => 'Open'
+     *     'content' => 'Read more'
      * ]);
      */
     function render_button($options)

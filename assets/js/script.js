@@ -4,12 +4,12 @@ import {toggleButton} from './modules/utils/helpers.js';
 import scrollEvents from "./modules/utils/scrollEvents.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-	preloader();
-	toggleButton();
-	scrollEvents();
+    preloader();
+    toggleButton();
+    scrollEvents();
 
-	const wow = new WOW({mobile: true});
-	wow.init();
+    const wow = new WOW({mobile: true});
+    wow.init();
 
-	new Menu();
+    new Menu();
 });
