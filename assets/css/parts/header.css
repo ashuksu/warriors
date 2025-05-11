@@ -19,6 +19,7 @@
 
 [data-scrolled="true"] .header .link {
     padding: 0.5rem 0;
+    font-size: 1.8rem;
 }
 
 @media (min-width: 768px) {

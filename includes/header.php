@@ -7,7 +7,7 @@
 
 			<?php
 			render_button([
-				'class' => 'button button--menu',
+				'class' => 'button button--menu button--transparent',
 				'attr' => 'data-button="menu-open"',
 				'content' => '<i></i>',
 			]);
