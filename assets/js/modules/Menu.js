@@ -1,4 +1,6 @@
 import Overlay from './Overlay.js';
+import {scrollToElement} from './helpers.js';
+
 export default class Menu {
 	constructor() {
 		this.overlay = new Overlay();
@@ -30,24 +32,6 @@ export default class Menu {
 		this.overlay.destroy('menu-opened');
 	}
 
-	/**
-	 * Smoothly scrolls to specified element
-	 * @param {HTMLElement} element - Target element to scroll to
-	 * @param {number} [offset=0] - Offset from element's top in pixels
-	 * @param {('smooth'|'auto'|'instant')} [behavior='smooth'] - Scroll behavior type
-	 */
-
-	scrollToElement(element, offset = 0, behavior = 'smooth') {
-		if (!element) return;
-
-		const top = element.offsetTop - offset;
-
-		window.scrollTo({
-			top,
-			behavior
-		});
-	}
-
 	handleClick(e) {
 		const onButtonOpen = e.target.closest('[data-button="menu-open"]');
 		const onMenuOpened = this.html.classList.contains('menu-opened');
@@ -72,13 +56,13 @@ export default class Menu {
 
 		if (link.href === window.location.href) {
 			e.preventDefault();
-			this.scrollToElement(target);
+			scrollToElement(target);
 			return;
 		}
 
 		if (link.hash) {
 			if (target) {
-				this.scrollToElement(target, this.header.offsetHeight / 2);
+				scrollToElement(target, this.header.offsetHeight / 2);
 				this.closeMenu();
 				e.preventDefault();
 			}
