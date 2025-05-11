@@ -1,4 +1,10 @@
-export default class ScrollEvents {
+/**
+ * Manages scroll-related UI elements:
+ * - Controls visibility of the "scroll to top" button
+ * - Updates header state based on scroll position
+ */
+
+export default class ScrollToTopButton {
 	static init() {
 		const html = document.documentElement;
 

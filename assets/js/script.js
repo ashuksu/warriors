@@ -1,7 +1,7 @@
 import Preloader from '/assets/js/modules/Preloader.js';
-import ScrollEvents from '/assets/js/modules/ScrollEvents.js';
 import Menu from '/assets/js/modules/Menu.js';
 import ToggleButton from '/assets/js/modules/ToggleButton.js';
+import ScrollToTopButton from "/assets/js/modules/ScrollToTopButton.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 	Preloader.init();
@@ -9,9 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const wow = new WOW({mobile: true});
 	wow.init();
 
-	ScrollEvents.init();
-
-	const menu = new Menu();
+	ScrollToTopButton.init();
+	new Menu();
 
 	ToggleButton.init();
 });
