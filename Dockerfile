@@ -10,7 +10,7 @@ RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html/
 
 # Open port
-ONBUILD EXPOSE 80
+EXPOSE 80
 
 # Command that will be executed when container starts
 CMD ["apache2-foreground"]
