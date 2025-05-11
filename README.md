@@ -18,7 +18,7 @@ npm run sere
 ## встроенным PHP
 
 (8000 port)
-npm run start
+npm run php-serve
 
 ---
 
