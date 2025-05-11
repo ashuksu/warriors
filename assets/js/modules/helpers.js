@@ -52,13 +52,21 @@ export function toggleButton() {
 /**
  * Handles navigation link clicks with smooth scrolling and menu integration
  * @param {Event} e - Click event object
+ * @param {HTMLAnchorElement} link - The clicked navigation link
  * @param {Object} options - Configuration options
- * @param {Function} options.targetCallback - Function to close the menu (optional)
- * @param {number} options.offsetHeight - Header height for offset calculation (optional)
+ * @param {Function} [options.targetCallback] - Optional callback function to execute after navigation (e.g., closing a menu)
+ * @param {number} [options.offsetHeight=0] - Header height in pixels to offset scroll position
+ * @returns {void}
+ *
+ * @description
+ * - Handles both same-page and cross-page navigation with hash links
+ * - Provides smooth scrolling to target elements
+ * - Supports offset for fixed headers
+ * - Can trigger a callback after navigation (useful for mobile menu closing)
  */
-export function handleNavigationClick(e, {targetCallback = null, offsetHeight = 0} = {}) {
-    const link = e.currentTarget;
-    const selector = link.hash.substring(1) || 'content';
+
+export function handleNavigationClick(e, link, {targetCallback = null, offsetHeight = 0} = {}) {
+    const selector = link.hash.substring(1);
     const target = document.getElementById(selector);
 
     // Same page link
@@ -77,10 +85,28 @@ export function handleNavigationClick(e, {targetCallback = null, offsetHeight = 
     if (targetCallback) targetCallback();
 }
 
-export function initNavigationLinks(selector, options = {}) {
-    const links = document.querySelectorAll(selector);
+/**
+ * Initializes click handlers for navigation links matching the specified selector
+ * @param {string} selector - CSS selector for navigation links
+ * @param {Object} [options={}] - Configuration options passed to handleNavigationClick
+ * @param {Function} [options.targetCallback] - Optional callback after navigation
+ * @param {number} [options.offsetHeight] - Header height for scroll offset
+ * @returns {void}
+ *
+ * @example
+ * // Initialize navigation for all links with class 'nav-link'
+ * initNavigationLinks('.nav-link', {
+ *   offsetHeight: 60, // 60px header offset
+ *   targetCallback: () => closeMenu()
+ * });
+ */
 
-    links.forEach(link => {
-        link.addEventListener('click', (e) => handleNavigationClick(e, options));
+export function initNavigationLinks(selector, options = {}) {
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest(selector);
+        if (!link) return;
+
+        // e.preventDefault;
+        handleNavigationClick(e, link, options);
     });
 }
