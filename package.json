@@ -3,8 +3,8 @@
     "serve": "live-server",
     "php-serve": "php -S localhost:8000",
     "start": "docker run --env PORT=${PORT:-80} -p ${PORT:-80}:${PORT:-80} warriors",
-    "build": "docker build -t warriors .",
-    "docker:build": "docker build -t warriors .",
+    "build": "docker build -t warriors -f docker/Dockerfile .",
+    "docker:build": "docker build -t warriors -f docker/Dockerfile .",
     "docker:start": "docker run -p 8080:80 warriors",
     "docker:stop": "docker stop $(docker ps -q --filter ancestor=warriors)",
     "docker:dev": "docker run -p 8080:80 -v ${PWD}:/var/www/html warriors"
