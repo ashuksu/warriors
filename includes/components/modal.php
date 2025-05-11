@@ -2,11 +2,11 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class="subtitle">Modal title</h2>
+				<h2 class="sub-title">Modal title</h2>
 
 				<?php
 				render_button([
-					'class' => 'button button--close',
+					'class' => 'button button--close button--transparent',
 					'attr' => 'data-bs-dismiss="modal" data-dismiss="modal"',
 				]);
 				?>

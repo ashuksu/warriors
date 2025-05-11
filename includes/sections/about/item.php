@@ -8,7 +8,7 @@
 		</div>
 		<div class="col-md-6 mb-md-0">
 			<div class="inner about__card-inner">
-				<h3 class="subtitle"><?= $item['title'] ?></h3>
+				<h3 class="sub-title"><?= $item['title'] ?></h3>
 				<p class="text-justify"><?= $item['text'] ?></p>
 			</div>
 		</div>
