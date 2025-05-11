@@ -13,4 +13,4 @@ RUN chown -R www-data:www-data /var/www/html/
 EXPOSE 80
 
 # Command that will be executed when container starts
-CMD ["apache2-foreground"]
+CMD ["/usr/local/bin/apache2-foreground"]
