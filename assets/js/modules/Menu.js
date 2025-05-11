@@ -84,4 +84,16 @@ export default class Menu {
 			}
 		}
 	}
+
+	/**
+	 * Cleanup method, Removes all event listeners to prevent memory leaks
+	 * Called when the menu component is no longer needed (being destroyed/unmounted)
+	 */
+
+	destroy() {
+		document.removeEventListener('click', this.handleClick);
+		this.menuLinks.forEach(link =>
+			link.removeEventListener('click', this.handleLinkClick)
+		);
+	}
 }
