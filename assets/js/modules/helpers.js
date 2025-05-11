@@ -48,3 +48,39 @@ export function toggleButton() {
         target.classList.toggle('active', isActive);
     });
 }
+
+/**
+ * Handles navigation link clicks with smooth scrolling and menu integration
+ * @param {Event} e - Click event object
+ * @param {Object} options - Configuration options
+ * @param {Function} options.targetCallback - Function to close the menu (optional)
+ * @param {number} options.offsetHeight - Header height for offset calculation (optional)
+ */
+export function handleNavigationClick(e, {targetCallback = null, offsetHeight = 0} = {}) {
+    const link = e.currentTarget;
+    const selector = link.hash.substring(1) || 'content';
+    const target = document.getElementById(selector);
+
+    // Same page link
+    if (link.href === window.location.href) {
+        e.preventDefault();
+        scrollToElement(target);
+        return;
+    }
+
+    // Hash link with an existing target
+    if (link.hash && target) {
+        e.preventDefault();
+        scrollToElement(target, offsetHeight);
+    }
+
+    if (targetCallback) targetCallback();
+}
+
+export function initNavigationLinks(selector, options = {}) {
+    const links = document.querySelectorAll(selector);
+
+    links.forEach(link => {
+        link.addEventListener('click', (e) => handleNavigationClick(e, options));
+    });
+}
