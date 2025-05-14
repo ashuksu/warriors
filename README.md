@@ -7,49 +7,73 @@
 ![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
 </details>
 
+## Установка
 
----
+```bash
+    npm install
+```
 
-## Live Server
+## Способы запуска проекта
 
-(установить: sudo npm install -g live-server)
-npm run sere
+### PHP встроенный сервер
 
-## встроенным PHP
+```bash
+    npm run php
+```
 
-(8000 port)
-npm run php-serve
+### Live Server
 
----
+```bash
+    # Установка Live Server глобально (если еще не установлен)
+    sudo npm install -g live-server
+```
 
-## valet
+```bash
+    # Запуск Live Server
+    npm run ls
+```
 
-(альтернатива на nginx)
+## Docker
 
-установить valet, перейти в проект, имя проекта без _
-define("APP_PATH", "/"); — должен указывать на /, если в корне проекта
+#### Предварительные требования
 
-valet park
-припарковать проект (или директорию для проектов)
+1. Установить [Docker](https://docs.docker.com/get-docker/) и [Docker Compose](https://docs.docker.com/compose/install/)
 
-valet start
-Запускает все службы Valet (nginx, dnsmasq, php и т.д.)
-(sudo systemctl restart dnsmasq
-valet restart)
-http://name-project.test
+```bash
+    # На Ubuntu/Debian можно установить gnome-terminal для удобства
+    sudo apt install gnome-terminal
+```
 
-valet open
-Открывает проект в браузере
+#### Docker команды
 
-valet stop
-Останавливает все службы
-(интернет отпадет из-за стопа dnsmasq)
+```bash
+    # Запуск
+    npm start
+```
 
-valet paths
-Показывает директории, где работает park
+```bash
+    # Перезапуск контейнера (работает с 'npm start')
+    npm restart
+```
 
-valet restart
-valet status
-valet log
+```bash  
+    # Остановка контейнера
+    npm stop
+```
 
----
+```bash   
+    # Пересборка Docker образа (если были внесены изменения в Dockerfile)
+    npm run build
+```
+
+```bash
+    # Мониторинг Docker контейнеров (может работать паралельно)
+    npm run monitor
+```
+
+```bash 
+    # Очистка неиспользуемых Docker ресурсов
+    npm run clean
+```
+
+После запуска открыть в браузере http://localhost:8080
