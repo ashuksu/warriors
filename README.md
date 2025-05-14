@@ -7,98 +7,73 @@
 ![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
 </details>
 
+## Установка
 
----
+```bash
+    npm install
+```
 
-## Live Server
+## Способы запуска проекта
 
-(установить: sudo npm install -g live-server)
-npm run sere
+### PHP встроенный сервер
 
-## встроенным PHP
+```bash
+    npm run php
+```
 
-(8000 port)
-npm run php-serve
+### Live Server
 
----
+```bash
+    # Установка Live Server глобально (если еще не установлен)
+    sudo npm install -g live-server
+```
+
+```bash
+    # Запуск Live Server
+    npm run ls
+```
 
 ## Docker
 
-имя: warriors (должно быть уникальным myapp, render-test-project
-)
-(если нужно изменить: стопнуть, удалить старый образ, переименовать, перебилдить)
+#### Предварительные требования
 
-### Собрать образ
+1. Установить [Docker](https://docs.docker.com/get-docker/) и [Docker Compose](https://docs.docker.com/compose/install/)
 
-npm run docker:build
+```bash
+    # На Ubuntu/Debian можно установить gnome-terminal для удобства
+    sudo apt install gnome-terminal
+```
 
-### Запустить контейнер
+#### Docker команды
 
-(изменения в локальных файлах НЕ будут видны в контейнере)
-(для проверки production-версии)
-npm run docker:start
+```bash
+    # Запуск
+    npm start
+```
 
-### Проверить работу контейнера
+```bash
+    # Перезапуск контейнера (работает с 'npm start')
+    npm restart
+```
 
-curl http://localhost:8080
+```bash  
+    # Остановка контейнера
+    npm stop
+```
 
-## Запустить в режиме разработки
+```bash   
+    # Пересборка Docker образа (если были внесены изменения в Dockerfile)
+    npm run build
+```
 
-(- изменения сразу видны в контейнере)
-npm run docker:dev
+```bash
+    # Мониторинг Docker контейнеров (может работать паралельно)
+    npm run monitor
+```
 
----
+```bash 
+    # Очистка неиспользуемых Docker ресурсов
+    npm run clean
+```
 
-## Дополнительно
-
-### Остановить контейнер
-
-npm run docker:stop
-
-### Удалить старый образ
-
-docker rmi myapp
-
-### Посмотреть список запущенных контейнеров
-
-docker ps
-
-### Остановить контейнер по имени
-
-docker stop warriors
-
-### Или остановить все контейнеры
-
-docker stop $(docker ps -a -q)
-
----
-
-## valet
-
-(альтернатива на nginx)
-
-установить valet, перейти в проект, имя проекта без _
-define("APP_PATH", "/"); — должен указывать на /, если в корне проекта
-
-valet park
-припарковать проект (или директорию для проектов)
-
-valet start
-Запускает все службы Valet (nginx, dnsmasq, php и т.д.)
-(sudo systemctl restart dnsmasq
-valet restart)
-http://name-project.test
-
-valet open
-Открывает проект в браузере
-
-valet stop
-Останавливает все службы
-(интернет отпадет из-за стопа dnsmasq)
-
-valet paths
-Показывает директории, где работает park
-
-valet restart
-valet status
-valet log
+После запуска открыть в браузере http://localhost:8080

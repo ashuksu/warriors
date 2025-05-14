@@ -1,12 +1,16 @@
 {
+  "name": "warriors",
+  "version": "1.0.0",
+  "description": "Warriors project",
   "scripts": {
-    "serve": "live-server",
-    "php-serve": "php -S localhost:8000",
-    "start": "docker run --env PORT=${PORT:-80} -p ${PORT:-80}:${PORT:-80} warriors",
-    "build": "docker build -t warriors .",
-    "docker:build": "docker build -t warriors .",
-    "docker:start": "docker run -p 8080:80 warriors",
-    "docker:stop": "docker stop $(docker ps -q --filter ancestor=warriors)",
-    "docker:dev": "docker run -p 8080:80 -v ${PWD}:/var/www/html warriors"
-  }
+    "ls": "live-server",
+    "php": "php -S localhost:8000",
+    "start": "docker-compose up && echo '\n\nServer started at http://localhost:8080\n\n'",
+    "restart": "docker-compose restart && echo '\nServer restarted at http://localhost:8080\n'",
+    "stop": "docker-compose down && echo '\nDocker images and server were stoped\n'",
+    "build": "docker-compose up --build && echo '\n\nDocker image rebuilt and server started at http://localhost:8080\n\n'",
+    "monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
+    "clean": "docker system prune -af && echo '\nThe Docker system has been cleaned\n'"
+  },
+  "author": "ashuksu"
 }
