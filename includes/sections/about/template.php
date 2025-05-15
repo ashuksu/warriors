@@ -7,7 +7,7 @@ if (!is_array($about) || empty($about)) {
 }
 ?>
 
-<section id="about" class="section about" <?php $isHidden ?>>
+<section id="about" class="section about" <?= $isHidden ?? "" ?>>
     <div class="container">
         <?php
         foreach ($about as $index => $item) {
