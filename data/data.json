@@ -73,7 +73,7 @@
     "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum cupiditate dicta earum enim ipsum iure pariatur porro possimus",
     "image": {
       "name": "w4.gif",
-      "alt": "image",
+      "alt": "w4",
       "width": "600",
       "height": "600"
     },
@@ -100,5 +100,15 @@
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
       }
     ]
+  },
+  "main": {
+    "title": "Lorem ipsum dolor sit amet",
+    "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur",
+    "image": {
+      "name": "w3r.svg",
+      "alt": "w3r",
+      "width": "600",
+      "height": "600"
+    }
   }
 }

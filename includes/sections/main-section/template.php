@@ -1,13 +1,20 @@
+<?php
+$title = SectionService::get('main', 'title');
+$text = SectionService::get('main', 'title');
+$image = SectionService::get('main', 'image');
+
+?>
+
 <section class="section main-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-5 col-md-6 mb-3 mb-md-0">
                 <div class="inner main-section__inner">
                     <h1 class="title main-section__title">
-                        Lorem ipsum dolor sit amet
+                        <?= $title ?>
                     </h1>
                     <p class="main-section__text">
-                        lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur
+                        <?= $text ?>
                     </p>
 
                     <?php
@@ -28,10 +35,14 @@
                 </div>
             </div>
             <div class="col-md-6 mt-md-0">
-                <div class="image">
-                    <img src="<?= APP_PATH ?>assets/images/w3r.svg" alt="image"
-                         class="" width="600" height="600">
-                </div>
+
+                <?php if (isset($image) && is_array($image)): ?>
+                    <div class="image">
+                        <img src="<?= APP_PATH ?>assets/images/<?= $image['name'] ?>"  alt="<?= $image['alt'] ?>"
+                             width="<?= $image['width'] ?>" height="<?= $image['height'] ?>">
+                    </div>
+                <?php endif; ?>
+
             </div>
         </div>
     </div>
