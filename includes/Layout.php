@@ -1,8 +1,16 @@
 <?php
 $dir = $dir ?? '';
+$bodyClass = $bodyClass ?? '';
+$sections = $sections ?? [];
 
+/**
+ * Includes the configuration file with global settings.
+ */
 include $dir . 'config.php';
 
+/**
+ * Includes the head section of the HTML document.
+ */
 include $dir . 'includes/head.php';
 
 /**
@@ -17,13 +25,23 @@ include $dir . 'includes/components/button.php';
 <div class="wrapper">
 
     <?php
+    /**
+     * Includes the preloader component for page loading animation.
+     */
     include $dir . 'includes/components/preloader.php';
 
+    /**
+     * Includes the header section of the page.
+     */
     include $dir . 'includes/header.php';
     ?>
 
     <main id="content" class="content">
         <?php
+        /**
+         * Dynamically includes section templates based on the $sections array.
+         * Each section is loaded from its corresponding template file.
+         */
         foreach ($sections as $section) {
             include $dir . 'includes/sections/' . $section . '/template.php';
         }
@@ -31,6 +49,9 @@ include $dir . 'includes/components/button.php';
     </main>
 
     <?php
+    /**
+     * Includes the footer section of the page.
+     */
     include $dir . 'includes/footer.php';
     ?>
 </div>
@@ -43,8 +64,14 @@ render_button([
     'attr' => 'data-element="link" data-element="up"',
 ]);
 
+/**
+ * Includes the popup component for modal dialogs.
+ */
 include $dir . 'includes/Popup.php';
 
+/**
+ * Includes the footer links and scripts.
+ */
 include $dir . 'includes/footer-links.php';
 ?>
 
