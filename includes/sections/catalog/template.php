@@ -2,8 +2,9 @@
     <div class="container">
         <div class="inner catalog__inner">
             <h1 class="title mb-5 text-center wow pixFadeUp" data-wow-delay="0.2s">
-                lorem ipsum dolor sit
+                <?= $title ?>
             </h1>
+
             <div class="catalog__grid">
                 <?php
                 foreach ($catalog as $item) {

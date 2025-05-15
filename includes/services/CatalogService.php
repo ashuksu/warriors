@@ -60,6 +60,29 @@ class CatalogService
     }
 
     /**
+     * Get catalog title with caching
+     *
+     * @return string Catalog items
+     */
+    public function getCatalogTitle()
+    {
+        if (isset($this->cache['catalog_title'])) {
+            return $this->cache['catalog_title'];
+        }
+
+        try {
+            $catalogData = $this->loadCatalogData();
+            $title = $catalogData['title'] ?? [];
+            $this->cache['catalog_title'] = $title;
+
+            return $title;
+        } catch (Exception $e) {
+            error_log('Error loading catalog data: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
      * Load catalog data from JSON file
      *
      * @return array Catalog data

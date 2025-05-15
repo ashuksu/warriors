@@ -7,7 +7,8 @@ $sections = ['catalog', 'info'];
 // Load catalog items
 $servicePath = $dir . 'includes/services/CatalogService.php';
 require_once $servicePath;
-$catalog = CatalogService::getInstance()->getCatalogItems() ?? [];
+$catalog = CatalogService::getInstance()->getCatalogItems();
+$title = CatalogService::getInstance()->getCatalogTitle();
 
 include $dir . 'includes/Layout.php';
 ?>
