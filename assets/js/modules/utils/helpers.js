@@ -36,6 +36,16 @@ export function toggleButton() {
 }
 
 /**
+ * Returns the DOM element by extracting the ID from the element's hash property.
+ * @param {HTMLAnchorElement} element - Anchor element with a hash (e.g., #section).
+ * @returns {HTMLElement|null} The target element or null if not found.
+ */
+export function getElementIdByHash(element) {
+    const selector = element.hash.substring(1);
+    return document.getElementById(selector);
+}
+
+/**
  * Handles navigation link click event
  * @param {Event} e - Click event
  * @param {HTMLAnchorElement} link - Clicked link

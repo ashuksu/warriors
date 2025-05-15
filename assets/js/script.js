@@ -1,7 +1,8 @@
 import preloader from './modules/utils/preloader.js';
-import Menu from './modules/Menu.js';
 import {toggleButton} from './modules/utils/helpers.js';
 import scrollEvents from "./modules/utils/scrollEvents.js";
+import Menu from './modules/Menu.js';
+import Popup from "./modules/Popup.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     preloader();
@@ -12,4 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
     wow.init();
 
     new Menu();
+    new Popup();
 });
