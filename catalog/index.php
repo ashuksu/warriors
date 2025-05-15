@@ -4,7 +4,7 @@ $dir = "../";
 $bodyClass = 'page-catalog';
 $sections = ['catalog', 'info'];
 
-$servicePath = $dir . 'includes/services/SectionService.php';
+$servicePath = $dir . 'Services/SectionService.php';
 require_once $servicePath;
 
 $title = SectionService::get('catalog', 'title');

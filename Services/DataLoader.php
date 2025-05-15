@@ -15,7 +15,7 @@ class DataLoader
     private function __construct()
     {
         // Get the base path of the application
-        $this->basePath = dirname(dirname(dirname(__FILE__)));
+        $this->basePath = dirname(dirname(__FILE__));
     }
 
     /**
