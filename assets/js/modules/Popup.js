@@ -1,5 +1,5 @@
 import Overlay from './Overlay.js';
-import {getElementIdByHash} from "./utils/helpers.js";
+import {getElementIdByHash, closeMenu} from "./utils/helpers.js";
 
 /**
  * Manages pop-up windows functionality
@@ -19,7 +19,6 @@ export default class Popup {
         document.addEventListener('click', this.handleClick.bind(this));
     }
 
-
     /**
      * Handles click events to toggle a popup state.
      * @param {Event} e - The click event object.
@@ -35,14 +34,15 @@ export default class Popup {
         }
 
         if (buttonPopupOpen) {
-            if (isPopupOpened) this.popupClose();
+            if (isPopupOpened) this.close();
 
-            this.popupOpen(buttonPopupOpen);
+            closeMenu();
+            this.open(buttonPopupOpen);
             return;
         }
 
         if (isPopupOpened && (buttonPopupClose || missClick)) {
-            this.popupClose();
+            this.close();
         }
     }
 
@@ -50,20 +50,20 @@ export default class Popup {
      * Opens a popup by adding the 'active' class and setting up the overlay
      * @param {HTMLElement} button - The button that triggers the popup
      */
-    popupOpen(button) {
+    open(button) {
         const popup = getElementIdByHash(button);
 
         if (!popup) return;
 
         popup.classList.add('active');
-        this.overlay.create('popup-opened');
+        this.overlay.open('popup-opened');
     }
 
     /**
      * Closes all active popups and removes the overlay.
      */
-    popupClose() {
+    close() {
         document.querySelectorAll('[data-block="popup"]').forEach(el => el.classList.remove('active'));
-        this.overlay.destroy('popup-opened');
+        this.overlay.close('popup-opened');
     }
 }
