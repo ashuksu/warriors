@@ -61,7 +61,7 @@ include $dir . 'includes/components/button.php';
 render_button([
     'url' => '#content',
     'class' => 'button--up',
-    'attr' => 'data-element="link" data-element="up"',
+    'attr' => 'data-element="link" data-action="up"',
 ]);
 
 /**
