@@ -6,11 +6,15 @@
             </h1>
 
             <div class="row contacts__list wow pixFadeUp" data-wow-delay="0.3s">
+
                 <?php
-                foreach ($contacts as $index => $item) {
-                    include __DIR__ . '/item.php';
+                if (!empty($contacts) && is_array($contacts)) {
+                    foreach ($contacts as $index => $item) {
+                        include __DIR__ . '/item.php';
+                    }
                 }
                 ?>
+
             </div>
         </div>
     </div>

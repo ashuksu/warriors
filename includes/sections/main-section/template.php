@@ -36,7 +36,7 @@ $image = SectionService::get('main', 'image');
             </div>
             <div class="col-md-6 mt-md-0">
 
-                <?php if (isset($image) && is_array($image)): ?>
+                <?php if (!empty($image) && is_array($image)): ?>
                     <div class="image">
                         <img src="<?= APP_PATH ?>assets/images/<?= $image['name'] ?>"  alt="<?= $image['alt'] ?>"
                              width="<?= $image['width'] ?>" height="<?= $image['height'] ?>">

@@ -6,13 +6,17 @@
             </h1>
 
             <div class="catalog__grid">
-                <?php
-                foreach ($catalog as $item) {
-                    $imageUrl = APP_PATH . 'assets/images/items/' . $item['image'];
 
-                    include __DIR__ . '/item.php';
+                <?php
+                if (!empty($catalog) && is_array($catalog)) {
+                    foreach ($catalog as $item) {
+                        $imageUrl = APP_PATH . 'assets/images/items/' . $item['image'];
+
+                        include __DIR__ . '/item.php';
+                    }
                 }
                 ?>
+
             </div>
         </div>
     </div>
