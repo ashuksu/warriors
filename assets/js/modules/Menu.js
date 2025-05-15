@@ -23,15 +23,15 @@ export default class Menu {
     init() {
         document.addEventListener('click', this.handleClick.bind(this));
 
-        initNavigationLinks('[data-menu="link"]', {
-            targetCallback: () => this.closeMenu(), offsetHeight: this.header.offsetHeight / 2
+        initNavigationLinks('[data-element="link"]', {
+            targetCallback: () => this.close(), offsetHeight: this.header.offsetHeight / 2
         });
     }
 
     handleClick(e) {
-        const onButtonOpen = e.target.closest('[data-button="menu-open"]');
+        const onButtonOpen = e.target.closest('[data-element="menu-open"]');
         const isMenuOpened = this.html.classList.contains('menu-opened');
-        const onButtonClose = e.target.closest('[data-button="menu-close"]');
+        const onButtonClose = e.target.closest('[data-element="menu-close"]');
         const onNotMenu = !e.target.closest('#menu');
 
         if (onButtonOpen || onButtonClose) {
@@ -39,29 +39,29 @@ export default class Menu {
         }
 
         if (onButtonOpen) {
-            this.openMenu();
+            this.open();
             return;
         }
 
         // Close menu on clicking close button or outside menu area (miss-click)
         if (isMenuOpened && (onButtonClose || onNotMenu)) {
-            this.closeMenu();
+            this.close();
         }
     }
 
     /**
-     * Opens menu and creates overlay
+     * Opens menu and open overlay
      * @public
      */
-    openMenu() {
-        this.overlay.create('menu-opened');
+    open() {
+        this.overlay.open('menu-opened');
     }
 
     /**
-     * Closes menu and removes overlay
+     * Closes menu and close overlay
      * @public
      */
-    closeMenu() {
-        this.overlay.destroy('menu-opened');
+    close() {
+        this.overlay.close('menu-opened');
     }
 }

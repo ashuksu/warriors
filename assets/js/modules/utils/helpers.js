@@ -20,7 +20,7 @@ export function scrollToElement(element, offset = 0, behavior = 'smooth') {
  */
 export function toggleButton() {
     document.addEventListener('click', e => {
-        const button = e.target.closest('[data-button="toggle"]');
+        const button = e.target.closest('[data-element="toggle"]');
 
         if (!button) return;
 
@@ -33,6 +33,16 @@ export function toggleButton() {
 
         target.classList.toggle('active', isActive);
     });
+}
+
+/**
+ * Returns the DOM element by extracting the ID from the element's hash property.
+ * @param {HTMLAnchorElement} element - Anchor element with a hash (e.g., #section).
+ * @returns {HTMLElement|null} The target element or null if not found.
+ */
+export function getElementIdByHash(element) {
+    const selector = element.hash.substring(1);
+    return document.getElementById(selector);
 }
 
 /**
@@ -67,7 +77,10 @@ export function handleNavigationClick(e, link, {targetCallback = null, offsetHei
  * Sets up navigation links click handlers
  * @param {string} selector - Links selector
  * @param {Object} [options={}] - Configuration options
+ * @param {Function} [options.targetCallback] - Callback function to execute after navigation
+ * @param {number} [options.offsetHeight] - Offset height for scrolling
  */
+
 export function initNavigationLinks(selector, options = {}) {
     document.addEventListener('click', (e) => {
         const link = e.target.closest(selector);
@@ -84,4 +97,16 @@ export function initNavigationLinks(selector, options = {}) {
  */
 export function isWindowScroll(height) {
     return window.scrollY > height;
+}
+
+/**
+ * Closes the menu if it is open and the close button exists.
+ */
+export function closeMenu() {
+    const html = document.documentElement;
+    const buttonMenuClose = document.querySelector('[data-element="menu-close"]');
+
+    if (html.classList.contains('menu-opened') && buttonMenuClose) {
+        buttonMenuClose.click();
+    }
 }

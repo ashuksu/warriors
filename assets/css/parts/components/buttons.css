@@ -40,7 +40,7 @@
     cursor: pointer;
 }
 
-.button--top,
+.button--up,
 .button--plus,
 .button--menu,
 .button--close {
@@ -63,7 +63,7 @@
     width: 5rem;
 }
 
-.button--top {
+.button--up {
     border-radius: 50%;
     position: fixed;
     right: 2rem;
@@ -73,7 +73,7 @@
     visibility: hidden;
 }
 
-.button--top.active {
+.button--up.active {
     bottom: 5rem;
     opacity: 1;
     visibility: visible;
@@ -81,7 +81,7 @@
 }
 
 @media (min-width: 576px) {
-    .button--top.active {
+    .button--up.active {
         bottom: 2rem;
     }
 }
@@ -91,14 +91,14 @@
 .button--plus::after,
 .button--menu::before,
 .button--menu::after,
-.button--top::before,
+.button--up::before,
 .button--close::before,
 .button--close::after {
     content: "";
     display: block;
 }
 
-.button--top::before,
+.button--up::before,
 .button--plus::before,
 .button--plus::after,
 .button--close::before,
@@ -128,7 +128,7 @@
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.button--top::before {
+.button--up::before {
     width: 1.45rem;
     height: 1.45rem;
     border: solid var(--white);

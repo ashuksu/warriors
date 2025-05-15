@@ -12,8 +12,17 @@
 
 					<?php
 					render_button([
-						'attr' => 'data-bs-toggle="modal" data-bs-target="#modal"',
-						'content' => 'Open MODAL',
+                        'url'=> '#popup-first',
+						'attr' => 'data-element="popup-open"',
+						'content' => 'Open POPUP 1',
+					]);
+					?>
+
+					<?php
+					render_button([
+                        'url'=> '#popup-second',
+						'attr' => 'data-element="popup-open"',
+                        'content' => 'Open POPUP 2',
 					]);
 					?>
 				</div>

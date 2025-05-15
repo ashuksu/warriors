@@ -16,7 +16,7 @@ if (!function_exists('render_button')) {
      * render_button([
      *     'url' => '#section',
      *     'class' => 'button--primary',
-     *     'attr' => 'data-button="toggle"',
+     *     'attr' => 'data-element="toggle"',
      *     'content' => 'Read more'
      * ]);
      */

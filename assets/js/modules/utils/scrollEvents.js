@@ -24,7 +24,7 @@ export function setHeaderScrolledState() {
  * @param {number} height - Activation threshold
  */
 export function buttonTopActivator(height) {
-    const buttonTop = document.querySelector('[data-button="top"]');
+    const buttonTop = document.querySelector('[data-element="up"]');
 
     if (!buttonTop) return;
 
