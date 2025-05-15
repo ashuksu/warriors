@@ -14,21 +14,21 @@ class SectionService
     /**
      * Private constructor to enforce singleton pattern
      */
-    protected function __construct() {}
-
-    /**
-     * Get singleton instance
-     *
-     * @return self
-     */
-    private static function getInstance()
+    protected function __construct()
     {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 
+    /**
+     * Get section data with caching
+     *
+     * @param string $section Section name (e.g., 'catalog', 'about')
+     * @param string|null $type Type of data to return (e.g., 'items', 'title')
+     * @return mixed Section data based on requested type. Returns empty string on error.
+     */
+    public static function get($section, $type = null)
+    {
+        return self::getInstance()->getSectionData($section, $type);
+    }
 
     /**
      * Get section data with caching.
@@ -82,15 +82,16 @@ class SectionService
     }
 
     /**
-     * Get section data with caching
+     * Get singleton instance
      *
-     * @param string $section Section name (e.g., 'catalog', 'about')
-     * @param string|null $type Type of data to return (e.g., 'items', 'title')
-     * @return mixed Section data based on requested type. Returns empty string on error.
+     * @return self
      */
-    public static function get($section, $type = null)
+    private static function getInstance()
     {
-        return self::getInstance()->getSectionData($section, $type);
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     /**

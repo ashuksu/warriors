@@ -11,7 +11,9 @@ class DataLoader
     /**
      * Private constructor to enforce singleton pattern
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * Get singleton instance

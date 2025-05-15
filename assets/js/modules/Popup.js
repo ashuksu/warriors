@@ -1,5 +1,5 @@
 import Overlay from './Overlay.js';
-import {getElementIdByHash, closeMenu} from "./utils/helpers.js";
+import {closeMenu, getElementIdByHash} from "./utils/helpers.js";
 
 /**
  * Manages pop-up windows functionality
