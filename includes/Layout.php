@@ -39,7 +39,7 @@ render_button([
 	'attr' => 'data-menu="link" data-button="top"',
 ]);
 
-include $dir . 'includes/components/modal.php';
+include $dir . 'includes/Popup.php';
 
 include $dir . 'includes/footer-links.php';
 ?>
