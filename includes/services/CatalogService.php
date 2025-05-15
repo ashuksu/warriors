@@ -46,7 +46,7 @@ class CatalogService
 
         try {
             $catalogData = $this->loadCatalogData();
-            $items = $catalogData['items'] ?? [];
+            $items = $catalogData['catalog']['items'] ?? [];
 
             // Cache the result
             $this->cache['catalog_items'] = $items;
@@ -72,7 +72,7 @@ class CatalogService
 
         try {
             $catalogData = $this->loadCatalogData();
-            $title = $catalogData['title'] ?? [];
+            $title = $catalogData['catalog']['title'] ?? [];
             $this->cache['catalog_title'] = $title;
 
             return $title;
@@ -90,7 +90,7 @@ class CatalogService
      */
     private function loadCatalogData()
     {
-        $catalogJsonPath = $this->basePath . '/data/sections/catalog.json';
+        $catalogJsonPath = $this->basePath . '/data/data.json';
 
         if (!file_exists($catalogJsonPath)) {
             throw new Exception('Catalog JSON file not found: ' . $catalogJsonPath);

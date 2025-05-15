@@ -45,7 +45,7 @@ class AboutService
 
         try {
             $aboutData = $this->loadAboutData();
-            $items = $aboutData['items'] ?? [];
+            $items = $aboutData['about']['items'] ?? [];
             $this->cache['about_items'] = $items;
 
             return $items;
@@ -64,7 +64,7 @@ class AboutService
      */
     private function loadAboutData()
     {
-        $aboutJsonPath = $this->basePath . '/data/sections/about.json';
+        $aboutJsonPath = $this->basePath . '/data/data.json';
 
         if (!file_exists($aboutJsonPath)) {
             throw new Exception('About JSON file not found: ' . $aboutJsonPath);
