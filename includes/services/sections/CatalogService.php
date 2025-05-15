@@ -3,15 +3,22 @@
 require_once __DIR__ . '/BaseSectionService.php';
 
 /**
- * Service for handling catalog data operations
- * Provides caching and error handling for catalog data
+ * Service for handling catalog data operations.
+ * Provides caching and error handling for catalog data.
+ * Implements the singleton pattern for efficient resource usage.
+ *
+ * @see BaseSectionService
  */
 class CatalogService extends BaseSectionService
 {
     protected static $instance = null;
 
     /**
-     * Protected constructor to enforce singleton pattern
+     * Protected constructor to enforce singleton pattern.
+     * Initializes the service by calling the parent constructor.
+     *
+     * @protected
+     * @see BaseSectionService::__construct()
      */
     protected function __construct()
     {
@@ -19,9 +26,11 @@ class CatalogService extends BaseSectionService
     }
 
     /**
-     * Get singleton instance
+     * Get singleton instance of the CatalogService.
+     * Creates a new instance if one doesn't exist yet.
      *
-     * @return CatalogService
+     * @return CatalogService The singleton instance
+     * @static
      */
     public static function getInstance()
     {
@@ -32,44 +41,17 @@ class CatalogService extends BaseSectionService
     }
 
     /**
-     * Get catalog data with caching
+     * Static helper method to get any catalog data.
+     * Provides a convenient way to access catalog data without
+     * explicitly creating an instance of the service.
      *
-     * @param string $type Type of data to return ('items', 'title', etc.)
-     * @return mixed Catalog data based on requested type
-     */
-    public function getData($type = 'items')
-    {
-        return $this->getSectionData('catalog', $type);
-    }
-
-    /**
-     * Static helper method to get catalog items
-     *
-     * @return array Catalog items
-     */
-    public static function getItems()
-    {
-        return self::getInstance()->getData('items');
-    }
-
-    /**
-     * Static helper method to get catalog title
-     *
-     * @return string Catalog title
-     */
-    public static function getTitle()
-    {
-        return self::getInstance()->getData('title');
-    }
-
-    /**
-     * Static helper method to get any catalog data
-     *
-     * @param string $type Type of data to return
-     * @return mixed Catalog data based on requested type
+     * @param string $type Type of data to return (e.g., 'items', 'title')
+     * @return mixed Catalog data based on requested type. Returns empty string on error.
+     * @static
+     * @see BaseSectionService::getSectionData()
      */
     public static function get($type)
     {
-        return self::getInstance()->getData($type);
+        return self::getInstance()->getSectionData('catalog', $type);
     }
 }
