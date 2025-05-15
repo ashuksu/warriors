@@ -14,11 +14,11 @@
 		<a class="menu__link link" data-menu="link" href="<?= APP_PATH ?>contacts">Contacts</a>
 	</div>
 
-	<?php
-	render_button([
-		'class' => 'mx-auto',
-		'attr' => 'data-toggle="modal" data-target="#modal"',
-		'content' => 'Open MODAL',
-	]);
-	?>
+    <?php
+    render_button([
+        'url'=> '#popup-first',
+        'attr' => 'data-element="popup-open"',
+        'content' => 'Open POPUP 1',
+    ]);
+    ?>
 </nav>
