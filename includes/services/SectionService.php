@@ -1,26 +1,19 @@
 <?php
 
-require_once __DIR__ . '/../DataLoader.php';
+require_once __DIR__ . '/DataLoader.php';
 
 /**
- * Base service class for handling section data operations.
- * Provides common functionality for all section services including
- * caching, error handling, and data retrieval.
- *
- * @abstract
+ * Service class for handling section data operations.
+ * Provides caching and error handling for all section data.
  */
-abstract class BaseSectionService
+class SectionService
 {
     protected static $instance = null;
     protected $cache = [];
     protected $basePath;
 
     /**
-     * Protected constructor to enforce singleton pattern.
-     * Initializes the base path for the service.
-     * This constructor should be called by child classes.
-     *
-     * @protected
+     * Private constructor to enforce singleton pattern
      */
     protected function __construct()
     {
@@ -29,12 +22,26 @@ abstract class BaseSectionService
     }
 
     /**
+     * Get singleton instance
+     *
+     * @return self
+     */
+    private static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+
+    /**
      * Get section data with caching.
      * Retrieves data for the specified section and type from the data source.
      * Results are cached to improve performance on subsequent calls.
      *
      * @param string $section Section name (e.g., 'catalog', 'about')
-     * @param string|null $type Type of data to return (e.g., 'items', 'title'). 
+     * @param string|null $type Type of data to return (e.g., 'items', 'title').
      *                          If null, returns the entire section data.
      * @return mixed Section data based on requested type. Returns empty string on error.
      * @throws Exception Exceptions are caught internally and logged
@@ -80,14 +87,24 @@ abstract class BaseSectionService
     }
 
     /**
-     * Clear the cache.
-     * Removes all cached data for this service instance,
-     * forcing subsequent calls to getSectionData to fetch fresh data.
+     * Get section data with caching
      *
-     * @return void
+     * @param string $section Section name (e.g., 'catalog', 'about')
+     * @param string|null $type Type of data to return (e.g., 'items', 'title')
+     * @return mixed Section data based on requested type. Returns empty string on error.
      */
-    public function clearCache()
+    public static function get($section, $type = null)
     {
-        $this->cache = [];
+        return self::getInstance()->getSectionData($section, $type);
+    }
+
+    /**
+     * Clear the cache
+     */
+    public static function clearCache()
+    {
+        if (self::$instance !== null) {
+            self::$instance->cache = [];
+        }
     }
 }

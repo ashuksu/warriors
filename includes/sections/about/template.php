@@ -1,5 +1,6 @@
 <?php
-$about = AboutService::get('items');
+//require_once __DIR__ . '/../../../services/SectionService.php';
+$about = SectionService::get('about', 'items');
 
 if (!is_array($about) || empty($about)) {
     $about = [];
