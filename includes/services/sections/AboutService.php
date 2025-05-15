@@ -3,15 +3,22 @@
 require_once __DIR__ . '/BaseSectionService.php';
 
 /**
- * Service for handling about data operations
- * Provides caching and error handling for about data
+ * Service for handling about data operations.
+ * Provides caching and error handling for about data.
+ * Implements the singleton pattern for efficient resource usage.
+ *
+ * @see BaseSectionService
  */
 class AboutService extends BaseSectionService
 {
     protected static $instance = null;
 
     /**
-     * Protected constructor to enforce singleton pattern
+     * Protected constructor to enforce singleton pattern.
+     * Initializes the service by calling the parent constructor.
+     *
+     * @protected
+     * @see BaseSectionService::__construct()
      */
     protected function __construct()
     {
@@ -19,9 +26,11 @@ class AboutService extends BaseSectionService
     }
 
     /**
-     * Get singleton instance
+     * Get singleton instance of the CatalogService.
+     * Creates a new instance if one doesn't exist yet.
      *
-     * @return AboutService
+     * @return AboutService The singleton instance
+     * @static
      */
     public static function getInstance()
     {
@@ -32,24 +41,17 @@ class AboutService extends BaseSectionService
     }
 
     /**
-     * Get about data with caching
+     * Static helper method to get any about data.
+     * Provides a convenient way to access about data without
+     * explicitly creating an instance of the service.
      *
-     * @param string $type Type of data to return ('items', 'bool', etc.)
-     * @return mixed About data based on requested type
+     * @param string $type Type of data to return (e.g., 'items')
+     * @return mixed About data based on requested type. Returns empty string on error.
+     * @static
+     * @see BaseSectionService::getSectionData()
      */
-    public function getAbout($type = 'items')
+    public static function get($type)
     {
-        return $this->getSectionData('about', $type);
+        return self::getInstance()->getSectionData('about', $type);
     }
-
-    /**
-     * Get about items with caching (legacy method)
-     *
-     * @return array About items
-     */
-    public function getAboutItems()
-    {
-        return $this->getAbout('items');
-    }
-
 }
