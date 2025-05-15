@@ -19,7 +19,6 @@ $popups = [
             'content' => 'Go Home'
         ],
     ],
-
 ];
 
 foreach ($popups as $index => &$item) {

@@ -23,15 +23,15 @@ export default class Menu {
     init() {
         document.addEventListener('click', this.handleClick.bind(this));
 
-        initNavigationLinks('[data-menu="link"]', {
+        initNavigationLinks('[data-element="link"]', {
             targetCallback: () => this.close(), offsetHeight: this.header.offsetHeight / 2
         });
     }
 
     handleClick(e) {
-        const onButtonOpen = e.target.closest('[data-button="menu-open"]');
+        const onButtonOpen = e.target.closest('[data-element="menu-open"]');
         const isMenuOpened = this.html.classList.contains('menu-opened');
-        const onButtonClose = e.target.closest('[data-button="menu-close"]');
+        const onButtonClose = e.target.closest('[data-element="menu-close"]');
         const onNotMenu = !e.target.closest('#menu');
 
         if (onButtonOpen || onButtonClose) {

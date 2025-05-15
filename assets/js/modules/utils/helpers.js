@@ -20,7 +20,7 @@ export function scrollToElement(element, offset = 0, behavior = 'smooth') {
  */
 export function toggleButton() {
     document.addEventListener('click', e => {
-        const button = e.target.closest('[data-button="toggle"]');
+        const button = e.target.closest('[data-element="toggle"]');
 
         if (!button) return;
 
@@ -104,7 +104,7 @@ export function isWindowScroll(height) {
  */
 export function closeMenu() {
     const html = document.documentElement;
-    const buttonMenuClose = document.querySelector('[data-button="menu-close"]');
+    const buttonMenuClose = document.querySelector('[data-element="menu-close"]');
 
     if (html.classList.contains('menu-opened') && buttonMenuClose) {
         buttonMenuClose.click();

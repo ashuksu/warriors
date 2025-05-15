@@ -36,8 +36,8 @@ include $dir . 'includes/components/button.php';
 <?php
 render_button([
     'url' => '#content',
-    'class' => 'button--top',
-    'attr' => 'data-menu="link" data-button="top"',
+    'class' => 'button--up',
+    'attr' => 'data-element="link" data-element="up"',
 ]);
 
 include $dir . 'includes/Popup.php';
