@@ -1,10 +1,11 @@
 <?php
 define("APP_TITLE", "Home Page");
+require_once __DIR__ . '/config.php';
 $bodyClass = 'home-page';
 $sections = ['main-section', 'about', 'faq', 'info'];
 
-$servicePath = 'Services/SectionService.php';
+$servicePath = PROJECT_ROOT . 'Services/SectionService.php';
 require_once $servicePath;
 
-include 'includes/Layout.php';
+include PROJECT_ROOT . 'includes/Layout.php';
 ?>

@@ -28,6 +28,6 @@ foreach ($popups as $index => &$item) {
         $item['button'] = ob_get_clean();
     }
 
-    include $dir . 'includes/sections/popup/template.php';
+    include PROJECT_ROOT . 'includes/sections/popup/template.php';
 }
 ?>

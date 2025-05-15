@@ -22,7 +22,7 @@
 					]];
 
 				foreach ($faq as $index => $item) {
-					include $dir . 'includes/sections/faq/item.php';
+					include PROJECT_ROOT . 'includes/sections/faq/item.php';
 				}
 				?>
 			</div>

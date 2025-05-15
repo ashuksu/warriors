@@ -1,8 +1,8 @@
 <?php
 define("APP_TITLE", "Contacts Page");
-$dir = "../";
+require_once __DIR__ . '/../config.php';
 $bodyClass = 'page-contacts';
 $sections = ['contacts', 'info'];
 
-include $dir . 'includes/Layout.php';
+include PROJECT_ROOT . 'includes/Layout.php';
 ?>

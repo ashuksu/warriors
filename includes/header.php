@@ -12,7 +12,7 @@
 				'content' => '<i></i>',
 			]);
 
-			include $dir . 'includes/components/menu.php'
+			include PROJECT_ROOT . 'includes/components/menu.php'
 			?>
 		</div>
 	</div>

@@ -1,8 +1,8 @@
 <?php
 define("APP_TITLE", "404 Page");
-$dir = "../";
+require_once __DIR__ . '/../config.php';
 $bodyClass = 'page-error';
 $sections = ['error'];
 
-include $dir . 'includes/Layout.php';
+include PROJECT_ROOT . 'includes/Layout.php';
 ?>
