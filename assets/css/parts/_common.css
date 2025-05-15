@@ -229,7 +229,7 @@ img {
     }
 }
 
-.no-scroll {
+.overlay-opened {
     overflow: hidden;
 }
 
