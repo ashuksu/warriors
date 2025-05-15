@@ -41,4 +41,35 @@ class CatalogService extends BaseSectionService
     {
         return $this->getSectionData('catalog', $type);
     }
+
+    /**
+     * Static helper method to get catalog items
+     *
+     * @return array Catalog items
+     */
+    public static function getItems()
+    {
+        return self::getInstance()->getData('items');
+    }
+
+    /**
+     * Static helper method to get catalog title
+     *
+     * @return string Catalog title
+     */
+    public static function getTitle()
+    {
+        return self::getInstance()->getData('title');
+    }
+
+    /**
+     * Static helper method to get any catalog data
+     *
+     * @param string $type Type of data to return
+     * @return mixed Catalog data based on requested type
+     */
+    public static function get($type)
+    {
+        return self::getInstance()->getData($type);
+    }
 }
