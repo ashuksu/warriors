@@ -24,7 +24,7 @@ export default class Menu {
         document.addEventListener('click', this.handleClick.bind(this));
 
         initNavigationLinks('[data-menu="link"]', {
-            targetCallback: () => this.closeMenu(), offsetHeight: this.header.offsetHeight / 2
+            targetCallback: () => this.close(), offsetHeight: this.header.offsetHeight / 2
         });
     }
 
@@ -39,29 +39,29 @@ export default class Menu {
         }
 
         if (onButtonOpen) {
-            this.openMenu();
+            this.open();
             return;
         }
 
         // Close menu on clicking close button or outside menu area (miss-click)
         if (isMenuOpened && (onButtonClose || onNotMenu)) {
-            this.closeMenu();
+            this.close();
         }
     }
 
     /**
-     * Opens menu and creates overlay
+     * Opens menu and open overlay
      * @public
      */
-    openMenu() {
-        this.overlay.create('menu-opened');
+    open() {
+        this.overlay.open('menu-opened');
     }
 
     /**
-     * Closes menu and removes overlay
+     * Closes menu and close overlay
      * @public
      */
-    closeMenu() {
-        this.overlay.destroy('menu-opened');
+    close() {
+        this.overlay.close('menu-opened');
     }
 }

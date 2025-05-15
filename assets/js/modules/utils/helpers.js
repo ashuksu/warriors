@@ -77,7 +77,10 @@ export function handleNavigationClick(e, link, {targetCallback = null, offsetHei
  * Sets up navigation links click handlers
  * @param {string} selector - Links selector
  * @param {Object} [options={}] - Configuration options
+ * @param {Function} [options.targetCallback] - Callback function to execute after navigation
+ * @param {number} [options.offsetHeight] - Offset height for scrolling
  */
+
 export function initNavigationLinks(selector, options = {}) {
     document.addEventListener('click', (e) => {
         const link = e.target.closest(selector);
@@ -94,4 +97,16 @@ export function initNavigationLinks(selector, options = {}) {
  */
 export function isWindowScroll(height) {
     return window.scrollY > height;
+}
+
+/**
+ * Closes the menu if it is open and the close button exists.
+ */
+export function closeMenu() {
+    const html = document.documentElement;
+    const buttonMenuClose = document.querySelector('[data-button="menu-close"]');
+
+    if (html.classList.contains('menu-opened') && buttonMenuClose) {
+        buttonMenuClose.click();
+    }
 }
