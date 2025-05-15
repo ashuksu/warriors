@@ -67,5 +67,21 @@
         "url": "$TELEGRAM"
       }
     ]
+  },
+  "error": {
+    "title": "404",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum cupiditate dicta earum enim ipsum iure pariatur porro possimus",
+    "image": {
+      "name": "w4.gif",
+      "alt": "image",
+      "width": "600",
+      "height": "600"
+    },
+    "button": {
+      "url": "/",
+      "class": "error-button wow pixFadeUp",
+      "attr": "data-wow-delay='0.5s' target='_blank'",
+      "content": "to the Home page"
+    }
   }
 }
