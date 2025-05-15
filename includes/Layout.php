@@ -5,7 +5,10 @@ include $dir . 'config.php';
 
 include $dir . 'includes/head.php';
 
-//helpers
+/**
+ * Includes the button component, which provides the render_button() function
+ * for rendering configurable anchor-based buttons.
+ */
 include $dir . 'includes/components/button.php';
 ?>
 
