@@ -3,8 +3,11 @@
 require_once __DIR__ . '/../DataLoader.php';
 
 /**
- * Base service class for handling section data operations
- * Provides common functionality for all section services
+ * Base service class for handling section data operations.
+ * Provides common functionality for all section services including
+ * caching, error handling, and data retrieval.
+ *
+ * @abstract
  */
 abstract class BaseSectionService
 {
@@ -13,7 +16,11 @@ abstract class BaseSectionService
     protected $basePath;
 
     /**
-     * Private constructor to enforce singleton pattern
+     * Protected constructor to enforce singleton pattern.
+     * Initializes the base path for the service.
+     * This constructor should be called by child classes.
+     *
+     * @protected
      */
     protected function __construct()
     {
@@ -22,60 +29,62 @@ abstract class BaseSectionService
     }
 
     /**
-     * Get section data with caching
+     * Get section data with caching.
+     * Retrieves data for the specified section and type from the data source.
+     * Results are cached to improve performance on subsequent calls.
      *
      * @param string $section Section name (e.g., 'catalog', 'about')
-     * @param string $type Type of data to return (e.g., 'items', 'title')
-     * @return mixed Section data based on requested type
+     * @param string|null $type Type of data to return (e.g., 'items', 'title'). 
+     *                          If null, returns the entire section data.
+     * @return mixed Section data based on requested type. Returns empty string on error.
+     * @throws Exception Exceptions are caught internally and logged
      */
-    protected function getSectionData($section, $type = 'items')
+    protected function getSectionData($section, $type = null)
     {
-        $cacheKey = $section . '_' . $type;
+        $cacheKey = $section . ($type !== null ? '_' . $type : '');
 
-        // Check if data is already cached
+        // Check if data is already in cache
         if (isset($this->cache[$cacheKey])) {
             return $this->cache[$cacheKey];
         }
 
         try {
             $data = DataLoader::getInstance()->loadData($section);
-            $result = $data[$section][$type] ?? [];
 
-            // Cache the result
+            // Cache the entire section data to avoid multiple loads
+            if (!isset($this->cache[$section])) {
+                $this->cache[$section] = $data[$section] ?? [];
+            }
+
+            // Return entire section if type is null
+            if ($type === null) {
+                $result = $this->cache[$section];
+                $this->cache[$cacheKey] = $result;
+                return $result;
+            }
+
+            // Return specific type if available
+            if (!isset($this->cache[$section]) || !isset($this->cache[$section][$type])) {
+                $result = '';
+            } else {
+                $result = $this->cache[$section][$type];
+            }
+
+            // Cache the result for this specific type
             $this->cache[$cacheKey] = $result;
-
             return $result;
         } catch (Exception $e) {
-            // Log error or handle it appropriately
             error_log('Error loading ' . $section . ' data: ' . $e->getMessage());
-
-            // Return appropriate default value based on type
-            if ($type === 'title') {
-                return '';
-            } elseif (is_numeric($type) || $type === 'counter') {
-                return 0;
-            } elseif ($type === 'bool') {
-                return false;
-            } else {
-                return [];
-            }
+            return '';
         }
     }
 
     /**
-     * Universal method to get any section data
+     * Clear the cache.
+     * Removes all cached data for this service instance,
+     * forcing subsequent calls to getSectionData to fetch fresh data.
      *
-     * @param string $section Section name (e.g., 'catalog', 'about', 'another')
-     * @param string $type Type of data to return (e.g., 'items', 'title', 'bool')
-     * @return mixed Section data based on requested type
-     */
-    public function getSection($section, $type = 'items')
-    {
-        return $this->getSectionData($section, $type);
-    }
-
-    /**
-     * Clear the cache
+     * @return void
      */
     public function clearCache()
     {
