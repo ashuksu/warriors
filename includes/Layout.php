@@ -13,30 +13,31 @@ include $dir . 'includes/components/button.php';
 
 <div class="wrapper">
 
-	<?php
-	include $dir . 'includes/components/preloader.php';
+    <?php
+    include $dir . 'includes/components/preloader.php';
 
-	include $dir . 'includes/header.php';
-	?>
+    include $dir . 'includes/header.php';
+    ?>
 
-	<main id="content" class="content">
-		<?php
-		foreach ($sections as $section) {
-			include $dir . 'includes/sections/' . $section . '/template.php';
-		}
-		?>
-	</main>
+    <main id="content" class="content">
+        <?php
+        foreach ($sections as $section) {
+            include $dir . 'includes/sections/' . $section . '/template.php';
+        }
+        ?>
+    </main>
 
-	<?php
-	include $dir . 'includes/footer.php';
-	?>
+    <?php
+    include $dir . 'includes/footer.php';
+    ?>
 </div>
+
 
 <?php
 render_button([
-	'url' => '#content',
-	'class' => 'button--top',
-	'attr' => 'data-menu="link" data-button="top"',
+    'url' => '#content',
+    'class' => 'button--top',
+    'attr' => 'data-menu="link" data-button="top"',
 ]);
 
 include $dir . 'includes/Popup.php';
