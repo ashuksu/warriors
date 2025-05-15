@@ -52,5 +52,20 @@
         "image": "9.png"
       }
     ]
+  },
+  "contacts": {
+    "title": "Contacts",
+    "items": [
+      {
+        "title": "Email",
+        "text": "lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ",
+        "url": "mailto:$EMAIL"
+      },
+      {
+        "title": "Telegram",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur dolore eum fuga itaque quasi qui quisquam sequi tenetur.",
+        "url": "$TELEGRAM"
+      }
+    ]
   }
 }
