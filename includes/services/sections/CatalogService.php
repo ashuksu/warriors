@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../DataLoader.php';
+
 /**
  * Service for handling catalog data operations
  * Provides caching and error handling for catalog data
@@ -45,7 +47,7 @@ class CatalogService
         }
 
         try {
-            $catalogData = $this->loadCatalogData();
+            $catalogData = DataLoader::getInstance()->loadData('catalog');
             $items = $catalogData['catalog']['items'] ?? [];
 
             // Cache the result
@@ -71,7 +73,7 @@ class CatalogService
         }
 
         try {
-            $catalogData = $this->loadCatalogData();
+            $catalogData = DataLoader::getInstance()->loadData('catalog');
             $title = $catalogData['catalog']['title'] ?? [];
             $this->cache['catalog_title'] = $title;
 
@@ -80,33 +82,6 @@ class CatalogService
             error_log('Error loading catalog data: ' . $e->getMessage());
             return [];
         }
-    }
-
-    /**
-     * Load catalog data from JSON file
-     *
-     * @return array Catalog data
-     * @throws Exception If file cannot be read or JSON is invalid
-     */
-    private function loadCatalogData()
-    {
-        $catalogJsonPath = $this->basePath . '/data/data.json';
-
-        if (!file_exists($catalogJsonPath)) {
-            throw new Exception('Catalog JSON file not found: ' . $catalogJsonPath);
-        }
-
-        $jsonContent = file_get_contents($catalogJsonPath);
-        if ($jsonContent === false) {
-            throw new Exception('Failed to read catalog JSON file');
-        }
-
-        $catalogData = json_decode($jsonContent, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception('Invalid JSON in catalog file: ' . json_last_error_msg());
-        }
-
-        return $catalogData;
     }
 
     /**

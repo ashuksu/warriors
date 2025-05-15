@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../DataLoader.php';
+
 /**
  * Service for handling about data operations
  * Provides caching and error handling for about data
@@ -44,7 +46,7 @@ class AboutService
         }
 
         try {
-            $aboutData = $this->loadAboutData();
+            $aboutData = DataLoader::getInstance()->loadData('about');
             $items = $aboutData['about']['items'] ?? [];
             $this->cache['about_items'] = $items;
 
@@ -54,33 +56,6 @@ class AboutService
             error_log('Error loading about data: ' . $e->getMessage());
             return [];
         }
-    }
-
-    /**
-     * Load about data from JSON file
-     *
-     * @return array About data
-     * @throws Exception If file cannot be read or JSON is invalid
-     */
-    private function loadAboutData()
-    {
-        $aboutJsonPath = $this->basePath . '/data/data.json';
-
-        if (!file_exists($aboutJsonPath)) {
-            throw new Exception('About JSON file not found: ' . $aboutJsonPath);
-        }
-
-        $jsonContent = file_get_contents($aboutJsonPath);
-        if ($jsonContent === false) {
-            throw new Exception('Failed to read about JSON file');
-        }
-
-        $aboutData = json_decode($jsonContent, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception('Invalid JSON in about file: ' . json_last_error_msg());
-        }
-
-        return $aboutData;
     }
 
     /**
