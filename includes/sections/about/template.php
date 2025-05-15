@@ -1,5 +1,5 @@
 <?php
-$about = AboutService::getInstance()->getAboutItems();
+$about = AboutService::getInstance()->getAbout('items');
 ?>
 
 <section id="about" class="section about">

@@ -1,24 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../DataLoader.php';
+require_once __DIR__ . '/BaseSectionService.php';
 
 /**
  * Service for handling catalog data operations
  * Provides caching and error handling for catalog data
  */
-class CatalogService
+class CatalogService extends BaseSectionService
 {
-    private static $instance = null;
-    private $cache = [];
-    private $basePath;
+    protected static $instance = null;
 
     /**
-     * Private constructor to enforce singleton pattern
+     * Protected constructor to enforce singleton pattern
      */
-    private function __construct()
+    protected function __construct()
     {
-        // Get the base path of the application
-        $this->basePath = dirname(dirname(dirname(__FILE__)));
+        parent::__construct();
     }
 
     /**
@@ -35,60 +32,34 @@ class CatalogService
     }
 
     /**
-     * Get catalog items with caching
+     * Get catalog data with caching
+     *
+     * @param string $type Type of data to return ('items', 'title', etc.)
+     * @return mixed Catalog data based on requested type
+     */
+    public function getCatalog($type = 'items')
+    {
+        return $this->getSectionData('catalog', $type);
+    }
+
+    /**
+     * Get catalog items with caching (legacy method)
      *
      * @return array Catalog items
      */
     public function getCatalogItems()
     {
-        // Check if data is already cached
-        if (isset($this->cache['catalog_items'])) {
-            return $this->cache['catalog_items'];
-        }
-
-        try {
-            $catalogData = DataLoader::getInstance()->loadData('catalog');
-            $items = $catalogData['catalog']['items'] ?? [];
-
-            // Cache the result
-            $this->cache['catalog_items'] = $items;
-
-            return $items;
-        } catch (Exception $e) {
-            // Log error or handle it appropriately
-            error_log('Error loading catalog data: ' . $e->getMessage());
-            return [];
-        }
+        return $this->getCatalog('items');
     }
 
     /**
-     * Get catalog title with caching
+     * Get catalog title with caching (legacy method)
      *
-     * @return string Catalog items
+     * @return string Catalog title
      */
     public function getCatalogTitle()
     {
-        if (isset($this->cache['catalog_title'])) {
-            return $this->cache['catalog_title'];
-        }
-
-        try {
-            $catalogData = DataLoader::getInstance()->loadData('catalog');
-            $title = $catalogData['catalog']['title'] ?? [];
-            $this->cache['catalog_title'] = $title;
-
-            return $title;
-        } catch (Exception $e) {
-            error_log('Error loading catalog data: ' . $e->getMessage());
-            return [];
-        }
+        return $this->getCatalog('title');
     }
 
-    /**
-     * Clear the cache
-     */
-    public function clearCache()
-    {
-        $this->cache = [];
-    }
 }

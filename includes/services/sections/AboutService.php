@@ -1,24 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../DataLoader.php';
+require_once __DIR__ . '/BaseSectionService.php';
 
 /**
  * Service for handling about data operations
  * Provides caching and error handling for about data
  */
-class AboutService
+class AboutService extends BaseSectionService
 {
-    private static $instance = null;
-    private $cache = [];
-    private $basePath;
+    protected static $instance = null;
 
     /**
-     * Private constructor to enforce singleton pattern
+     * Protected constructor to enforce singleton pattern
      */
-    private function __construct()
+    protected function __construct()
     {
-        // Get the base path of the application
-        $this->basePath = dirname(dirname(dirname(__FILE__)));
+        parent::__construct();
     }
 
     /**
@@ -35,34 +32,24 @@ class AboutService
     }
 
     /**
-     * Get about items with caching
+     * Get about data with caching
+     *
+     * @param string $type Type of data to return ('items', 'bool', etc.)
+     * @return mixed About data based on requested type
+     */
+    public function getAbout($type = 'items')
+    {
+        return $this->getSectionData('about', $type);
+    }
+
+    /**
+     * Get about items with caching (legacy method)
      *
      * @return array About items
      */
     public function getAboutItems()
     {
-        if (isset($this->cache['about_items'])) {
-            return $this->cache['about_items'];
-        }
-
-        try {
-            $aboutData = DataLoader::getInstance()->loadData('about');
-            $items = $aboutData['about']['items'] ?? [];
-            $this->cache['about_items'] = $items;
-
-            return $items;
-        } catch (Exception $e) {
-            // Log error or handle it appropriately
-            error_log('Error loading about data: ' . $e->getMessage());
-            return [];
-        }
+        return $this->getAbout('items');
     }
 
-    /**
-     * Clear the cache
-     */
-    public function clearCache()
-    {
-        $this->cache = [];
-    }
 }

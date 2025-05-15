@@ -4,11 +4,11 @@ $dir = "../";
 $bodyClass = 'page-catalog';
 $sections = ['catalog', 'info'];
 
-// Load catalog items
+// Load catalog data
 $servicePath = $dir . 'includes/services/sections/CatalogService.php';
 require_once $servicePath;
-$catalog = CatalogService::getInstance()->getCatalogItems();
-$title = CatalogService::getInstance()->getCatalogTitle();
+$catalog = CatalogService::getInstance()->getCatalog('items');
+$title = CatalogService::getInstance()->getCatalog('title');
 
 include $dir . 'includes/Layout.php';
 ?>
