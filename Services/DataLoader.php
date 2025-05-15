@@ -7,16 +7,11 @@
 class DataLoader
 {
     private static $instance = null;
-    private $basePath;
 
     /**
      * Private constructor to enforce singleton pattern
      */
-    private function __construct()
-    {
-        // Get the base path of the application
-        $this->basePath = dirname(dirname(__FILE__));
-    }
+    private function __construct() {}
 
     /**
      * Get singleton instance
@@ -40,7 +35,7 @@ class DataLoader
      */
     public function loadData($section = '')
     {
-        $jsonPath = $this->basePath . '/data/data.json';
+        $jsonPath = PROJECT_ROOT . '/data/data.json';
 
         if (!file_exists($jsonPath)) {
             throw new Exception($section . ' JSON file not found: ' . $jsonPath);

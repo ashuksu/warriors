@@ -10,16 +10,11 @@ class SectionService
 {
     protected static $instance = null;
     protected $cache = [];
-    protected $basePath;
 
     /**
      * Private constructor to enforce singleton pattern
      */
-    protected function __construct()
-    {
-        // Get the base path of the application
-        $this->basePath = dirname(dirname(dirname(__FILE__)));
-    }
+    protected function __construct() {}
 
     /**
      * Get singleton instance
