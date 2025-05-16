@@ -1,25 +1,7 @@
 <?php
-$popups = [
-    [
-        'name' => 'first',
-        'title' => 'First',
-        'text' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.',
-        'button' => [
-            'url' => $LINK,
-            'attr' => 'target="_blank"',
-            'content' => 'GitHub'
-        ],
-    ],
-    [
-        'name' => 'second',
-        'title' => 'Second',
-        'text' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?',
-        'button' => [
-            'url' => APP_PATH,
-            'content' => 'Go Home'
-        ],
-    ],
-];
+require_once PROJECT_ROOT . 'Services/SectionService.php';
+$title = SectionService::get('popup', 'title');
+$popups = SectionService::get('popup', 'items');
 
 foreach ($popups as $index => &$item) {
     if (isset($item['button'])) {
@@ -30,4 +12,5 @@ foreach ($popups as $index => &$item) {
 
     include PROJECT_ROOT . 'includes/sections/popup/template.php';
 }
+
 ?>

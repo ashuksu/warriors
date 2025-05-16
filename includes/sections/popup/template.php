@@ -1,4 +1,4 @@
-<article class="popup popup--<?= $index ?>" id="popup-<?= $item['name'] ?>" data-block="popup">
+<article class="popup popup--<?= $index ?>" id="popup-<?= $item['name'] ?>" data-block="popup" hidden>
     <div class="popup__inner">
         <div class="popup__header">
             <h2 class="popup__title sub-title"><?= $item['title'] ?></h2>
@@ -14,7 +14,6 @@
         <div class="popup__body">
             <div class="popup__content">
                 <?= $item['text'] ?>
-
             </div>
         </div>
 

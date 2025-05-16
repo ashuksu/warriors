@@ -110,5 +110,28 @@
       "width": "600",
       "height": "600"
     }
+  },
+  "popup": {
+    "items": [
+      {
+        "name": "001",
+        "title": "First",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
+        "button": {
+          "url": "$LINK",
+          "attr": "target='_blank'",
+          "content": "GitHub"
+        }
+      },
+      {
+        "name": "002",
+        "title": "Second",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
+        "button": {
+          "url": "APP_PATH",
+          "content": "Go Home"
+        }
+      }
+    ]
   }
 }

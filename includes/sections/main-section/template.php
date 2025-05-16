@@ -3,6 +3,8 @@ $title = SectionService::get('main', 'title');
 $text = SectionService::get('main', 'title');
 $image = SectionService::get('main', 'image');
 
+$popups = SectionService::get('popup', 'items');
+
 ?>
 
 <section class="section main-section">
@@ -18,19 +20,17 @@ $image = SectionService::get('main', 'image');
                     </p>
 
                     <?php
-                    render_button([
-                        'url' => '#popup-first',
-                        'attr' => 'data-element="popup-open"',
-                        'content' => 'Open POPUP 1',
-                    ]);
-                    ?>
 
-                    <?php
-                    render_button([
-                        'url' => '#popup-second',
-                        'attr' => 'data-element="popup-open"',
-                        'content' => 'Open POPUP 2',
-                    ]);
+                    if (!empty($popups) && is_array($popups)) {
+                        foreach ($popups as $index => &$item) {
+                            render_button([
+                                'url' => '#popup-' . $item['name'],
+                                'attr' => 'data-element="popup-open"',
+                                'content' => 'Open popup ' . $item['name'],
+                            ]);
+                        }
+                    }
+
                     ?>
                 </div>
             </div>
@@ -38,7 +38,7 @@ $image = SectionService::get('main', 'image');
 
                 <?php if (!empty($image) && is_array($image)): ?>
                     <div class="image">
-                        <img src="<?= APP_PATH ?>assets/images/<?= $image['name'] ?>"  alt="<?= $image['alt'] ?>"
+                        <img src="<?= APP_PATH ?>assets/images/<?= $image['name'] ?>" alt="<?= $image['alt'] ?>"
                              width="<?= $image['width'] ?>" height="<?= $image['height'] ?>">
                     </div>
                 <?php endif; ?>
