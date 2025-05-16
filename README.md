@@ -1,79 +1,75 @@
-# [WARRIORS](https://ashuksu.github.io/warriors/public)
+# Warriors Project
 
 <details>
-  <summary>Click, to show Preview</summary>
+  <summary>Click to show Preview</summary>
 
-
-![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
+  ![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
 </details>
 
-## Установка
+## Project Structure
+This project uses a modern PHP structure with MVC pattern and Vite for frontend asset building.
+
+### Directory Structure
+- `app/` - Application code
+  - `Controllers/` - Controller classes
+  - `Data/` - Data files
+  - `Services/` - Service classes
+  - `Views/` - View templates
+- `assets/` - Static assets (images, fonts, etc.)
+- `config/` - Configuration files
+- `public/` - Public web root
+  - `assets/` - Compiled assets
+- `src/` - Frontend source files for Vite
+  - `css/` - CSS source files
+  - `js/` - JavaScript source files
+
+## Development
+
+### Installation
+```bash
+npm install
+```
+
+### Running the Project
+
+#### PHP Built-in Server
+```bash
+npm run php
+```
+
+#### Live Server
+```bash
+# Install Live Server globally (if not already installed)
+sudo npm install -g live-server
+
+# Run Live Server
+npm run ls
+```
+
+#### Docker
+Prerequisites:
+1. Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
 ```bash
-    npm install
+# On Ubuntu/Debian you can install gnome-terminal for convenience
+sudo apt install gnome-terminal
 ```
 
-## Способы запуска проекта
+Docker commands:
+- Start the server: `npm run start`
+- Restart the container: `npm run restart`
+- Stop the container: `npm run stop`
+- Rebuild the Docker image: `npm run build`
+- Monitor Docker containers: `npm run monitor`
+- Clean unused Docker resources: `npm run clean`
 
-### PHP встроенный сервер
-
+### Frontend Development
 ```bash
-    npm run php
+# Run Vite development server
+npm run dev
+
+# Build frontend assets
+npm run build:assets
 ```
 
-### Live Server
-
-```bash
-    # Установка Live Server глобально (если еще не установлен)
-    sudo npm install -g live-server
-```
-
-```bash
-    # Запуск Live Server
-    npm run ls
-```
-
-## Docker
-
-#### Предварительные требования
-
-1. Установить [Docker](https://docs.docker.com/get-docker/) и [Docker Compose](https://docs.docker.com/compose/install/)
-
-```bash
-    # На Ubuntu/Debian можно установить gnome-terminal для удобства
-    sudo apt install gnome-terminal
-```
-
-#### Docker команды
-
-```bash
-    # Запуск
-    npm start
-```
-
-```bash
-    # Перезапуск контейнера (работает с 'npm start')
-    npm restart
-```
-
-```bash  
-    # Остановка контейнера
-    npm stop
-```
-
-```bash   
-    # Пересборка Docker образа (если были внесены изменения в Dockerfile)
-    npm run build
-```
-
-```bash
-    # Мониторинг Docker контейнеров (может работать паралельно)
-    npm run monitor
-```
-
-```bash 
-    # Очистка неиспользуемых Docker ресурсов
-    npm run clean
-```
-
-После запуска открыть в браузере http://localhost:8080
+After starting the server, open http://localhost:8080 in your browser.

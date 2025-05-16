@@ -10,7 +10,12 @@
     "stop": "docker-compose down && echo 'Docker images and server were stoped'",
     "build": "docker-compose up --build && echo 'Docker image rebuilt and server started at http://localhost:8080'",
     "monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
-    "clean": "docker system prune -af && echo 'The Docker system has been cleaned'"
+    "clean": "docker system prune -af && echo 'The Docker system has been cleaned'",
+    "dev": "vite",
+    "build:assets": "vite build"
   },
-  "author": "ashuksu"
+  "author": "ashuksu",
+  "devDependencies": {
+    "vite": "^4.5.0"
+  }
 }

@@ -1,0 +1,200 @@
+{
+  "about": {
+    "items": [
+      {
+        "id": "a001",
+        "image": "w1.svg",
+        "name": "w1",
+        "title": "Lorem ipsum dolor sit amet.",
+        "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur adipiscing"
+      },
+      {
+        "id": "a002",
+        "image": "w12.svg",
+        "name": "w12",
+        "title": "Lorem ipsum dolor sit amet, consectetur.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi, dicta distinctio dolorum eos inventore ipsum laboriosam magni minima neque officiis placeat quam quisquam quod similique sit soluta vel voluptatum?"
+      },
+      {
+        "id": "a003",
+        "image": "w2.svg",
+        "name": "w2",
+        "title": "Lorem ipsum dolor sit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dicta explicabo, nisi omnis possimus quia quis sapiente. Alias animi atque, autem enim esse eveniet expedita id illum molestias non voluptatem."
+      }
+    ]
+  },
+  "catalog": {
+    "title": "lorem ipsum dolor sit",
+    "items": [
+      {
+        "id": "cat001",
+        "image": "1.png"
+      },
+      {
+        "id": "cat002",
+        "image": "2.png"
+      },
+      {
+        "id": "cat003",
+        "image": "3.png"
+      },
+      {
+        "id": "cat004",
+        "image": "4.png"
+      },
+      {
+        "id": "cat005",
+        "image": "5.png"
+      },
+      {
+        "id": "cat006",
+        "image": "6.png"
+      },
+      {
+        "id": "cat007",
+        "image": "7.png"
+      },
+      {
+        "id": "cat008",
+        "image": "8.png"
+      },
+      {
+        "id": "cat009",
+        "image": "9.png"
+      }
+    ]
+  },
+  "contacts": {
+    "title": "Contacts",
+    "items": [
+      {
+        "id": "c001",
+        "title": "Email",
+        "text": "lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ",
+        "url": "mailto:$EMAIL"
+      },
+      {
+        "id": "c002",
+        "title": "Telegram",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur dolore eum fuga itaque quasi qui quisquam sequi tenetur.",
+        "url": "$TELEGRAM"
+      }
+    ]
+  },
+  "error": {
+    "title": "404",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum cupiditate dicta earum enim ipsum iure pariatur porro possimus",
+    "image": {
+      "name": "w4.gif",
+      "alt": "w4",
+      "width": "600",
+      "height": "600"
+    },
+    "button": {
+      "url": "APP_PATH",
+      "class": "error-button wow pixFadeUp",
+      "attr": "data-wow-delay='0.5s' target='_blank'",
+      "content": "to the Home page"
+    }
+  },
+  "faq": {
+    "title": "Have Questions? <br> <span>Cluely Has Answers</span>",
+    "items": [
+      {
+        "id": "f001",
+        "title": "Lorem ipsum dolor sit amet.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi illo natus numquam qui quidem quod, sit? Adipisci a"
+      },
+      {
+        "id": "f002",
+        "title": "Lorem ipsum dolor sit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipi"
+      },
+      {
+        "id": "f003",
+        "title": "Lorem ipsum dolor sit amet, consectetur.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
+      }
+    ]
+  },
+  "main": {
+    "title": "Lorem ipsum dolor sit amet",
+    "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur",
+    "image": {
+      "name": "w3r.svg",
+      "alt": "w3r",
+      "width": "600",
+      "height": "600"
+    }
+  },
+  "popup": {
+    "items": [
+      {
+        "id": "p001",
+        "name": "First",
+        "title": "First Popup",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
+        "button": {
+          "url": "APP_PATH",
+          "content": "Go Home"
+        }
+      },
+      {
+        "id": "p002",
+        "name": "Second",
+        "title": "Second Popup",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
+        "button": {
+          "url": "$LINK",
+          "attr": "target='_blank'",
+          "content": "GitHub"
+        }
+      }
+    ]
+  },
+  "info": {
+    "items": [
+      {
+        "id": "info-main",
+        "title": "An Info Section on the Home page.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eoss excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!  excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
+      },
+      {
+        "id": "info-catalog",
+        "title": "The Catalog page and an Info section",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
+      },
+      {
+        "id": "info-contacts",
+        "title": "The Title for the Contact page",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipi"
+      }
+    ]
+  },
+  "menu": {
+    "items": [
+      {
+        "id": "about",
+        "hash": "#",
+        "name": "About"
+      },{
+        "id": "catalog",
+        "hash": "",
+        "name": "Catalog"
+      },{
+        "id": "faq",
+        "hash": "#",
+        "name": "FAQ"
+      },{
+        "id": "info",
+        "hash": "#",
+        "name": "Info"
+      },{
+        "id": "contacts",
+        "hash": "",
+        "name": "Contacts"
+      }
+    ]
+  }
+}
