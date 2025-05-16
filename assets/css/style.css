@@ -1,21 +1,34 @@
-@import "parts/_common.css";
-@import "parts/components/preloader.css";
-@import "parts/components/logo.css";
-@import "parts/components/link.css";
-@import "parts/header.css";
+/**
+ * Main CSS entry point
+ * This file will be processed by Vite and will include all other CSS files
+ */
 
-@import "parts/components/buttons.css";
-@import "parts/components/menu.css";
-@import "parts/components/overlay.css";
+/* Import CSS libraries */
+@import 'libs/animate.min.css';
 
-@import "parts/page_home.css";
-@import "parts/info.css";
+/* Import common styles */
+@import 'parts/_common.css';
 
-@import "parts/components/contacts-card.css";
-@import "parts/page_contacts.css";
+/* Import component styles */
+@import 'parts/components/about-card.css';
+@import 'parts/components/buttons.css';
+@import 'parts/components/contacts-card.css';
+@import 'parts/components/link.css';
+@import 'parts/components/logo.css';
+@import 'parts/components/menu.css';
+@import 'parts/components/overlay.css';
+@import 'parts/components/preloader.css';
 
-@import "parts/page_catalog.css";
-@import "parts/page_error.css";
+/* Import section styles */
+@import 'parts/faq.css';
+@import 'parts/footer.css';
+@import 'parts/header.css';
+@import 'parts/info.css';
+@import 'parts/main-section.css';
+@import 'parts/popup.css';
 
-@import "parts/footer.css";
-@import "parts/popup.css";
+/* Import page-specific styles */
+@import 'parts/page_catalog.css';
+@import 'parts/page_contacts.css';
+@import 'parts/page_error.css';
+@import 'parts/page_home.css';
