@@ -1,7 +1,7 @@
 .header {
     width: 100%;
     padding: 2rem 0;
-    background: var(--gradient-lihgt);
+    background: var(--gradient-light);
     position: fixed;
     top: -2px;
     left: 0;

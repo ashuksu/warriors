@@ -47,12 +47,12 @@
 
 .footer__link:focus,
 .footer__link:active {
-    color: var(--bs-form-invalid-color);
+    color: var(--red-light);
 }
 
 @media (hover: hover) {
     .footer__link:hover {
-        color: var(--red-dark);
+        color: var(--red);
     }
 }
 

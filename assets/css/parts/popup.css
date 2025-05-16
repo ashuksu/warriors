@@ -24,7 +24,7 @@
     flex-direction: column;
     max-width: 60rem;
     width: 100%;
-    background: var(--gradient-lihgt);
+    background: var(--gradient-light);
     border-radius: 2rem;
     position: relative;
 }

@@ -1,4 +1,4 @@
-<div class="contacts__card col-md-6 mt-md-0">
+<div class="contacts__card col col-md-6">
     <div class="inner contacts__card-inner mx-auto">
         <h3 class="sub-title contacts__card-title"><?= $item['title'] ?></h3>
 

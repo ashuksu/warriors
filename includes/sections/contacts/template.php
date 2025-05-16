@@ -1,7 +1,7 @@
 <section class="section contacts">
     <div class="container">
         <div class="inner">
-            <h1 class="title text-center mb-5 wow pixFadeUp" data-wow-delay="0.2s">
+            <h1 class="title text-center mb-3 wow pixFadeUp" data-wow-delay="0.2s">
                 <?= $title ?>
             </h1>
 
