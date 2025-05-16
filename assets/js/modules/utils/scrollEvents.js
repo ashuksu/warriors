@@ -1,12 +1,20 @@
 import {isWindowScroll} from "./helpers.js";
 
 /**
- * Initializes scroll event handlers
+ * Initializes scroll event handlers with requestAnimationFrame for performance
  */
 export default function scrollEvents() {
+    let ticking = false;
+
     window.addEventListener('scroll', () => {
-        setHeaderScrolledState();
-        buttonUpActivator(300);
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                setHeaderScrolledState();
+                buttonUpActivator(300);
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
 }
 
