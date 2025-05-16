@@ -1,8 +1,3 @@
-node_modules
-.idea/
-.vscode/
-/.htaccess
-
 # Git
 .git
 .gitignore
@@ -18,10 +13,16 @@ npm-debug.log
 
 # IDE files
 .idea
+.idea/
 .vscode
+.vscode/
 *.sublime-workspace
 *.sublime-project
+/.htaccess
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# Test
+test
