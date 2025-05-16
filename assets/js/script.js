@@ -1,5 +1,5 @@
 import preloader from './modules/utils/preloader.js';
-import {toggleButton} from './modules/utils/helpers.js';
+import {toggleButton} from './modules/utils/Toggle.js';
 import scrollEvents from "./modules/utils/scrollEvents.js";
 import Menu from './modules/Menu.js';
 import Popup from "./modules/Popup.js";
