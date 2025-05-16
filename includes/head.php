@@ -12,7 +12,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;900&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wowjs@1.1.3/css/libs/animate.min.css">
+
+    <!-- Critical CSS - loaded immediately -->
     <link rel="stylesheet" href="<?= APP_PATH ?>assets/css/style.css">
+
+    <!-- Animation CSS - loaded asynchronously (used by WOW.js) -->
+    <link rel="stylesheet" href="<?= APP_PATH ?>assets/css/libs/animate.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="<?= APP_PATH ?>assets/css/libs/animate.min.css">
+    </noscript>
 </head>
 
