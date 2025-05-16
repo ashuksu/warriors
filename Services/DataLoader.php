@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/ConfigVarResolver.php';
+
 /**
  * Utility class for loading data from JSON files
  * Provides error handling for data loading operations
@@ -52,6 +54,9 @@ class DataLoader
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception('Invalid JSON in ' . $section . ' file: ' . json_last_error_msg());
         }
+
+        // Resolve config variables in the data
+        $data = ConfigVarResolver::getInstance()->resolveArray($data);
 
         return $data;
     }

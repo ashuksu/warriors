@@ -1,10 +1,4 @@
 <?php
-$bodyClass = $bodyClass ?? '';
-$sections = $sections ?? [];
-
-/**
- * Includes the head section of the HTML document.
- */
 include PROJECT_ROOT . 'includes/head.php';
 
 /**
@@ -14,38 +8,34 @@ include PROJECT_ROOT . 'includes/head.php';
 include PROJECT_ROOT . 'includes/components/button.php';
 ?>
 
-<body data-style="default" class="<?= $bodyClass ?>">
+<body data-style="default" class="<?= 'page-' . PAGE ?>">
 
 <div class="wrapper">
 
     <?php
-    /**
-     * Includes the preloader component for page loading animation.
-     */
     include PROJECT_ROOT . 'includes/components/preloader.php';
 
-    /**
-     * Includes the header section of the page.
-     */
     include PROJECT_ROOT . 'includes/header.php';
     ?>
 
     <main id="content" class="content">
         <?php
-        /**
-         * Dynamically includes section templates based on the $sections array.
-         * Each section is loaded from its corresponding template file.
-         */
-        foreach ($sections as $section) {
-            include PROJECT_ROOT . 'includes/sections/' . $section . '/template.php';
+        if (!empty($sections) && is_array($sections)) {
+            /**
+             * Set configuration values.
+             *
+             * @param array $config Array of configuration options.
+             * @param string $config ['key'] The key to configure.
+             * @param mixed $config ['value'] The value for the given key.
+             */
+            foreach ($sections as $section) {
+                include PROJECT_ROOT . 'includes/sections/' . $section . '/template.php';
+            }
         }
         ?>
     </main>
 
     <?php
-    /**
-     * Includes the footer section of the page.
-     */
     include PROJECT_ROOT . 'includes/footer.php';
     ?>
 </div>
@@ -58,14 +48,8 @@ render_button([
     'attr' => 'data-element="link" data-action="up"',
 ]);
 
-/**
- * Includes the popup component for modal dialogs.
- */
 include PROJECT_ROOT . 'includes/Popup.php';
 
-/**
- * Includes the footer links and scripts.
- */
 include PROJECT_ROOT . 'includes/footer-links.php';
 ?>
 

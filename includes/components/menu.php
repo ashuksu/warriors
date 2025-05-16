@@ -1,3 +1,8 @@
+<?php
+$popup = SectionService::get('popup', 'items', 'p002');
+$menu = SectionService::get('menu', 'items');
+?>
+
 <nav id="menu" class="menu" data-block="menu">
     <?php
     render_button([
@@ -6,19 +11,25 @@
     ]);
     ?>
 
+    <?php if (!empty($menu) && is_array($menu)): ?>
     <div class="menu__list">
-        <a class="menu__link link" data-element="link" href="<?= APP_PATH ?>#about">About</a>
-        <a class="menu__link link" data-element="link" href="<?= APP_PATH ?>catalog">Catalog</a>
-        <a class="menu__link link" data-element="link" href="<?= APP_PATH ?>#faq">FAQ</a>
-        <a class="menu__link link" data-element="link" href="<?= APP_PATH ?>#info">Info</a>
-        <a class="menu__link link" data-element="link" href="<?= APP_PATH ?>contacts">Contacts</a>
+
+        <?php foreach ($menu as $item): ?>
+
+            <a class="menu__link link" data-element="link" href="<?= APP_PATH . $item['hash'] . $item['id']?>"><?= $item['name'] ?></a>
+
+        <?php endforeach; ?>
+
     </div>
+    <?php endif; ?>
 
     <?php
-    render_button([
-        'url' => '#popup-first',
-        'attr' => 'data-element="popup-open"',
-        'content' => 'Open POPUP 1',
-    ]);
+    if (!empty($popup) && is_array($popup)) {
+        render_button([
+            'url' => '#popup-' . $popup['id'],
+            'attr' => 'data-element="popup-open"',
+            'content' => 'Open ' . $popup['name'],
+        ]);
+    }
     ?>
 </nav>

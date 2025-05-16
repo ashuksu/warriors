@@ -1,10 +1,7 @@
 <?php
-$title = SectionService::get('main', 'title');
-$text = SectionService::get('main', 'title');
-$image = SectionService::get('main', 'image');
-
+$mainSection = SectionService::get('main');
+$image = $mainSection['image'];
 $popups = SectionService::get('popup', 'items');
-
 ?>
 
 <section class="section main-section">
@@ -13,10 +10,10 @@ $popups = SectionService::get('popup', 'items');
             <div class="col col-lg-5 col-md-6 mb-1 mb-md-0">
                 <div class="inner main-section__inner">
                     <h1 class="title main-section__title">
-                        <?= $title ?>
+                        <?= $mainSection['title'] ?>
                     </h1>
                     <p class="main-section__text">
-                        <?= $text ?>
+                        <?= $mainSection['text'] ?>
                     </p>
 
                     <?php
@@ -24,7 +21,7 @@ $popups = SectionService::get('popup', 'items');
                     if (!empty($popups) && is_array($popups)) {
                         foreach ($popups as $index => &$item) {
                             render_button([
-                                'url' => '#popup-' . $item['name'],
+                                'url' => '#popup-' . $item['id'],
                                 'attr' => 'data-element="popup-open"',
                                 'content' => 'Open popup ' . $item['name'],
                             ]);

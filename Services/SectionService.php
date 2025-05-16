@@ -23,11 +23,13 @@ class SectionService
      *
      * @param string $section Section name (e.g., 'catalog', 'about')
      * @param string|null $type Type of data to return (e.g., 'items', 'title')
-     * @return mixed Section data based on requested type. Returns empty string on error.
+     * @param string|null $id Optional ID to retrieve a specific item from an array
+     * @param string ...$keys Optional additional keys for accessing nested properties
+     * @return mixed Section data based on requested parameters. Returns empty string on error.
      */
-    public static function get($section, $type = null)
+    public static function get($section, $type = null, $id = null, ...$keys)
     {
-        return self::getInstance()->getSectionData($section, $type);
+        return self::getInstance()->getSectionData($section, $type, $id, ...$keys);
     }
 
     /**
@@ -38,12 +40,22 @@ class SectionService
      * @param string $section Section name (e.g., 'catalog', 'about')
      * @param string|null $type Type of data to return (e.g., 'items', 'title').
      *                          If null, returns the entire section data.
-     * @return mixed Section data based on requested type. Returns empty string on error.
+     * @param string|null $id Optional ID to retrieve a specific item from an array
+     * @param string ...$keys Optional additional keys for accessing nested properties
+     * @return mixed Section data based on requested parameters. Returns empty string on error.
      * @throws Exception Exceptions are caught internally and logged
      */
-    protected function getSectionData($section, $type = null)
+    protected function getSectionData($section, $type = null, $id = null, ...$keys)
     {
         $cacheKey = $section . ($type !== null ? '_' . $type : '');
+
+        // Add id and keys to cache key if provided
+        if ($id !== null) {
+            $cacheKey .= '_' . $id;
+            if (!empty($keys)) {
+                $cacheKey .= '_' . implode('_', $keys);
+            }
+        }
 
         // Check if data is already in cache
         if (isset($this->cache[$cacheKey])) {
@@ -72,9 +84,50 @@ class SectionService
                 $result = $this->cache[$section][$type];
             }
 
-            // Cache the result for this specific type
-            $this->cache[$cacheKey] = $result;
-            return $result;
+            // If no ID is provided, return the type result
+            if ($id === null) {
+                $this->cache[$cacheKey] = $result;
+                return $result;
+            }
+
+            // If result is not an array or is empty, return empty string
+            if (!is_array($result) || empty($result)) {
+                return '';
+            }
+
+            // Find the item with the specified ID
+            $item = null;
+            foreach ($result as $entry) {
+                if (is_array($entry) && isset($entry['id']) && $entry['id'] === $id) {
+                    $item = $entry;
+                    break;
+                }
+            }
+
+            // If item not found, return empty string
+            if ($item === null) {
+                return '';
+            }
+
+            // If no additional keys are provided, return the item
+            if (empty($keys)) {
+                $this->cache[$cacheKey] = $item;
+                return $item;
+            }
+
+            // Navigate through nested properties
+            $value = $item;
+            foreach ($keys as $key) {
+                if (!is_array($value) || !isset($value[$key])) {
+                    $value = '';
+                    break;
+                }
+                $value = $value[$key];
+            }
+
+            // Cache and return the final result
+            $this->cache[$cacheKey] = $value;
+            return $value;
         } catch (Exception $e) {
             error_log('Error loading ' . $section . ' data: ' . $e->getMessage());
             return '';

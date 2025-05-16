@@ -1,12 +1,13 @@
 <?php
 define("APP_TITLE", "Contacts Page");
+define("PAGE", "contacts");
 require_once __DIR__ . '/../config.php';
-$bodyClass = 'page-contacts';
-$sections = ['contacts', 'info'];
-
 require_once PROJECT_ROOT . 'Services/SectionService.php';
-$title = SectionService::get('contacts', 'title');
-$contacts = SectionService::get('contacts', 'items');
+
+$sections = [PAGE, 'info'];
+
+$title = SectionService::get(PAGE, 'title');
+$contacts = SectionService::get(PAGE, 'items');
 
 include PROJECT_ROOT . 'includes/Layout.php';
 ?>
