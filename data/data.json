@@ -133,5 +133,9 @@
         }
       }
     ]
+  },
+  "info": {
+    "title": "Lorem ipsum dolor sit amet",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid asperiores assumenda aut autem\n                blanditiis debitis delectus deleniti dolorem eveniet harum id inventore minus modi molestias\n                necessitatibus nisi nostrum quaerat quas qui quidem, quo, quod reprehenderit sunt temporibus, tenetur\n                totam ut veniam. Commodi delectus nihil nostrum rerum veritatis? Animi, beatae cum cupiditate eligendi\n                ex excepturi harum ipsum minus nostrum odio? Accusantium asperiores aspernatur beatae doloribus iusto\n                magnam magni minima officiis quisquam, tempore. Accusantium asperiores et fuga harum in incidunt ipsa,\n                iusto magni mollitia nostrum perferendis quas quos reprehenderit rerum sapiente sequi temporibus, ullam\n                unde, veritatis voluptates? Deleniti et hic necessitatibus quod."
   }
 }
