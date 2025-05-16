@@ -1,6 +1,18 @@
-User-agent: *
-Disallow: /404
-Disallow: /private
-Disallow: /admin
+# robots.txt for Warriors website
+# This file tells search engine crawlers which pages they can or cannot request from your site
 
-Sitemap: https://www.@@domain@@/sitemap.xml
+# Allow all search engines to access the site
+User-agent: *
+
+# Prevent access to these directories
+Disallow: /404/        # Error page
+Disallow: /private/    # Private content
+Disallow: /admin/      # Admin area
+Disallow: /.git/       # Git repository
+Disallow: /.idea/      # IDE files
+
+# Crawl-delay to prevent server overload (in seconds)
+Crawl-delay: 10
+
+# Location of the sitemap file
+Sitemap: /sitemap.xml
