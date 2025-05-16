@@ -12,7 +12,7 @@ Disallow: /.git/       # Git repository
 Disallow: /.idea/      # IDE files
 
 # Crawl-delay to prevent server overload (in seconds)
-Crawl-delay: 10
+Crawl-delay: 5
 
 # Location of the sitemap file
-Sitemap: /sitemap.xml
+Sitemap: https://warriors.example.com/sitemap.php

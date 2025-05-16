@@ -23,8 +23,8 @@ echo "Disallow: /.git/       # Git repository\n";
 echo "Disallow: /.idea/      # IDE files\n\n";
 
 echo "# Crawl-delay to prevent server overload (in seconds)\n";
-echo "Crawl-delay: 10\n\n";
+echo "Crawl-delay: 5\n\n";
 
 echo "# Location of the sitemap file\n";
-echo "Sitemap: /sitemap.xml\n";
+echo "Sitemap: https://{$domain}/sitemap.php\n";
 ?>
