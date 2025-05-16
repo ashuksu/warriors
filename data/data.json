@@ -2,18 +2,21 @@
   "about": {
     "items": [
       {
+        "id": "a001",
         "image": "w1.svg",
         "name": "w1",
         "title": "Lorem ipsum dolor sit amet.",
         "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur adipiscing"
       },
       {
+        "id": "a002",
         "image": "w12.svg",
         "name": "w12",
         "title": "Lorem ipsum dolor sit amet, consectetur.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi, dicta distinctio dolorum eos inventore ipsum laboriosam magni minima neque officiis placeat quam quisquam quod similique sit soluta vel voluptatum?"
       },
       {
+        "id": "a003",
         "image": "w2.svg",
         "name": "w2",
         "title": "Lorem ipsum dolor sit.",
@@ -25,30 +28,39 @@
     "title": "lorem ipsum dolor sit",
     "items": [
       {
+        "id": "cat001",
         "image": "1.png"
       },
       {
+        "id": "cat002",
         "image": "2.png"
       },
       {
+        "id": "cat003",
         "image": "3.png"
       },
       {
+        "id": "cat004",
         "image": "4.png"
       },
       {
+        "id": "cat005",
         "image": "5.png"
       },
       {
+        "id": "cat006",
         "image": "6.png"
       },
       {
+        "id": "cat007",
         "image": "7.png"
       },
       {
+        "id": "cat008",
         "image": "8.png"
       },
       {
+        "id": "cat009",
         "image": "9.png"
       }
     ]
@@ -57,11 +69,13 @@
     "title": "Contacts",
     "items": [
       {
+        "id": "c001",
         "title": "Email",
         "text": "lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ",
         "url": "mailto:$EMAIL"
       },
       {
+        "id": "c002",
         "title": "Telegram",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur dolore eum fuga itaque quasi qui quisquam sequi tenetur.",
         "url": "$TELEGRAM"
@@ -88,14 +102,17 @@
     "title": "Have Questions? <br> <span>Cluely Has Answers</span>",
     "items": [
       {
+        "id": "f001",
         "title": "Lorem ipsum dolor sit amet.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi illo natus numquam qui quidem quod, sit? Adipisci a"
       },
       {
+        "id": "f002",
         "title": "Lorem ipsum dolor sit.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipi"
       },
       {
+        "id": "f003",
         "title": "Lorem ipsum dolor sit amet, consectetur.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
       }
