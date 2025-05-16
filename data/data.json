@@ -92,7 +92,7 @@
       "height": "600"
     },
     "button": {
-      "url": "/",
+      "url": "APP_PATH",
       "class": "error-button wow pixFadeUp",
       "attr": "data-wow-delay='0.5s' target='_blank'",
       "content": "to the Home page"
@@ -142,7 +142,7 @@
         }
       },
       {
-        "id": "p001",
+        "id": "p002",
         "name": "Second",
         "title": "Second Popup",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",

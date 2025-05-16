@@ -14,7 +14,7 @@
 
             <?php
             render_button([
-                'url' => ($button['url'] === '/') ? APP_PATH : "/",
+                'url' => $button['url'],
                 'class' => $button['class'],
                 'attr' => $button['attr'],
                 'content' => $button['content']
