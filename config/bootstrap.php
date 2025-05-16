@@ -9,13 +9,18 @@ require_once dirname(__DIR__) . '/config/config.php';
 spl_autoload_register(function ($class) {
     // Convert namespace to file path
     $file = PROJECT_ROOT . str_replace('\\', '/', $class) . '.php';
-    
+
+    // Handle case sensitivity for App namespace
+    if (strpos($class, 'App\\') === 0) {
+        $file = PROJECT_ROOT . 'app/' . substr(str_replace('\\', '/', $class), 4) . '.php';
+    }
+
     // Check if file exists
     if (file_exists($file)) {
         require_once $file;
         return true;
     }
-    
+
     return false;
 });
 
