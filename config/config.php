@@ -2,7 +2,7 @@
 // Main configuration file
 
 // Path definitions
-define('APP_PATH', '/');
+define('APP_PATH', isset($_SERVER['DOCUMENT_ROOT']) ? str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__DIR__)) . '/' : '/');
 define('PROJECT_ROOT', dirname(__DIR__) . '/');
 
 // Site information
