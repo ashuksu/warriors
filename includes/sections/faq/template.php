@@ -1,31 +1,29 @@
-<section id="faq" class="section faq">
-	<div class="container">
-		<div class="inner inner-style faq__inner">
-			<h2 class="title text-center wow pixFadeUp" data-wow-delay="0.2s">
-				Lorem ipsum dolor
-			</h2>
+<?php
+$title = SectionService::get('faq', 'title');
+$faq = SectionService::get('faq', 'items');
 
-			<div class="faq__list">
-				<?php
-				$faq = [
-					[
-						'title' => 'Lorem ipsum dolor sit amet.',
-						'text' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi illo natus numquam qui quidem quod, sit? Adipisci a'
-					],
-					[
-						'title' => 'Lorem ipsum dolor sit.',
-						'text' => 'Lorem ipsum dolor sit amet, consectetur adipi'
-					],
-					[
-						'title' => 'Lorem ipsum dolor sit amet, consectetur.',
-						'text' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!'
-					]];
+if (!is_array($faq) || empty($faq)) {
+    $faq = [];
+    $isHidden = 'hidden';
+}
+?>
 
-				foreach ($faq as $index => $item) {
-					include $dir . 'includes/sections/faq/item.php';
-				}
-				?>
-			</div>
-		</div>
-	</div>
+<section id="faq" class="section faq" <?= $isHidden ?? "" ?>>
+    <div class="container">
+        <div class="inner inner-style faq__inner">
+            <h2 class="title text-center wow pixFadeUp" data-wow-delay="0.2s">
+                <?= $title ?>
+            </h2>
+
+            <div class="faq__list">
+                <?php
+                foreach ($faq as $index => $item) {
+                    $setActiveClass = $index === 0 ? 'active' : '';
+
+                    include __DIR__ . '/item.php';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
 </section>

@@ -1,67 +1,67 @@
 .popup {
-	display: none;
-	max-width: calc(100vw - 30px);
-	width: max-content;
-	overflow: hidden;
-	visibility: hidden;
-	opacity: 0;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 1000;
-	transition: opacity 0.3s ease-in-out;
+    display: none;
+    max-width: calc(100vw - 30px);
+    width: max-content;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .popup.active {
-	display: block !important;
-	visibility: visible;
-	opacity: 1;
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
 }
 
 .popup__inner {
-	display: flex;
-	flex-direction: column;
-	max-width: 60rem;
-	width: 100%;
-	background: var(--gradient-lihgt);
-	border-radius: 2rem;
-	position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    background: var(--gradient-lihgt);
+    border-radius: 2rem;
+    position: relative;
 }
 
 .popup__header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	flex-shrink: 0;
-	gap: 3rem;
-	padding: 1rem 2rem;
-	background: var(--gray-light);
-	border-top-right-radius: 2rem;
-	border-top-left-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 3rem;
+    padding: 1rem 2rem;
+    background: var(--gray-light);
+    border-top-right-radius: 2rem;
+    border-top-left-radius: 2rem;
 }
 
 .popup__body {
-	flex: 1 1 auto;
-	padding: 2rem .5rem 2rem 2rem;
+    flex: 1 1 auto;
+    padding: 2rem .5rem 2rem 2rem;
 }
 
 .popup__content {
-	padding-right: 1.5rem;
-	height: 100%;
-	max-height: calc(100vh - 30rem);
-	overflow-x: visible;
-	overflow-y: auto;
+    padding-right: 1.5rem;
+    height: 100%;
+    max-height: calc(100vh - 30rem);
+    overflow-x: visible;
+    overflow-y: auto;
 }
 
 .popup__footer {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	flex-shrink: 0;
-	padding: 0 2rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 2rem 2rem;
 }
 
 .popup__footer .button {
-	margin-left: auto;
+    margin-left: auto;
 }

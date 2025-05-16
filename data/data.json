@@ -1,0 +1,141 @@
+{
+  "about": {
+    "items": [
+      {
+        "image": "w1.svg",
+        "name": "w1",
+        "title": "Lorem ipsum dolor sit amet.",
+        "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur adipiscing"
+      },
+      {
+        "image": "w12.svg",
+        "name": "w12",
+        "title": "Lorem ipsum dolor sit amet, consectetur.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi, dicta distinctio dolorum eos inventore ipsum laboriosam magni minima neque officiis placeat quam quisquam quod similique sit soluta vel voluptatum?"
+      },
+      {
+        "image": "w2.svg",
+        "name": "w2",
+        "title": "Lorem ipsum dolor sit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dicta explicabo, nisi omnis possimus quia quis sapiente. Alias animi atque, autem enim esse eveniet expedita id illum molestias non voluptatem."
+      }
+    ]
+  },
+  "catalog": {
+    "title": "lorem ipsum dolor sit",
+    "items": [
+      {
+        "image": "1.png"
+      },
+      {
+        "image": "2.png"
+      },
+      {
+        "image": "3.png"
+      },
+      {
+        "image": "4.png"
+      },
+      {
+        "image": "5.png"
+      },
+      {
+        "image": "6.png"
+      },
+      {
+        "image": "7.png"
+      },
+      {
+        "image": "8.png"
+      },
+      {
+        "image": "9.png"
+      }
+    ]
+  },
+  "contacts": {
+    "title": "Contacts",
+    "items": [
+      {
+        "title": "Email",
+        "text": "lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ",
+        "url": "mailto:$EMAIL"
+      },
+      {
+        "title": "Telegram",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur dolore eum fuga itaque quasi qui quisquam sequi tenetur.",
+        "url": "$TELEGRAM"
+      }
+    ]
+  },
+  "error": {
+    "title": "404",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum cupiditate dicta earum enim ipsum iure pariatur porro possimus",
+    "image": {
+      "name": "w4.gif",
+      "alt": "w4",
+      "width": "600",
+      "height": "600"
+    },
+    "button": {
+      "url": "/",
+      "class": "error-button wow pixFadeUp",
+      "attr": "data-wow-delay='0.5s' target='_blank'",
+      "content": "to the Home page"
+    }
+  },
+  "faq": {
+    "title": "Have Questions? <br> <span>Cluely Has Answers</span>",
+    "items": [
+      {
+        "title": "Lorem ipsum dolor sit amet.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi illo natus numquam qui quidem quod, sit? Adipisci a"
+      },
+      {
+        "title": "Lorem ipsum dolor sit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipi"
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
+      }
+    ]
+  },
+  "main": {
+    "title": "Lorem ipsum dolor sit amet",
+    "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur",
+    "image": {
+      "name": "w3r.svg",
+      "alt": "w3r",
+      "width": "600",
+      "height": "600"
+    }
+  },
+  "popup": {
+    "items": [
+      {
+        "name": "001",
+        "title": "First",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
+        "button": {
+          "url": "$LINK",
+          "attr": "target='_blank'",
+          "content": "GitHub"
+        }
+      },
+      {
+        "name": "002",
+        "title": "Second",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
+        "button": {
+          "url": "APP_PATH",
+          "content": "Go Home"
+        }
+      }
+    ]
+  },
+  "info": {
+    "title": "Lorem ipsum dolor sit amet",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid asperiores assumenda aut autem\n                blanditiis debitis delectus deleniti dolorem eveniet harum id inventore minus modi molestias\n                necessitatibus nisi nostrum quaerat quas qui quidem, quo, quod reprehenderit sunt temporibus, tenetur\n                totam ut veniam. Commodi delectus nihil nostrum rerum veritatis? Animi, beatae cum cupiditate eligendi\n                ex excepturi harum ipsum minus nostrum odio? Accusantium asperiores aspernatur beatae doloribus iusto\n                magnam magni minima officiis quisquam, tempore. Accusantium asperiores et fuga harum in incidunt ipsa,\n                iusto magni mollitia nostrum perferendis quas quos reprehenderit rerum sapiente sequi temporibus, ullam\n                unde, veritatis voluptates? Deleniti et hic necessitatibus quod."
+  }
+}

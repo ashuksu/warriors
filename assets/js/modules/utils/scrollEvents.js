@@ -6,7 +6,7 @@ import {isWindowScroll} from "./helpers.js";
 export default function scrollEvents() {
     window.addEventListener('scroll', () => {
         setHeaderScrolledState();
-        buttonTopActivator(300);
+        buttonUpActivator(300);
     });
 }
 
@@ -23,10 +23,10 @@ export function setHeaderScrolledState() {
  * Controls "back to top" button visibility
  * @param {number} height - Activation threshold
  */
-export function buttonTopActivator(height) {
-    const buttonTop = document.querySelector('[data-element="up"]');
+export function buttonUpActivator(height) {
+    const buttonUp = document.querySelector('[data-action="up"]');
 
-    if (!buttonTop) return;
+    if (!buttonUp) return;
 
-    buttonTop.classList.toggle('active', isWindowScroll(height));
+    buttonUp.classList.toggle('active', isWindowScroll(height));
 }
