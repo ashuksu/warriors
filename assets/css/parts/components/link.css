@@ -28,3 +28,9 @@
         --d: 80%;
     }
 }
+
+@media (max-width: 768px) {
+    .link:hover {
+        background: none;
+    }
+}

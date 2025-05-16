@@ -1,7 +1,7 @@
 <section class="section catalog">
     <div class="container">
         <div class="inner catalog__inner">
-            <h1 class="title mb-5 text-center wow pixFadeUp" data-wow-delay="0.2s">
+            <h1 class="title mb-3 text-center wow pixFadeUp" data-wow-delay="0.2s">
                 <?= $title ?>
             </h1>
 
