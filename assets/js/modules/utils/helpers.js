@@ -16,26 +16,6 @@ export function scrollToElement(element, offset = 0, behavior = 'smooth') {
 }
 
 /**
- * Initializes toggle buttons functionality
- */
-export function toggleButton() {
-    document.addEventListener('click', e => {
-        const button = e.target.closest('[data-element="toggle"]');
-
-        if (!button) return;
-
-        e.preventDefault();
-        const isActive = button.classList.toggle('active');
-        const targetId = button.getAttribute('href');
-        const target = document.getElementById(targetId);
-
-        if (!target) return;
-
-        target.classList.toggle('active', isActive);
-    });
-}
-
-/**
  * Returns the DOM element by extracting the ID from the element's hash property.
  * @param {HTMLAnchorElement} element - Anchor element with a hash (e.g., #section).
  * @returns {HTMLElement|null} The target element or null if not found.

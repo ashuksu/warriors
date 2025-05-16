@@ -55,10 +55,13 @@ class ConfigVarResolver
             }
         }
 
+        // Check for {{VARIABLE}} format
+        $value = $this->resolveTemplateVariables($value);
+
         // Process strings that might contain variable references
         return preg_replace_callback('/(\$[A-Za-z_][A-Za-z0-9_]*|\b[A-Z_][A-Z0-9_]*\b)/', function($matches) {
             $match = $matches[0];
-            
+
             // Handle variables with $ prefix
             if (strpos($match, '$') === 0) {
                 $varName = substr($match, 1);
@@ -70,9 +73,40 @@ class ConfigVarResolver
             else if (defined($match)) {
                 return constant($match);
             }
-            
+
             // Return original if not found
             return $match;
+        }, $value);
+    }
+
+    /**
+     * Resolve template variables in {{VARIABLE}} format
+     * 
+     * @param string $value The string that may contain template variables
+     * @return string The string with template variables replaced with their values
+     */
+    public function resolveTemplateVariables($value)
+    {
+        if (!is_string($value)) {
+            return $value;
+        }
+
+        // Replace {{VARIABLE}} with the value of $VARIABLE
+        return preg_replace_callback('/\{\{([A-Za-z_][A-Za-z0-9_]*)\}\}/', function($matches) {
+            $varName = $matches[1];
+
+            // Check if the variable exists in the global scope
+            if (isset($GLOBALS[$varName])) {
+                return $GLOBALS[$varName];
+            }
+
+            // Check if it's a defined constant
+            if (defined($varName)) {
+                return constant($varName);
+            }
+
+            // Return original if not found
+            return $matches[0];
         }, $value);
     }
 
