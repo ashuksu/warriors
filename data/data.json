@@ -134,21 +134,21 @@
         "id": "p001",
         "name": "First",
         "title": "First Popup",
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
         "button": {
-          "url": "$LINK",
-          "attr": "target='_blank'",
-          "content": "GitHub"
+          "url": "APP_PATH",
+          "content": "Go Home"
         }
       },
       {
         "id": "p002",
         "name": "Second",
         "title": "Second Popup",
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
         "button": {
-          "url": "APP_PATH",
-          "content": "Go Home"
+          "url": "$LINK",
+          "attr": "target='_blank'",
+          "content": "GitHub"
         }
       }
     ]
@@ -169,6 +169,31 @@
         "id": "info-contacts",
         "title": "The Title for the Contact page",
         "text": "Lorem ipsum dolor sit amet, consectetur adipi"
+      }
+    ]
+  },
+  "menu": {
+    "items": [
+      {
+        "id": "about",
+        "hash": "#",
+        "name": "About"
+      },{
+        "id": "catalog",
+        "hash": "",
+        "name": "Catalog"
+      },{
+        "id": "faq",
+        "hash": "#",
+        "name": "FAQ"
+      },{
+        "id": "info",
+        "hash": "#",
+        "name": "Info"
+      },{
+        "id": "contacts",
+        "hash": "",
+        "name": "Contacts"
       }
     ]
   }
