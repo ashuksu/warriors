@@ -4,6 +4,9 @@
     --pressed: #2E3946;
     --red: #e80000;
     --red-light: #dc3545;
+    --blue: #0d6efd;
+    --primary-emphasis: #055160;
+    --primary: #052c65;
     --gradient: linear-gradient(164deg, var(--gray-dark) 0%, var(--gray) 35%, var(--gray-dark) 120%);
     --gradient-easy: linear-gradient(150deg, var(--gray-dark) -20%, var(--bs-gray-100) 20%, var(--bs-gray-100) 50%, var(--gray-dark) 130%);
     --gradient-light: linear-gradient(0deg, var(--gray) 0%, var(--bs-gray-100) 100%);
@@ -14,10 +17,6 @@
     --gray: #c0d3de;
     --gray-light: #D5EAF7;
     --white: #fff;
-
-    --blue: #0d6efd;
-    --primary-emphasis: #055160;
-    --primary: #052c65;
 }
 
 /*=======================================================*/
