@@ -1,3 +1,8 @@
+<?php
+$popupId = SectionService::get('popup', 'items', 'p001', 'id');
+$popupName = SectionService::get('popup', 'items', 'p001', '$popupName');
+?>
+
 <nav id="menu" class="menu" data-block="menu">
     <?php
     render_button([
@@ -16,9 +21,9 @@
 
     <?php
     render_button([
-        'url' => '#popup-first',
+        'url' => '#popup-' . $popupId,
         'attr' => 'data-element="popup-open"',
-        'content' => 'Open POPUP 1',
+        'content' => 'Open ' . $popupName,
     ]);
     ?>
 </nav>

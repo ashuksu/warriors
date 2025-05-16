@@ -114,8 +114,9 @@
   "popup": {
     "items": [
       {
-        "name": "001",
-        "title": "First",
+        "id": "p001",
+        "name": "First",
+        "title": "First Popup",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
         "button": {
           "url": "$LINK",
@@ -124,8 +125,9 @@
         }
       },
       {
-        "name": "002",
-        "title": "Second",
+        "id": "p001",
+        "name": "Second",
+        "title": "Second Popup",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
         "button": {
           "url": "APP_PATH",

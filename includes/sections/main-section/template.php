@@ -24,7 +24,7 @@ $popups = SectionService::get('popup', 'items');
                     if (!empty($popups) && is_array($popups)) {
                         foreach ($popups as $index => &$item) {
                             render_button([
-                                'url' => '#popup-' . $item['name'],
+                                'url' => '#popup-' . $item['id'],
                                 'attr' => 'data-element="popup-open"',
                                 'content' => 'Open popup ' . $item['name'],
                             ]);
