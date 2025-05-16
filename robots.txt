@@ -15,4 +15,4 @@ Disallow: /.idea/      # IDE files
 Crawl-delay: 5
 
 # Location of the sitemap file
-Sitemap: https://warriors.example.com/sitemap.php
+Sitemap: https://{{DOMAIN}}/sitemap.php

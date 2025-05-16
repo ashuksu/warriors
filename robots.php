@@ -5,8 +5,8 @@ header('Content-Type: text/plain; charset=utf-8');
 // Include configuration
 require_once __DIR__ . '/config.php';
 
-// Get the domain from config or use the server hostname
-$domain = $_SERVER['HTTP_HOST'] ?? 'warriors.example.com';
+// Get the domain from config
+$domain = $DOMAIN;
 
 // Output robots.txt content
 echo "# robots.txt for Warriors website\n";
