@@ -2,15 +2,15 @@
 
 use Services\SectionService;
 
-define("APP_TITLE", "Contacts Page");
-define("PAGE", "contacts");
-require_once __DIR__ . '/../config.php';
+define("APP_TITLE", "Catalog Page");
+define("PAGE", "catalog");
+require_once __DIR__ . '/../../config.php';
 require_once PROJECT_ROOT . 'app/Services/SectionService.php';
 
 $sections = [PAGE, 'info'];
 
 $title = SectionService::get(PAGE, 'title');
-$contacts = SectionService::get(PAGE, 'items');
+$catalog = SectionService::get(PAGE, 'items');
 
 include PROJECT_ROOT . 'Views/Layout.php';
 ?>

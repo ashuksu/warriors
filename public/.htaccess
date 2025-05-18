@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Handle requests for existing files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Handle requests for 404, catalog, and contacts
+    RewriteRule ^404/?$ 404/index.php [L]
+    RewriteRule ^catalog/?$ catalog/index.php [L]
+    RewriteRule ^contacts/?$ contacts/index.php [L]
+
+    # Handle request for the home page
+    RewriteRule ^$ index.php [L]
+</IfModule>
