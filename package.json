@@ -2,15 +2,14 @@
   "name": "warriors",
   "version": "1.0.0",
   "description": "Warriors project",
+  "type": "module",
+  "author": "ashuksu",
   "scripts": {
-    "ls": "live-server",
-    "php": "php -S localhost:8000",
-    "start": "docker-compose up && echo 'Server started at http://localhost:8080'",
-    "restart": "docker-compose restart && echo 'Server restarted at http://localhost:8080'",
-    "stop": "docker-compose down && echo 'Docker images and server were stoped'",
-    "build": "docker-compose up --build && echo 'Docker image rebuilt and server started at http://localhost:8080'",
-    "monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
-    "clean": "docker system prune -af && echo 'The Docker system has been cleaned'"
-  },
-  "author": "ashuksu"
+    "docker:dev": "docker-compose up && echo 'Server started at http://localhost:8080'",
+    "docker:restart": "docker-compose restart && echo 'Server restarted at http://localhost:8080'",
+    "docker:stop": "docker-compose down && echo 'Docker images and server were stoped'",
+    "docker:build": "docker-compose up --build && echo 'Docker image rebuilt and server started at http://localhost:8080'",
+    "docker:monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
+    "docker:clean": "docker system prune -af && echo 'The Docker system has been cleaned'"
+  }
 }
