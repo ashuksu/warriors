@@ -1,57 +1,61 @@
 <?php
-include PROJECT_ROOT . 'Views/head.php';
+namespace Views;
 
-/**
- * Includes the button component, which provides the render_button() function
- * for rendering configurable anchor-based buttons.
- */
-include PROJECT_ROOT . 'Views/components/button.php';
-?>
+//use Views\Layout\Head;
+//use Views\Layout\Header;
+//use Views\Layout\Footer;
+//use Views\Layout\FooterLinks;
+//use Views\Components\Button;
+//use Views\Components\Preloader;
+//use Views\Components\Popup;;
 
-<body data-style="default" class="<?= 'page-' . PAGE ?>">
+class Layout {
+    public static function render($data = []) {
+        extract($data);
 
-<div class="wrapper">
+//        Head::render([
+//            'title' => APP_TITLE ?? 'Warriors',
+//            'page' => PAGE
+//        ]);
 
-    <?php
-    include PROJECT_ROOT . 'Views/components/preloader.php';
-
-    include PROJECT_ROOT . 'Views/header.php';
-    ?>
-
-    <main id="content" class="content">
-        <?php
-        if (!empty($sections) && is_array($sections)) {
-            /**
-             * Set configuration values.
-             *
-             * @param array $config Array of configuration options.
-             * @param string $config ['key'] The key to configure.
-             * @param mixed $config ['value'] The value for the given key.
-             */
-            foreach ($sections as $section) {
-                include PROJECT_ROOT . 'Views/sections/' . $section . '/template.php';
-            }
-        }
         ?>
-    </main>
+        <body data-style="default" class="<?= 'page-' . PAGE ?>">
+        <div class="wrapper">
+            <?php
+//            Preloader::render();
+//            Header::render();
+            ?>
 
-    <?php
-    include PROJECT_ROOT . 'Views/footer.php';
-    ?>
-</div>
+            <main id="content" class="content">
+                <?php
+                if (!empty($sections) && is_array($sections)) {
+                    foreach ($sections as $section) {
+                        $sectionClass = 'Views\\Sections\\' . ucfirst($section) . '\\' . ucfirst($section);
+                        if (class_exists($sectionClass)) {
+                            $sectionClass::render($data);
+                        }
+                    }
+                }
+                ?>
+            </main>
 
+            <?php
+//            Footer::render();
+            ?>
+        </div>
 
-<?php
-render_button([
-    'url' => '#content',
-    'class' => 'button--up',
-    'attr' => 'data-element="link" data-action="up"',
-]);
+        <?php
+//        Button::render([
+//            'url' => '#content',
+//            'class' => 'button--up',
+//            'attr' => 'data-element="link" data-action="up"'
+//        ]);
 
-include PROJECT_ROOT . 'Views/Popup.php';
-
-include PROJECT_ROOT . 'Views/footer-links.php';
-?>
-
-</body>
-</html>
+//        Popup::render();
+//        FooterLinks::render();
+        ?>
+        </body>
+        </html>
+        <?php
+    }
+}
