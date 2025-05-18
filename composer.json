@@ -6,6 +6,7 @@
         "psr-4": {
             "App\\": "app/",
             "Services\\": "app/Services/",
+            "Controllers\\": "app/Controllers/",
             "Views\\": "Views/"
         },
         "files": [
