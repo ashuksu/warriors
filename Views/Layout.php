@@ -1,29 +1,32 @@
 <?php
+
 namespace Views;
 
-//use Views\Layout\Head;
+use Views\Layouts\Head;
 //use Views\Layout\Header;
 //use Views\Layout\Footer;
 //use Views\Layout\FooterLinks;
 //use Views\Components\Button;
 //use Views\Components\Preloader;
-//use Views\Components\Popup;;
+//use Views\Components\Popup;
 
-class Layout {
-    public static function render($data = []) {
+class Layout
+{
+    public static function render($data = [])
+    {
         extract($data);
 
-//        Head::render([
-//            'title' => APP_TITLE ?? 'Warriors',
-//            'page' => PAGE
-//        ]);
+        Head::render([
+            'title' => APP_TITLE ?? 'Warriors',
+            'page' => PAGE ?? ''
+        ]);
 
         ?>
         <body data-style="default" class="<?= 'page-' . PAGE ?>">
         <div class="wrapper">
             <?php
-//            Preloader::render();
-//            Header::render();
+            //            Preloader::render();
+            //            Header::render();
             ?>
 
             <main id="content" class="content">
@@ -40,19 +43,19 @@ class Layout {
             </main>
 
             <?php
-//            Footer::render();
+            //            Footer::render();
             ?>
         </div>
 
         <?php
-//        Button::render([
-//            'url' => '#content',
-//            'class' => 'button--up',
-//            'attr' => 'data-element="link" data-action="up"'
-//        ]);
+        //        Button::render([
+        //            'url' => '#content',
+        //            'class' => 'button--up',
+        //            'attr' => 'data-element="link" data-action="up"'
+        //        ]);
 
-//        Popup::render();
-//        FooterLinks::render();
+        //        Popup::render();
+        //        FooterLinks::render();
         ?>
         </body>
         </html>
