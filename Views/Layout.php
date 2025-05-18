@@ -5,10 +5,8 @@ namespace Views;
 use Views\Layouts\Head;
 use Views\Layouts\Header;
 use Views\Layouts\Footer;
-
 use Views\Components\Button;
-//use Views\Components\Preloader;
-//use Views\Components\Popup;
+use Views\Components\Popup\Popup;
 use Views\Helpers\RenderHelper;
 
 class Layout
@@ -28,7 +26,8 @@ class Layout
         <div class="wrapper">
 
             <?php
-            //                Preloader::render();
+            RenderHelper::renderTemplate(__DIR__ . '/Components/preloader.php');
+
             Header::render();
             ?>
 
@@ -60,8 +59,7 @@ class Layout
             'attr' => 'data-element="link" data-action="up"'
         ]);
 
-        //        Popup::render();
-        //        FooterLinks::render();
+        Popup::render();
 
         RenderHelper::renderTemplate(__DIR__ . '/Components/footer-links.php');
         ?>
