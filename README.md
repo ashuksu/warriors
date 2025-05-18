@@ -18,9 +18,21 @@ Before you begin, ensure you have the following installed:
 
 ### Installation
 
+## Requirements
+- PHP 7.4 or higher
+- Composer
+- Node.js and NPM
+
 ```bash
 # Install dependencies
+composer install
 npm install
+```
+```bash
+# to update startup
+composer dump-autoload
+# or
+composer dump-autoload -o
 ```
 
 ```bash   

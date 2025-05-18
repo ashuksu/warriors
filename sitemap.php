@@ -3,7 +3,11 @@
 header('Content-Type: application/xml; charset=utf-8');
 
 // Include configuration
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/config/config.php';
+// Ensure $DOMAIN is available
+if (!isset($DOMAIN)) {
+    $DOMAIN = $_SERVER['HTTP_HOST'] ?? 'warriors.example.com';
+}
 
 // Get the domain from config
 $domain = $DOMAIN;
