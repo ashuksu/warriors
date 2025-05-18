@@ -41,7 +41,7 @@ class Main
                         </div>
                         <div class="col col-md-6">
                             <div class="image">
-                                <img src="<?= APP_PATH ?>public/assets/images/<?= $mainImage['name'] ?>"
+                                <img src="<?= APP_PATH ?>assets/images/<?= $mainImage['name'] ?>"
                                      alt="<?= $mainImage['alt'] ?>"
                                      width="<?= $mainImage['width'] ?>" height="<?= $mainImage['height'] ?>">
                             </div>

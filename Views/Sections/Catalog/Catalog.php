@@ -25,7 +25,7 @@ class Catalog
                             <?php
                             foreach ($catalog as $item) {
                                 RenderHelper::renderTemplate(__DIR__ . '/item.php', [
-                                    'imageUrl' => APP_PATH . 'public/assets/images/items/' . $item['image']
+                                    'imageUrl' => APP_PATH . 'assets/images/items/' . $item['image']
                                 ]);
                             }
                             ?>

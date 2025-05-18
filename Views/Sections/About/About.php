@@ -20,7 +20,7 @@ class About
                     foreach ($about as $index => $item) {
                         RenderHelper::renderTemplate(__DIR__ . '/item.php', [
                             'item' => $item,
-                            'imageUrl' => APP_PATH . 'public/assets/images/' . $item['image'],
+                            'imageUrl' => APP_PATH . 'assets/images/' . $item['image'],
                             'isReverse' => $index % 2 !== 0
                         ]);
                     }
