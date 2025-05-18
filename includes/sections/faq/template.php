@@ -1,4 +1,7 @@
 <?php
+
+use Services\SectionService;
+
 $title = SectionService::get('faq', 'title');
 $faq = SectionService::get('faq', 'items');
 

@@ -1,4 +1,7 @@
 <?php
+
+use Services\SectionService;
+
 $item = SectionService::get('info', 'items', 'info-' . PAGE);
 ?>
 

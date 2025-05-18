@@ -1,4 +1,7 @@
 <?php
+
+use Services\SectionService;
+
 $mainSection = SectionService::get('main');
 $image = $mainSection['image'];
 $popups = SectionService::get('popup', 'items');

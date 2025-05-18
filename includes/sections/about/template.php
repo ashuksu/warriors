@@ -1,4 +1,7 @@
 <?php
+
+use Services\SectionService;
+
 $about = SectionService::get('about', 'items');
 ?>
 

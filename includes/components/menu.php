@@ -1,4 +1,7 @@
 <?php
+
+use Services\SectionService;
+
 $popup = SectionService::get('popup', 'items', 'p002');
 $menu = SectionService::get('menu', 'items');
 ?>

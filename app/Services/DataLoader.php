@@ -1,5 +1,7 @@
 <?php
 
+namespace Services;
+
 require_once __DIR__ . '/ConfigVarResolver.php';
 
 /**
@@ -39,7 +41,7 @@ class DataLoader
      */
     public function loadData($section = '')
     {
-        $jsonPath = PROJECT_ROOT . '/data/data.json';
+        $jsonPath = PROJECT_ROOT . 'app/Data/data.json';
 
         if (!file_exists($jsonPath)) {
             throw new Exception($section . ' JSON file not found: ' . $jsonPath);

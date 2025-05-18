@@ -1,5 +1,7 @@
 <?php
 
+namespace Services;
+
 require_once __DIR__ . '/DataLoader.php';
 
 /**

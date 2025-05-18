@@ -1,5 +1,8 @@
 <?php
-require_once PROJECT_ROOT . 'Services/SectionService.php';
+
+use Services\SectionService;
+
+require_once PROJECT_ROOT . 'app/Services/SectionService.php';
 $title = SectionService::get('popup', 'title');
 $popups = SectionService::get('popup', 'items');
 

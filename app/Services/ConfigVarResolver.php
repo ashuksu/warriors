@@ -1,5 +1,7 @@
 <?php
 
+namespace Services;
+
 /**
  * Utility class for resolving config variables in strings
  * Replaces references to config variables with their actual values
