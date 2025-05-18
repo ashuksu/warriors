@@ -2,6 +2,7 @@
 
 namespace Views\Layouts;
 
+use Views\Components\Menu\Menu;
 use Views\Components\Button;
 
 class Header
@@ -25,9 +26,10 @@ class Header
                         'attr' => 'data-element="menu-open"',
                         'content' => '<i></i>',
                     ]);
+
+                    Menu::render([]);
                     ?>
 
-                    <!--                    include PROJECT_ROOT . 'Views/Components/menu.php'-->
                 </div>
             </div>
         </header>
