@@ -31,7 +31,8 @@ npm install
 ```bash
 # to update startup
 composer dump-autoload
-# or
+
+# optimized generation, better for production
 composer dump-autoload -o
 ```
 

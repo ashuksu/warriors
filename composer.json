@@ -10,7 +10,8 @@
             "Views\\": "Views/"
         },
         "files": [
-            "config/config.php"
+            "config/config.php",
+            "config/constants.php"
         ]
     },
     "require": {
