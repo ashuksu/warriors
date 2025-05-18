@@ -1,7 +1,9 @@
 <?php
+
 namespace Views\Components;
 
-class Button {
+class Button
+{
     /**
      * Renders a button using an anchor tag with configurable options
      *
@@ -14,7 +16,8 @@ class Button {
      *
      * @return void Echoes HTML button
      */
-    public static function render($options = []) {
+    public static function render($options = [])
+    {
         // default params
         $url = $options['url'] ?? '#';
         $class = $options['class'] ?? '';
