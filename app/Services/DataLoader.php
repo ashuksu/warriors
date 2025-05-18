@@ -41,7 +41,7 @@ class DataLoader
      */
     public function loadData($section = '')
     {
-        $jsonPath = PROJECT_ROOT . 'app/Data/data.json';
+        $jsonPath = PROJECT_ROOT . 'Data/data.json';
 
         if (!file_exists($jsonPath)) {
             throw new Exception($section . ' JSON file not found: ' . $jsonPath);
