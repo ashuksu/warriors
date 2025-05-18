@@ -9,6 +9,7 @@ define("PAGE", "main");
 
 Layout::render([
     'sections' => ['MainSection', 'About', 'faq', 'info'],
+    'about' => SectionService::get('about', 'items'),
     'faq' => SectionService::get('faq', 'items'),
     'faqTitle' => SectionService::get('faq', 'title'),
     'info' => SectionService::get('info', 'items', 'info-' . PAGE)
