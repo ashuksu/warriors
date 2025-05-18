@@ -8,7 +8,7 @@ define("APP_TITLE", "404 Page");
 define("PAGE", "error");
 
 Layout::render([
-    'sections' => ['Error'],
+    'sections' => [PAGE],
     'title' => SectionService::get(PAGE, 'title'),
     'text' => SectionService::get(PAGE, 'text'),
     'image' => SectionService::get(PAGE, 'image'),

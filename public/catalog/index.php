@@ -8,7 +8,7 @@ define("APP_TITLE", "Catalog Page");
 define("PAGE", "catalog");
 
 Layout::render([
-    'sections' => ['Catalog', 'Info'],
+    'sections' => [PAGE, 'Info'],
     'title' => SectionService::get(PAGE, 'title'),
     'catalog' => SectionService::get(PAGE, 'items'),
     'info' => SectionService::get('info', 'items', 'info-' . PAGE)

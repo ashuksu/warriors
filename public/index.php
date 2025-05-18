@@ -8,5 +8,8 @@ define("APP_TITLE", "Home Page");
 define("PAGE", "main");
 
 Layout::render([
-    'sections' => ['main-section', 'about', 'faq', 'info']
+    'sections' => ['MainSection', 'About', 'faq', 'info'],
+    'faq' => SectionService::get('faq', 'items'),
+    'faqTitle' => SectionService::get('faq', 'title'),
+    'info' => SectionService::get('info', 'items', 'info-' . PAGE)
 ]);

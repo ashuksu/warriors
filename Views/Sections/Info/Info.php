@@ -10,6 +10,7 @@ class Info
 
         if (!empty($info) && is_array($info)):
             ?>
+
             <section id="info" class="section info mt-auto">
                 <div class="container">
                     <div class="inner inner-style text-center info__inner wow pixFadeUp" data-wow-delay="0.2s">
@@ -22,6 +23,7 @@ class Info
                     </div>
                 </div>
             </section>
+
         <?php
         endif;
     }

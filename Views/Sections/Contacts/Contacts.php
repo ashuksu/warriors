@@ -9,31 +9,33 @@ class Contacts
     public static function render($params = [])
     {
         extract($params);
-        ?>
 
-        <section class="section contacts">
-            <div class="container">
-                <div class="inner">
-                    <h1 class="title text-center mb-3 wow pixFadeUp" data-wow-delay="0.2s">
-                        <?= $title ?>
-                    </h1>
+        if (!empty($contacts) && is_array($contacts)) {
+            ?>
 
-                    <div class="row contacts__list wow pixFadeUp" data-wow-delay="0.3s">
+            <section class="section contacts">
+                <div class="container">
+                    <div class="inner">
+                        <h1 class="title text-center mb-3 wow pixFadeUp" data-wow-delay="0.2s">
+                            <?= $title ?>
+                        </h1>
 
-                        <?php
-                        if (!empty($contacts) && is_array($contacts)) {
+                        <div class="row contacts__list wow pixFadeUp" data-wow-delay="0.3s">
+
+                            <?php
                             foreach ($contacts as $index => $item) {
                                 RenderHelper::renderTemplate(__DIR__ . '/item.php', [
                                     'item' => $item,
                                 ]);
                             }
-                        }
-                        ?>
+                            ?>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <?php
+            </section>
+
+            <?php
+        }
     }
 }

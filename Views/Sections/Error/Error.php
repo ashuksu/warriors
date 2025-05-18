@@ -37,6 +37,7 @@ class Error
                 </div>
             </div>
         </section>
+
         <?php
     }
 }

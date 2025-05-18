@@ -9,31 +9,33 @@ class Catalog
     public static function render($params = [])
     {
         extract($params);
-        ?>
 
-        <section class="section catalog">
-            <div class="container">
-                <div class="inner catalog__inner">
-                    <h1 class="title mb-3 text-center wow pixFadeUp" data-wow-delay="0.2s">
-                        <?= $title ?>
-                    </h1>
+        if (!empty($catalog) && is_array($catalog)) {
+            ?>
 
-                    <div class="catalog__grid">
+            <section class="section catalog">
+                <div class="container">
+                    <div class="inner catalog__inner">
+                        <h1 class="title mb-3 text-center wow pixFadeUp" data-wow-delay="0.2s">
+                            <?= $title ?>
+                        </h1>
 
-                        <?php
-                        if (!empty($catalog) && is_array($catalog)) {
+                        <div class="catalog__grid">
+
+                            <?php
                             foreach ($catalog as $item) {
                                 RenderHelper::renderTemplate(__DIR__ . '/item.php', [
                                     'imageUrl' => APP_PATH . 'public/assets/images/items/' . $item['image']
                                 ]);
                             }
-                        }
-                        ?>
+                            ?>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <?php
+            </section>
+
+            <?php
+        }
     }
 }
