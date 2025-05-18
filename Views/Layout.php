@@ -1,11 +1,11 @@
 <?php
-include PROJECT_ROOT . 'includes/head.php';
+include PROJECT_ROOT . 'Views/head.php';
 
 /**
  * Includes the button component, which provides the render_button() function
  * for rendering configurable anchor-based buttons.
  */
-include PROJECT_ROOT . 'includes/components/button.php';
+include PROJECT_ROOT . 'Views/components/button.php';
 ?>
 
 <body data-style="default" class="<?= 'page-' . PAGE ?>">
@@ -13,9 +13,9 @@ include PROJECT_ROOT . 'includes/components/button.php';
 <div class="wrapper">
 
     <?php
-    include PROJECT_ROOT . 'includes/components/preloader.php';
+    include PROJECT_ROOT . 'Views/components/preloader.php';
 
-    include PROJECT_ROOT . 'includes/header.php';
+    include PROJECT_ROOT . 'Views/header.php';
     ?>
 
     <main id="content" class="content">
@@ -29,14 +29,14 @@ include PROJECT_ROOT . 'includes/components/button.php';
              * @param mixed $config ['value'] The value for the given key.
              */
             foreach ($sections as $section) {
-                include PROJECT_ROOT . 'includes/sections/' . $section . '/template.php';
+                include PROJECT_ROOT . 'Views/sections/' . $section . '/template.php';
             }
         }
         ?>
     </main>
 
     <?php
-    include PROJECT_ROOT . 'includes/footer.php';
+    include PROJECT_ROOT . 'Views/footer.php';
     ?>
 </div>
 
@@ -48,9 +48,9 @@ render_button([
     'attr' => 'data-element="link" data-action="up"',
 ]);
 
-include PROJECT_ROOT . 'includes/Popup.php';
+include PROJECT_ROOT . 'Views/Popup.php';
 
-include PROJECT_ROOT . 'includes/footer-links.php';
+include PROJECT_ROOT . 'Views/footer-links.php';
 ?>
 
 </body>

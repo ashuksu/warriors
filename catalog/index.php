@@ -12,5 +12,5 @@ $sections = [PAGE, 'info'];
 $title = SectionService::get(PAGE, 'title');
 $catalog = SectionService::get(PAGE, 'items');
 
-include PROJECT_ROOT . 'includes/Layout.php';
+include PROJECT_ROOT . 'Views/Layout.php';
 ?>

@@ -13,7 +13,7 @@ foreach ($popups as $index => &$item) {
         $item['button'] = ob_get_clean();
     }
 
-    include PROJECT_ROOT . 'includes/sections/popup/template.php';
+    include PROJECT_ROOT . 'Views/sections/popup/template.php';
 }
 
 ?>

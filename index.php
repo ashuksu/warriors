@@ -6,5 +6,5 @@ require_once PROJECT_ROOT . 'app/Services/SectionService.php';
 
 $sections = ['main-section', 'about', 'faq', 'info'];
 
-include PROJECT_ROOT . 'includes/Layout.php';
+include PROJECT_ROOT . 'Views/Layout.php';
 ?>

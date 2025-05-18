@@ -14,5 +14,5 @@ $text = SectionService::get(PAGE, 'text');
 $image = SectionService::get(PAGE, 'image');
 $button = SectionService::get(PAGE, 'button');
 
-include PROJECT_ROOT . 'includes/Layout.php';
+include PROJECT_ROOT . 'Views/Layout.php';
 ?>
