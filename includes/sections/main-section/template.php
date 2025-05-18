@@ -35,7 +35,7 @@ $popups = SectionService::get('popup', 'items');
 
                 <?php if (!empty($image) && is_array($image)): ?>
                     <div class="image">
-                        <img src="<?= APP_PATH ?>assets/images/<?= $image['name'] ?>" alt="<?= $image['alt'] ?>"
+                        <img src="<?= APP_PATH ?>public/assets/images/<?= $image['name'] ?>" alt="<?= $image['alt'] ?>"
                              width="<?= $image['width'] ?>" height="<?= $image['height'] ?>">
                     </div>
                 <?php endif; ?>

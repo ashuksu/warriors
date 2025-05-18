@@ -22,17 +22,17 @@
     </noscript>
 
     <!-- Critical CSS - loaded immediately -->
-    <link rel="stylesheet" href="<?= APP_PATH ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?= APP_PATH ?>src/css/style.css">
 
     <!-- Animation CSS - loaded asynchronously (used by WOW.js) -->
-    <link rel="stylesheet" href="<?= APP_PATH ?>assets/css/libs/animate.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="<?= APP_PATH ?>src/css/libs/animate.min.css" media="print" onload="this.media='all'">
     <noscript>
-        <link rel="stylesheet" href="<?= APP_PATH ?>assets/css/libs/animate.min.css">
+        <link rel="stylesheet" href="<?= APP_PATH ?>src/css/libs/animate.min.css">
     </noscript>
 
     <!-- Prefetch resources that will be needed soon -->
-    <link rel="prefetch" href="<?= APP_PATH ?>assets/js/modules/Popup.js" as="script">
-    <link rel="prefetch" href="<?= APP_PATH ?>assets/js/modules/utils/Toggle.js" as="script">
+    <link rel="prefetch" href="<?= APP_PATH ?>src/js/modules/Popup.js" as="script">
+    <link rel="prefetch" href="<?= APP_PATH ?>src/js/modules/utils/Toggle.js" as="script">
 
     <!-- Load WOW.js with defer and low priority to ensure it doesn't block critical resources -->
     <script defer src="https://cdn.jsdelivr.net/npm/wowjs@1.1.3/dist/wow.min.js" fetchpriority="low"></script>

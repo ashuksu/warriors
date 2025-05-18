@@ -8,7 +8,7 @@
                 <?= $text ?>
             </p>
             <div class="image error__image mb-3 mx-auto wow pixFadeUp" data-wow-delay="0.4s">
-                <img src="<?= APP_PATH ?>assets/images/<?= $image['name'] ?>"  alt="<?= $image['alt'] ?>"
+                <img src="<?= APP_PATH ?>public/assets/images/<?= $image['name'] ?>"  alt="<?= $image['alt'] ?>"
                      class="error-image" width="<?= $image['width'] ?>" height="<?= $image['height'] ?>">
             </div>
 

@@ -10,7 +10,7 @@
                 <?php
                 if (!empty($catalog) && is_array($catalog)) {
                     foreach ($catalog as $item) {
-                        $imageUrl = APP_PATH . 'assets/images/items/' . $item['image'];
+                        $imageUrl = APP_PATH . 'public/assets/images/items/' . $item['image'];
 
                         include __DIR__ . '/item.php';
                     }
