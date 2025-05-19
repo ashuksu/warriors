@@ -2,8 +2,8 @@
 // Set content type to text/plain
 header('Content-Type: text/plain; charset=utf-8');
 
-// Include configuration
-require_once __DIR__ . '/config/config.php';
+// Include Composer autoloader
+require_once __DIR__ . '/vendor/autoload.php';
 // Ensure $DOMAIN is available
 if (!isset($DOMAIN)) {
     $DOMAIN = $_SERVER['HTTP_HOST'] ?? 'warriors.example.com';

@@ -33,6 +33,11 @@ class Image
         $attr = $attr ?? '';
         $lazyLoad = isset($noLazy) && $noLazy ? '' : 'loading="lazy"';
 
+        // Resolve variables in URL
+        if (is_string($url) && strpos($url, '$') !== false) {
+            $url = \Services\ConfigVarResolver::getInstance()->resolveValue($url);
+        }
+
         // Escape attribute values
         $url = htmlspecialchars($url, ENT_QUOTES);
         $alt = htmlspecialchars($alt, ENT_QUOTES);

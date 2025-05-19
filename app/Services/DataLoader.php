@@ -4,8 +4,6 @@ namespace Services;
 
 use Exception;
 
-require_once __DIR__ . '/ConfigVarResolver.php';
-
 /**
  * Utility class for loading data from JSON files
  * Provides error handling for data loading operations
@@ -43,7 +41,8 @@ class DataLoader
      */
     public function loadData($section = '')
     {
-        $jsonPath = PROJECT_ROOT . 'app/Models/Data/data.json';
+        // Use a more modern approach with proper path resolution
+        $jsonPath = dirname(__DIR__, 2) . '/app/Models/Data/data.json';
 
         if (!file_exists($jsonPath)) {
             throw new Exception($section . ' JSON file not found: ' . $jsonPath);

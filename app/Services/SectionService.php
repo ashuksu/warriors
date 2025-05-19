@@ -4,8 +4,6 @@ namespace Services;
 
 use Exception;
 
-require_once __DIR__ . '/DataLoader.php';
-
 /**
  * Service class for handling section data operations.
  * Provides caching and error handling for all section data.

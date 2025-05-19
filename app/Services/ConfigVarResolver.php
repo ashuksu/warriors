@@ -61,6 +61,7 @@ class ConfigVarResolver
         $value = $this->resolveTemplateVariables($value);
 
         // Process strings that might contain variable references
+        // This handles both standalone variables and variables embedded within strings
         return preg_replace_callback('/(\$[A-Za-z_][A-Za-z0-9_]*|\b[A-Z_][A-Z0-9_]*\b)/', function($matches) {
             $match = $matches[0];
 

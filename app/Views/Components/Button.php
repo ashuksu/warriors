@@ -33,6 +33,11 @@ class Button
         $content = $content ?? '';
         $tag = $tag ?? 'link';
 
+        // Resolve variables in URL
+        if (is_string($url) && strpos($url, '$') !== false) {
+            $url = \Services\ConfigVarResolver::getInstance()->resolveValue($url);
+        }
+
         $url = htmlspecialchars($url, ENT_QUOTES);
         $class = htmlspecialchars($class, ENT_QUOTES);
 
