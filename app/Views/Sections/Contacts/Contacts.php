@@ -14,7 +14,6 @@ class Contacts
         renderTemplate(__DIR__ . '/template.php', [
             'contacts' => SectionService::get('contacts', 'items'),
             'section' => 'contacts',
-            'itemPath' => __DIR__ . '/item.php',
             'title' => SectionService::get(PAGE, 'title')
         ]);
     }

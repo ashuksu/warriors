@@ -13,7 +13,7 @@
 
                 if (!empty($contacts) && is_array($contacts)) {
                     foreach ($contacts as $item) {
-                        renderTemplate($itemPath, [
+                        renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
                         ]);
                     }

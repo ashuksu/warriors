@@ -14,8 +14,6 @@ class Error
         renderTemplate(__DIR__ . '/template.php', [
             'item' => SectionService::get('error'),
             'section' => 'error',
-            'imagePartPath' => APP_PATH . 'assets/images/',
-            'itemPath' => __DIR__ . '/item.php',
             'title' => SectionService::get('error', 'title')
         ]);
     }

@@ -7,10 +7,10 @@
 
         if (!empty($about) && is_array($about)) {
             foreach ($about as $index => $item) {
-                renderTemplate($itemPath, [
+                renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                     'item' => $item,
                     'isReverse' => $index % 2 !== 0,
-                    'image' => ($imagePartPath ?? "") . ($item['image'] ?? ''),
+                    'image' => ($imagePartPath ?? APP_PATH . 'assets/images/') . ($item['image'] ?? '')
                 ]);
             }
         }

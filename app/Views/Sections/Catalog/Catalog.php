@@ -14,7 +14,6 @@ class Catalog
         renderTemplate(__DIR__ . '/template.php', [
             'catalog' => SectionService::get('catalog', 'items'),
             'section' => 'catalog',
-            'itemPath' => __DIR__ . '/item.php',
             'title' => SectionService::get('catalog', 'title'),
             'imagePartPath' => APP_PATH . 'assets/images/items/'
         ]);

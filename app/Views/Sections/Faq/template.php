@@ -13,15 +13,29 @@
 
                 if (!empty($catalog) && is_array($catalog)) {
                     foreach ($catalog as $item) {
-                        renderTemplate($itemPath ?? __DIR__ . '/item.php', [
+                        renderTemplate($itemPath, [
                             'item' => $item,
-                            'image' => ($imagePartPath ?? APP_PATH . 'assets/images/') . ($item['image'] ?? '')
+                            'image' => ($imagePartPath ?? "") . ($item['image'] ?? ''),
                         ]);
                     }
                 }
                 ?>
 
             </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="info" class="section info mt-auto">
+    <div class="container">
+        <div class="inner inner-style text-center info__inner wow pixFadeUp" data-wow-delay="0.2s">
+            <h2 class="title">
+                <?= $info['title'] ?>
+            </h2>
+            <p class="text-justify">
+                <?= $info['text'] ?>
+            </p>
         </div>
     </div>
 </section>
