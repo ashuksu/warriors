@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use Views\Layout;
-use Services\SectionService;
 
 class ErrorController
 {
@@ -14,10 +13,6 @@ class ErrorController
 
         Layout::render([
             'sections' => ['error'],
-            'title' => SectionService::get('error', 'title'),
-            'text' => SectionService::get('error', 'text'),
-            'image' => SectionService::get('error', 'image'),
-            'button' => SectionService::get('error', 'button')
         ]);
     }
 }
