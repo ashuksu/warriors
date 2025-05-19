@@ -15,7 +15,7 @@
                     foreach ($collection as $item) {
                         renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
-                            'image' => ($imagePartPath ?? APP_PATH . 'assets/images/') . ($item['image'] ?? '')
+                            'image' => ($imagePartPath ?? (APP_PATH . 'assets/images/')) . ($item['image'] ?? '')
                         ]);
                     }
                 }

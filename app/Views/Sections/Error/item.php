@@ -2,8 +2,20 @@
     <?= $text ?? '' ?>
 </p>
 <div class="image error__image mb-3 mx-auto wow pixFadeUp" data-wow-delay="0.4s">
-    <img src="<?= $image ?? '#' ?>" alt="<?= $item['alt'] ?? '' ?>"
-         class="error-image" width="<?= $item['width'] ?? 600 ?>" height="<?= $item['height'] ?? 600 ?>">
+
+    <?php
+
+    use Views\Components\Image;
+
+    Image::render([
+        'url' => $image,
+        'alt' => $item['alt'],
+        'width' => $item['width'],
+        'height' => $item['height'],
+        'attr' => 'class="error-image"'
+    ]);
+    ?>
+
 </div>
 
 <?php

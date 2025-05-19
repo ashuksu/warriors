@@ -2,8 +2,17 @@
     <div class="row">
         <div class="col col-md-6 mb-1 mb-md-0">
             <div class="image">
-                <img src="<?= $image ?? '#' ?>" alt="<?= $item['alt'] ?? 'image' ?>"
-                     width="<?= $item['width'] ?? 600 ?>" height="<?= $item['height'] ?? 600 ?>">
+
+                <?php
+
+                use Views\Components\Image;
+
+                Image::render([
+                    'url' => $image,
+                    'alt' => $item['alt']
+                ]);
+                ?>
+
             </div>
         </div>
         <div class="col col-md-6 mb-md-0">

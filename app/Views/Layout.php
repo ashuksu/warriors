@@ -4,6 +4,7 @@ namespace Views;
 
 use Views\Components\Button;
 use Views\Components\Popup\Popup;
+use Views\Components\Preloader;
 use Views\Layouts\Footer;
 use Views\Layouts\Head;
 use Views\Layouts\Header;
@@ -26,7 +27,8 @@ class Layout
         <div class="wrapper">
 
             <?php
-            renderTemplate(__DIR__ . '/Components/preloader.php', []);
+
+            Preloader::render();
 
             Header::render();
             ?>
