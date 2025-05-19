@@ -11,25 +11,12 @@ class About
         extract($params);
 
         if (!empty($about) && is_array($about)) {
-            ?>
-
-            <section id="about" class="section about">
-                <div class="container">
-
-                    <?php
-                    foreach ($about as $index => $item) {
-                        renderTemplate(__DIR__ . '/item.php', [
-                            'item' => $item,
-                            'imageUrl' => APP_PATH . 'assets/images/' . $item['image'],
-                            'isReverse' => $index % 2 !== 0
-                        ]);
-                    }
-                    ?>
-
-                </div>
-            </section>
-
-            <?php
+            renderTemplate(__DIR__ . '/template.php', [
+                'about' => $about,
+                'section' => 'about',
+                'itemPath' => __DIR__ . '/item.php',
+                'imagePartPath' => APP_PATH . 'assets/images/'
+            ]);
         }
     }
 }

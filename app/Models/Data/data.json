@@ -4,21 +4,21 @@
       {
         "id": "a001",
         "image": "w1.svg",
-        "name": "w1",
+        "alt": "w1",
         "title": "Lorem ipsum dolor sit amet.",
         "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur adipiscing"
       },
       {
         "id": "a002",
         "image": "w12.svg",
-        "name": "w12",
+        "alt": "w12",
         "title": "Lorem ipsum dolor sit amet, consectetur.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi, dicta distinctio dolorum eos inventore ipsum laboriosam magni minima neque officiis placeat quam quisquam quod similique sit soluta vel voluptatum?"
       },
       {
         "id": "a003",
         "image": "w2.svg",
-        "name": "w2",
+        "alt": "w2",
         "title": "Lorem ipsum dolor sit.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dicta explicabo, nisi omnis possimus quia quis sapiente. Alias animi atque, autem enim esse eveniet expedita id illum molestias non voluptatem."
       }
