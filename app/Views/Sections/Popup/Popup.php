@@ -1,6 +1,6 @@
 <?php
 
-namespace Views\Components\Popup;
+namespace App\Views\Sections\Popup;
 
 use Services\SectionService;
 use function Helpers\renderTemplate;
@@ -17,6 +17,7 @@ class Popup
             foreach ($popups as $item) {
                 renderTemplate(__DIR__ . '/template.php', [
                     'item' => $item,
+                    'button' => $item['button'],
                 ]);
             }
         }

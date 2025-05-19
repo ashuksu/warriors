@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use Views\Layout;
-use Services\SectionService;
 
 class HomeController
 {
@@ -12,12 +11,8 @@ class HomeController
         define("APP_TITLE", PAGES['main']['title']);
         define("PAGE", "main");
 
-        $popups = SectionService::get('popup', 'items');
-
         Layout::render([
             'sections' => [PAGE, 'about', 'faq', 'info'],
-            'popups' => $popups,
-            'isPopups' => !empty($popups) && is_array($popups),
         ]);
     }
 }

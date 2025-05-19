@@ -2,12 +2,12 @@
 
 namespace Views;
 
+use App\Views\Sections\Popup\Popup;
+use Views\Components\Button;
+use Views\Components\Preloader;
 use Views\Sections\Footer;
 use Views\Sections\Head;
 use Views\Sections\Header;
-use Views\Components\Button;
-use Views\Components\Popup\Popup;
-use Views\Components\Preloader;
 use function Helpers\renderTemplate;
 
 class Layout

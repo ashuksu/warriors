@@ -11,6 +11,7 @@ class Main
     {
         extract($params);
 
+        $popups = SectionService::get('popup', 'items');
         $image = SectionService::get('main', 'image');
 
         renderTemplate(__DIR__ . '/template.php', [
@@ -19,7 +20,7 @@ class Main
             'image' => $image,
             'imagePath' => APP_PATH . 'assets/images/' . ($image['image'] ?? ''),
             'popups' => $popups,
-            'isPopups' => $isPopups,
+            'isPopups' => !empty($popups) && is_array($popups),
         ]);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Views\Sections;
 
+use Views\Sections\Menu;
 use Views\Components\Button;
 use Views\Components\Image;
-use Views\Components\Menu\Menu;
 
 class Header
 {
