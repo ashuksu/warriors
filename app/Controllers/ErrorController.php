@@ -12,7 +12,7 @@ class ErrorController
         define("PAGE", "error");
 
         Layout::render([
-            'sections' => ['error'],
+            'sections' => [PAGE],
         ]);
     }
 }

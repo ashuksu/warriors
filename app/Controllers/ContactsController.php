@@ -12,7 +12,7 @@ class ContactsController
         define("PAGE", "contacts");
 
         Layout::render([
-            'sections' => ['Contacts', 'Info']
+            'sections' => [PAGE, 'info']
         ]);
     }
 }

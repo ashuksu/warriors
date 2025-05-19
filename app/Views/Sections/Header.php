@@ -1,6 +1,6 @@
 <?php
 
-namespace Views\Layouts;
+namespace Views\Sections;
 
 use Views\Components\Button;
 use Views\Components\Image;

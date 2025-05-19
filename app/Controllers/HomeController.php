@@ -15,7 +15,7 @@ class HomeController
         $popups = SectionService::get('popup', 'items');
 
         Layout::render([
-            'sections' => ['main', 'about', 'faq', 'info'],
+            'sections' => [PAGE, 'about', 'faq', 'info'],
             'popups' => $popups,
             'isPopups' => !empty($popups) && is_array($popups),
         ]);

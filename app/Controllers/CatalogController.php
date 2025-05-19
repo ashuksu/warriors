@@ -12,7 +12,7 @@ class CatalogController
         define("PAGE", "catalog");
 
         Layout::render([
-            'sections' => ['catalog', 'info']
+            'sections' => [PAGE, 'info']
         ]);
     }
 }

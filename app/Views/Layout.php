@@ -2,12 +2,12 @@
 
 namespace Views;
 
+use Views\Sections\Footer;
+use Views\Sections\Head;
+use Views\Sections\Header;
 use Views\Components\Button;
 use Views\Components\Popup\Popup;
 use Views\Components\Preloader;
-use Views\Layouts\Footer;
-use Views\Layouts\Head;
-use Views\Layouts\Header;
 use function Helpers\renderTemplate;
 
 class Layout
@@ -63,7 +63,7 @@ class Layout
 
         Popup::render();
 
-        renderTemplate(__DIR__ . '/Components/footer-links.php', []);
+        renderTemplate(__DIR__ . '/Sections/footer-links.php', []);
         ?>
 
         </body>
