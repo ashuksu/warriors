@@ -61,7 +61,7 @@ class Layout
 
         Popup::render();
 
-        renderTemplate(__DIR__ . 'Components/footer-links.php', []);
+        renderTemplate(__DIR__ . '/Components/footer-links.php', []);
         ?>
 
         </body>
