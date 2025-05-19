@@ -5,8 +5,21 @@ namespace Views\Sections;
 use Services\SectionService;
 use Views\Components\Button;
 
+/**
+ * Menu section class
+ * 
+ * Handles rendering of the site navigation menu with links and popup button
+ */
 class Menu
 {
+    /**
+     * Render the menu section
+     * 
+     * Outputs the navigation menu with close button, menu links, and popup button
+     * 
+     * @param array $params Parameters for the menu section
+     * @return void
+     */
     public static function render($params = [])
     {
         extract($params);

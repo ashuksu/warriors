@@ -2,6 +2,8 @@
 
 namespace Services;
 
+use Exception;
+
 require_once __DIR__ . '/DataLoader.php';
 
 /**

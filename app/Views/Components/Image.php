@@ -33,7 +33,7 @@ class Image
         $attr = $attr ?? '';
         $lazyLoad = isset($noLazy) && $noLazy ? '' : 'loading="lazy"';
 
-        // Экранируем значения атрибутов
+        // Escape attribute values
         $url = htmlspecialchars($url, ENT_QUOTES);
         $alt = htmlspecialchars($alt, ENT_QUOTES);
 

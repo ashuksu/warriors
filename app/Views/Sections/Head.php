@@ -2,8 +2,22 @@
 
 namespace Views\Sections;
 
+/**
+ * Head section class
+ * 
+ * Handles rendering of the HTML head section with meta tags, CSS, and JavaScript resources
+ */
 class Head
 {
+    /**
+     * Render the HTML head section
+     * 
+     * Outputs the DOCTYPE, html tag, and head section with all necessary meta tags,
+     * stylesheets, fonts, and scripts for the page
+     * 
+     * @param array $params Parameters for the head section (title, etc.)
+     * @return void
+     */
     public static function render($params = [])
     {
         extract($params);

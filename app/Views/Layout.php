@@ -10,8 +10,21 @@ use Views\Sections\Head;
 use Views\Sections\Header;
 use function Helpers\renderTemplate;
 
+/**
+ * Main layout class for rendering the page structure
+ * 
+ * Handles the overall page layout including header, footer, and content sections
+ */
 class Layout
 {
+    /**
+     * Render the complete page layout
+     * 
+     * Renders the head, header, content sections, footer, and additional components
+     * 
+     * @param array $data Data to be passed to the layout and sections
+     * @return void
+     */
     public static function render($data = [])
     {
         extract($data);

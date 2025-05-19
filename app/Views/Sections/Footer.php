@@ -4,11 +4,27 @@ namespace Views\Sections;
 
 use Views\Components\Image;
 
+/**
+ * Footer section class
+ * 
+ * Handles rendering of the site footer with logo, copyright information, and links
+ */
 class Footer
 {
+    /**
+     * Render the footer section
+     * 
+     * Outputs the footer with logo, copyright text, and external links
+     * 
+     * @param array $params Parameters for the footer section
+     * @return void
+     */
     public static function render($params = [])
     {
         extract($params);
+
+        // Default link if not provided
+        $LINK = $LINK ?? 'https://github.com/ashuksu';
         ?>
 
         <footer id="footer" class="footer">

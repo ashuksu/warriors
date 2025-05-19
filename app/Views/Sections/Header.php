@@ -6,8 +6,21 @@ use Views\Sections\Menu;
 use Views\Components\Button;
 use Views\Components\Image;
 
+/**
+ * Header section class
+ * 
+ * Handles rendering of the site header with logo, menu button, and navigation
+ */
 class Header
 {
+    /**
+     * Render the header section
+     * 
+     * Outputs the header with logo, menu button, and navigation menu
+     * 
+     * @param array $params Parameters for the header section
+     * @return void
+     */
     public static function render($params = [])
     {
         extract($params);

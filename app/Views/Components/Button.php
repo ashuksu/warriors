@@ -2,6 +2,11 @@
 
 namespace Views\Components;
 
+/**
+ * Button component class
+ * 
+ * Provides functionality to render HTML buttons or links with button styling
+ */
 class Button
 {
     /**
