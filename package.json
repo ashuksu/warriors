@@ -3,13 +3,21 @@
   "version": "1.0.0",
   "description": "Warriors project",
   "type": "module",
-  "author": "ashuksu",
+  "main": "public/index.php",
   "scripts": {
     "docker:dev": "docker-compose up && echo 'Server started at http://localhost:8080'",
     "docker:restart": "docker-compose restart && echo 'Server restarted at http://localhost:8080'",
     "docker:stop": "docker-compose down && echo 'Docker images and server were stoped'",
     "docker:build": "docker-compose up --build && echo 'Docker image rebuilt and server started at http://localhost:8080'",
     "docker:monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
-    "docker:clean": "docker system prune -af && echo 'The Docker system has been cleaned'"
-  }
+    "docker:clean": "docker system prune -af && echo 'The Docker system has been cleaned'",
+    "vite:preview": "vite preview",
+    "vite:dev": "vite",
+    "vite:build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "author": "ashuksu",
+  "license": "ISC"
 }
