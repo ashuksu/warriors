@@ -11,8 +11,8 @@
 
                 use function Helpers\renderTemplate;
 
-                if (!empty($contacts) && is_array($contacts)) {
-                    foreach ($contacts as $item) {
+                if (!empty($collection) && is_array($collection)) {
+                    foreach ($collection as $item) {
                         renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
                         ]);

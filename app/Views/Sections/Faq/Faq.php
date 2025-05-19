@@ -2,6 +2,7 @@
 
 namespace Views\Sections\Faq;
 
+use Services\SectionService;
 use function Helpers\renderTemplate;
 
 class Faq
@@ -10,33 +11,11 @@ class Faq
     {
         extract($params);
 
-        if (!empty($faq) && is_array($faq)) {
-            ?>
+        renderTemplate(__DIR__ . '/template.php', [
+            'collection' => SectionService::get('faq', 'items'),
+            'section' => 'faq',
+            'title' => SectionService::get('faq', 'title')
+        ]);
 
-            <section id="faq" class="section faq">
-                <div class="container">
-                    <div class="inner inner-style faq__inner">
-                        <h2 class="title text-center wow pixFadeUp" data-wow-delay="0.2s">
-                            <?= $faqTitle ?>
-                        </h2>
-                        <div class="faq__list">
-
-                            <?php
-                            foreach ($faq as $index => $item) {
-                                renderTemplate(__DIR__ . '/item.php', [
-                                    'item' => $item,
-                                    'index' => $index,
-                                    '$setActiveClass' => $index === 0 ? 'active' : ''
-                                ]);
-                            }
-                            ?>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <?php
-        }
     }
 }

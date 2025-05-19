@@ -12,7 +12,7 @@ class Catalog
         extract($params);
 
         renderTemplate(__DIR__ . '/template.php', [
-            'catalog' => SectionService::get('catalog', 'items'),
+            'collection' => SectionService::get('catalog', 'items'),
             'section' => 'catalog',
             'title' => SectionService::get('catalog', 'title'),
             'imagePartPath' => APP_PATH . 'assets/images/items/'

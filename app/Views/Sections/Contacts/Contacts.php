@@ -12,7 +12,7 @@ class Contacts
         extract($params);
 
         renderTemplate(__DIR__ . '/template.php', [
-            'contacts' => SectionService::get('contacts', 'items'),
+            'collection' => SectionService::get('contacts', 'items'),
             'section' => 'contacts',
             'title' => SectionService::get(PAGE, 'title')
         ]);

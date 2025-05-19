@@ -11,8 +11,8 @@
 
                 use function Helpers\renderTemplate;
 
-                if (!empty($catalog) && is_array($catalog)) {
-                    foreach ($catalog as $item) {
+                if (!empty($collection) && is_array($collection)) {
+                    foreach ($collection as $item) {
                         renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
                             'image' => ($imagePartPath ?? APP_PATH . 'assets/images/') . ($item['image'] ?? '')

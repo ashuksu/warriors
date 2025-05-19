@@ -5,8 +5,8 @@
 
         use function Helpers\renderTemplate;
 
-        if (!empty($about) && is_array($about)) {
-            foreach ($about as $index => $item) {
+        if (!empty($collection) && is_array($collection)) {
+            foreach ($collection as $index => $item) {
                 renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                     'item' => $item,
                     'isReverse' => $index % 2 !== 0,

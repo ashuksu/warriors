@@ -2,6 +2,7 @@
 
 namespace Views\Sections\About;
 
+use Services\SectionService;
 use function Helpers\renderTemplate;
 
 class About
@@ -10,11 +11,9 @@ class About
     {
         extract($params);
 
-        if (!empty($about) && is_array($about)) {
-            renderTemplate(__DIR__ . '/template.php', [
-                'about' => $about,
-                'section' => 'about'
-            ]);
-        }
+        renderTemplate(__DIR__ . '/template.php', [
+            'collection' => SectionService::get('about', 'items'),
+            'section' => 'about'
+        ]);
     }
 }
