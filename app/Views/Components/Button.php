@@ -35,7 +35,16 @@ class Button
 
         // Resolve variables in URL
         if (is_string($url) && strpos($url, '$') !== false) {
-            $url = \Services\ConfigVarResolver::getInstance()->resolveValue($url);
+            // If the entire URL is a variable (like "$LINK"), extract the variable name and get its value
+            if (preg_match('/^\$([A-Za-z_][A-Za-z0-9_]*)$/', $url, $matches)) {
+                $varName = $matches[1];
+                if (isset($GLOBALS[$varName])) {
+                    $url = $GLOBALS[$varName];
+                }
+            } else {
+                // Otherwise, use the ConfigVarResolver to resolve any variables in the URL
+                $url = \Services\ConfigVarResolver::getInstance()->resolveValue($url);
+            }
         }
 
         $url = htmlspecialchars($url, ENT_QUOTES);
