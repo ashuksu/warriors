@@ -16,8 +16,6 @@ class HomeController
 
         Layout::render([
             'sections' => ['main', 'about', 'faq', 'info'],
-            'main' => SectionService::get('main'),
-            'mainImage' => SectionService::get('main', 'image'),
             'popups' => $popups,
             'isPopups' => !empty($popups) && is_array($popups),
         ]);

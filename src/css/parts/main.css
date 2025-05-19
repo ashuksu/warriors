@@ -1,10 +1,10 @@
-.main-section__inner {
+.main__inner {
     gap: 2rem;
     height: 100%;
 }
 
 @media (min-width: 768px) {
-    .main-section__inner {
+    .main__inner {
         gap: 3rem;
     }
 }

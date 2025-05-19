@@ -2,7 +2,8 @@
 
 namespace Views\Sections\Main;
 
-use Views\Components\Button;
+use Services\SectionService;
+use function Helpers\renderTemplate;
 
 class Main
 {
@@ -10,47 +11,15 @@ class Main
     {
         extract($params);
 
-        if (!empty($main) && is_array($main)) {
-            ?>
+        $image = SectionService::get('main', 'image');
 
-            <section class="section main-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col col-lg-5 col-md-6 mb-1 mb-md-0">
-                            <div class="inner main-section__inner">
-                                <h1 class="title main-section__title">
-                                    <?= $main['title'] ?>
-                                </h1>
-                                <p class="main-section__text">
-                                    <?= $main['text'] ?>
-                                </p>
-
-                                <?php
-                                if ($isPopups) {
-                                    foreach ($popups as $item) {
-                                        Button::render([
-                                            'url' => '#popup-' . $item['id'],
-                                            'attr' => 'data-element="popup-open"',
-                                            'content' => 'Open popup ' . $item['name']
-                                        ]);
-                                    }
-                                }
-                                ?>
-
-                            </div>
-                        </div>
-                        <div class="col col-md-6">
-                            <div class="image">
-                                <img src="<?= APP_PATH ?>assets/images/<?= $mainImage['name'] ?>"
-                                     alt="<?= $mainImage['alt'] ?>"
-                                     width="<?= $mainImage['width'] ?>" height="<?= $mainImage['height'] ?>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <?php
-        }
+        renderTemplate(__DIR__ . '/template.php', [
+            'item' => SectionService::get('main'),
+            'section' => 'main',
+            'image' => $image,
+            'imagePath' => APP_PATH . 'assets/images/' . ($image['image'] ?? ''),
+            'popups' => $popups,
+            'isPopups' => $isPopups,
+        ]);
     }
 }

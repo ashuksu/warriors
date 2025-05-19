@@ -131,7 +131,7 @@
     "title": "Lorem ipsum dolor sit amet",
     "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur",
     "image": {
-      "name": "w3r.svg",
+      "image": "w3r.svg",
       "alt": "w3r",
       "width": "600",
       "height": "600"
