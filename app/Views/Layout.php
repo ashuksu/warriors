@@ -55,7 +55,7 @@ class Layout
         </div>
 
         <?php
-        Button::render([
+        echo Button::render([
             'url' => '#content',
             'class' => 'button--up',
             'attr' => 'data-element="link" data-action="up"'

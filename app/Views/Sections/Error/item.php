@@ -22,7 +22,7 @@
 
 use Views\Components\Button;
 
-Button::render([
+echo Button::render([
     'url' => $button['url'] ?? '',
     'class' => $button['class'] ?? '',
     'attr' => $button['attr'] ?? '',

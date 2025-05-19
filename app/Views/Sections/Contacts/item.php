@@ -11,7 +11,7 @@ use Views\Components\Button;
         <p class="contacts__card-text "><?= $item['text'] ?? '' ?></p>
 
         <?php
-        Button::render([
+        echo Button::render([
             'url' => $item['url'] ?? '#',
             'class' => 'mt-auto',
             'content' => $item['title'] ?? ''

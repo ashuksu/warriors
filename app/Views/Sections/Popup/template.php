@@ -10,8 +10,8 @@
 
             use Views\Components\Button;
 
-            Button::render([
-                'class' => 'button button--close button--transparent',
+            echo Button::render([
+                'class' => 'button--close button--transparent',
                 'attr' => 'data-element="popup-close"',
             ]);
             ?>
@@ -25,7 +25,7 @@
         <div class="popup__footer">
 
             <?php
-            Button::render([
+            echo Button::render([
                 'url' => $button['url'] ?? '#',
                 'attr' => $button['attr'] ?? '',
                 'content' => $button['content'] ?? ''

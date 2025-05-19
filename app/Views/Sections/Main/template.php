@@ -16,7 +16,7 @@
 
                     if ($isPopups) {
                         foreach ($popups as $item) {
-                            Button::render([
+                            echo Button::render([
                                 'url' => '#popup-' . ($item['id'] ?? ''),
                                 'attr' => 'data-element="popup-open"',
                                 'content' => 'Open popup ' . ($item['name'] ?? '')

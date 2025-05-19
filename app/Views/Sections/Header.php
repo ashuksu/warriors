@@ -29,7 +29,7 @@ class Header
                     </a>
 
                     <?php
-                    Button::render([
+                    echo Button::render([
                         'class' => 'button button--menu button--transparent',
                         'attr' => 'data-element="menu-open"',
                         'content' => '<i></i>',

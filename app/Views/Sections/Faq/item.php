@@ -6,7 +6,7 @@
 
         use Views\Components\Button;
 
-        Button::render([
+        echo Button::render([
             'url' => 'faq-content-' . $index ?? '',
             'class' => 'faq__item-button button--plus button--transparent ' . $setActiveClass ?? '',
             'attr' => 'data-element="toggle"',

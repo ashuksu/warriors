@@ -18,8 +18,8 @@ class Menu
         <nav id="menu" class="menu" data-block="menu">
 
             <?php
-            Button::render([
-                'class' => 'button button--close button--transparent',
+            echo Button::render([
+                'class' => 'button--close button--transparent',
                 'attr' => 'data-element="menu-close"'
             ]);
             ?>
@@ -45,7 +45,7 @@ class Menu
             </div>
 
             <?php
-            Button::render([
+            echo Button::render([
                 'url' => '#popup-' . ($popup['id'] ?? ''),
                 'attr' => 'data-element="popup-open"',
                 'content' => 'Open ' . ($popup['name'] ?? ''),

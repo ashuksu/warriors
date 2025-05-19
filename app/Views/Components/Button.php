@@ -11,21 +11,36 @@ class Button
      *     url?: string,
      *     class?: string,
      *     attr?: string,
-     *     content?: string
-     * } $options Button configuration
+     *     content?: string,
+     *     tag?: string
+     * } $params Button configuration
      *
-     * @return void Echoes HTML button
+     * @return string HTML button
      */
-    public static function render($options = [])
+    public static function render(array $params = []): string
     {
-        // default params
-        $url = $options['url'] ?? '#';
-        $class = $options['class'] ?? '';
-        $attr = $options['attr'] ?? '';
-        $content = $options['content'] ?? '';
-        $button_html = '<a href="' . $url . '" class="button ' . $class . '" ' . $attr . '>';
-        $button_html .= $content . '</a>';
+        extract($params);
 
-        echo $button_html;
+        // default params
+        $url = $url ?? '#';
+        $class = isset($class) ? "button {$class}" : 'button';
+        $attr = $attr ?? '';
+        $content = $content ?? '';
+        $tag = $tag ?? 'link';
+
+        $url = htmlspecialchars($url, ENT_QUOTES);
+        $class = htmlspecialchars($class, ENT_QUOTES);
+
+        ob_start(); ?>
+        <?php if ($tag === 'button'): ?>
+
+            <button class="<?= $class ?>" <?= $attr ?>><?= $content ?></button>
+
+        <?php else: ?>
+
+            <a href="<?= $url ?>" class="<?= $class ?>" <?= $attr ?>><?= $content ?></a>
+
+        <?php endif;
+        return ob_get_clean();
     }
 }
