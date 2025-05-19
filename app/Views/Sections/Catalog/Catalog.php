@@ -2,6 +2,7 @@
 
 namespace Views\Sections\Catalog;
 
+use Services\SectionService;
 use function Helpers\renderTemplate;
 
 class Catalog
@@ -10,14 +11,12 @@ class Catalog
     {
         extract($params);
 
-        if (!empty($catalog) && is_array($catalog)) {
-            renderTemplate(__DIR__ . '/template.php', [
-                'catalog' => $catalog,
-                'section' => 'catalog',
-                'itemPath' => __DIR__ . '/item.php',
-                'title' => $title,
-                'imagePartPath' => APP_PATH . 'assets/images/items/'
-            ]);
-        }
+        renderTemplate(__DIR__ . '/template.php', [
+            'catalog' => SectionService::get('catalog', 'items'),
+            'section' => 'catalog',
+            'itemPath' => __DIR__ . '/item.php',
+            'title' => SectionService::get('catalog', 'title'),
+            'imagePartPath' => APP_PATH . 'assets/images/items/'
+        ]);
     }
 }

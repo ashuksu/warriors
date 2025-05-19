@@ -11,14 +11,12 @@ class Error
     {
         extract($params);
 
-        $error = SectionService::get('error');
-
         renderTemplate(__DIR__ . '/template.php', [
-            'item' => $error,
+            'item' => SectionService::get('error'),
             'section' => 'error',
-            'itemPath' => __DIR__ . '/item.php',
-            'title' => $error['title'],
             'imagePartPath' => APP_PATH . 'assets/images/',
+            'itemPath' => __DIR__ . '/item.php',
+            'title' => SectionService::get('error', 'title')
         ]);
     }
 }

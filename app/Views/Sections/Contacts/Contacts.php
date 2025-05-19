@@ -2,6 +2,7 @@
 
 namespace Views\Sections\Contacts;
 
+use Services\SectionService;
 use function Helpers\renderTemplate;
 
 class Contacts
@@ -10,13 +11,11 @@ class Contacts
     {
         extract($params);
 
-        if (!empty($contacts) && is_array($contacts)) {
-            renderTemplate(__DIR__ . '/template.php', [
-                'contacts' => $contacts,
-                'section' => 'contacts',
-                'itemPath' => __DIR__ . '/item.php',
-                'title' => $title
-            ]);
-        }
+        renderTemplate(__DIR__ . '/template.php', [
+            'contacts' => SectionService::get('contacts', 'items'),
+            'section' => 'contacts',
+            'itemPath' => __DIR__ . '/item.php',
+            'title' => SectionService::get(PAGE, 'title')
+        ]);
     }
 }

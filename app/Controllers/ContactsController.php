@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use Views\Layout;
-use Services\SectionService;
 
 class ContactsController
 {
@@ -13,10 +12,7 @@ class ContactsController
         define("PAGE", "contacts");
 
         Layout::render([
-            'sections' => ['Contacts', 'Info'],
-            'title' => SectionService::get(PAGE, 'title'),
-            'contacts' => SectionService::get('contacts', 'items'),
-            'info' => SectionService::get('info', 'items', 'info-contacts')
+            'sections' => ['Contacts', 'Info']
         ]);
     }
 }

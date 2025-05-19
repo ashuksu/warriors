@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use Views\Layout;
-use Services\SectionService;
 
 class CatalogController
 {
@@ -13,10 +12,7 @@ class CatalogController
         define("PAGE", "catalog");
 
         Layout::render([
-            'sections' => ['catalog', 'info'],
-            'title' => SectionService::get('catalog', 'title'),
-            'catalog' => SectionService::get('catalog', 'items'),
-            'info' => SectionService::get('info', 'items', 'info-catalog')
+            'sections' => ['catalog', 'info']
         ]);
     }
 }
