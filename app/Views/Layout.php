@@ -4,10 +4,10 @@ namespace Views;
 
 use Views\Components\Button;
 use Views\Components\Popup\Popup;
-use Views\Helpers\RenderHelper;
 use Views\Layouts\Footer;
 use Views\Layouts\Head;
 use Views\Layouts\Header;
+use function Helpers\renderTemplate;
 
 class Layout
 {
@@ -26,7 +26,7 @@ class Layout
         <div class="wrapper">
 
             <?php
-            RenderHelper::renderTemplate(__DIR__ . '/Components/preloader.php');
+            renderTemplate(__DIR__ . '/Components/preloader.php', []);
 
             Header::render();
             ?>
@@ -61,7 +61,7 @@ class Layout
 
         Popup::render();
 
-        RenderHelper::renderTemplate(__DIR__ . '/Components/footer-links.php');
+        renderTemplate(__DIR__ . 'Components/footer-links.php', []);
         ?>
 
         </body>

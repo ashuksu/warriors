@@ -2,7 +2,7 @@
 
 namespace Views\Sections\Faq;
 
-use Views\Helpers\RenderHelper;
+use function Helpers\renderTemplate;
 
 class Faq
 {
@@ -23,7 +23,7 @@ class Faq
 
                             <?php
                             foreach ($faq as $index => $item) {
-                                RenderHelper::renderTemplate(__DIR__ . '/item.php', [
+                                renderTemplate(__DIR__ . '/item.php', [
                                     'item' => $item,
                                     'index' => $index,
                                     '$setActiveClass' => $index === 0 ? 'active' : ''

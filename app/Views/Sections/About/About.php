@@ -2,7 +2,7 @@
 
 namespace Views\Sections\About;
 
-use Views\Helpers\RenderHelper;
+use function Helpers\renderTemplate;
 
 class About
 {
@@ -18,7 +18,7 @@ class About
 
                     <?php
                     foreach ($about as $index => $item) {
-                        RenderHelper::renderTemplate(__DIR__ . '/item.php', [
+                        renderTemplate(__DIR__ . '/item.php', [
                             'item' => $item,
                             'imageUrl' => APP_PATH . 'assets/images/' . $item['image'],
                             'isReverse' => $index % 2 !== 0

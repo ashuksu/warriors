@@ -2,7 +2,7 @@
 
 namespace Views\Sections\Contacts;
 
-use Views\Helpers\RenderHelper;
+use function Helpers\renderTemplate;
 
 class Contacts
 {
@@ -24,7 +24,7 @@ class Contacts
 
                             <?php
                             foreach ($contacts as $index => $item) {
-                                RenderHelper::renderTemplate(__DIR__ . '/item.php', [
+                                renderTemplate(__DIR__ . '/item.php', [
                                     'item' => $item,
                                 ]);
                             }
