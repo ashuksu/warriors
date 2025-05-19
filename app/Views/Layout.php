@@ -2,12 +2,12 @@
 
 namespace Views;
 
-use Views\Layouts\Head;
-use Views\Layouts\Header;
-use Views\Layouts\Footer;
 use Views\Components\Button;
 use Views\Components\Popup\Popup;
 use Views\Helpers\RenderHelper;
+use Views\Layouts\Footer;
+use Views\Layouts\Head;
+use Views\Layouts\Header;
 
 class Layout
 {

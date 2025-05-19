@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use Services\SectionService;
 use Views\Layout;
+use Services\SectionService;
 
 class CatalogController
 {

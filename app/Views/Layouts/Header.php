@@ -2,8 +2,8 @@
 
 namespace Views\Layouts;
 
-use Views\Components\Menu\Menu;
 use Views\Components\Button;
+use Views\Components\Menu\Menu;
 
 class Header
 {

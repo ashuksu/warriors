@@ -2,8 +2,8 @@
 
 namespace Views\Components\Popup;
 
-use Services\SectionService;
 use Views\Helpers\RenderHelper;
+use Services\SectionService;
 
 class Popup
 {

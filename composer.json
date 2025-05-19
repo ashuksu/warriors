@@ -8,7 +8,7 @@
             "Core\\": "app/Core/",
             "Services\\": "app/Services/",
             "Controllers\\": "app/Controllers/",
-            "Views\\": "Views/"
+            "Views\\": "app/Views/"
         },
         "files": [
             "config/config.php",

@@ -2,8 +2,8 @@
 
 namespace Views\Components\Menu;
 
-use Services\SectionService;
 use Views\Components\Button;
+use Services\SectionService;
 
 class Menu
 {
