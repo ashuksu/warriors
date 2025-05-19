@@ -29,39 +29,48 @@
     "items": [
       {
         "id": "cat001",
-        "image": "1.png"
+        "image": "1.png",
+        "alt": "image-1"
       },
       {
         "id": "cat002",
-        "image": "2.png"
+        "image": "2.png",
+        "alt": "image-2"
       },
       {
         "id": "cat003",
-        "image": "3.png"
+        "image": "3.png",
+        "alt": "image-3"
       },
       {
         "id": "cat004",
-        "image": "4.png"
+        "image": "4.png",
+        "alt": "image-4"
       },
       {
         "id": "cat005",
-        "image": "5.png"
+        "image": "5.png",
+        "alt": "image-5"
       },
       {
         "id": "cat006",
-        "image": "6.png"
+        "image": "6.png",
+        "alt": "image-6"
       },
       {
         "id": "cat007",
-        "image": "7.png"
+        "image": "7.png",
+        "alt": "image-7"
       },
       {
         "id": "cat008",
-        "image": "8.png"
+        "image": "8.png",
+        "alt": "image-8"
       },
       {
         "id": "cat009",
-        "image": "9.png"
+        "image": "9.png",
+        "alt": "image-9"
       }
     ]
   },
