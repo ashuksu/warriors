@@ -34,7 +34,7 @@
 
                     use Views\Components\Image;
 
-                    Image::render([
+                    echo Image::render([
                         'url' => $imagePath,
                         'alt' => $image['alt'],
                         'width' => $image['width'],

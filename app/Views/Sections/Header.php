@@ -19,7 +19,7 @@ class Header
                     <a href="<?= APP_PATH ?>" class="logo">
 
                         <?php
-                        Image::render([
+                        echo Image::render([
                             'url' => APP_PATH . 'assets/images/logo/logo-1.png',
                             'alt' => 'logo',
                             'width' => 30,

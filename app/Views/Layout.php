@@ -28,7 +28,7 @@ class Layout
 
             <?php
 
-            Preloader::render();
+            echo Preloader::render();
 
             Header::render();
             ?>

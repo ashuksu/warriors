@@ -17,7 +17,7 @@ class Footer
                     <a href="<?= APP_PATH ?>" class="logo">
 
                         <?php
-                        Image::render([
+                        echo Image::render([
                             'url' => APP_PATH . 'assets/images/logo/logo-3.png',
                             'alt' => 'logo-footer',
                             'width' => 70,

@@ -7,7 +7,7 @@
 
     use Views\Components\Image;
 
-    Image::render([
+    echo Image::render([
         'url' => $image,
         'alt' => $item['alt'],
         'width' => $item['width'],

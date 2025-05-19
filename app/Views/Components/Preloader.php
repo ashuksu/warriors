@@ -1,11 +1,25 @@
 <?php
 
 namespace Views\Components;
+
 use Views\Components\Image;
 
+/**
+ * Component for rendering preloader
+ */
 class Preloader
 {
-    public static function render(array $params = [])
+    /**
+     * Render preloader element
+     *
+     * @param array $params {
+     * @type string $id Preloader ID
+     * @type string $class CSS classes
+     * @type string $attr Additional HTML attributes
+     * }
+     * @return string Rendered HTML
+     */
+    public static function render(array $params = []): string
     {
         extract($params);
 
@@ -13,24 +27,21 @@ class Preloader
         $id = $id ?? 'preloader';
         $class = $class ?? 'preloader';
         $attr = $attr ?? '';
-        ?>
-        <div id="<?= $id ?>"
-             class="<?= $class ?>"
+
+        ob_start(); ?>
+        <div id="<?= htmlspecialchars($id, ENT_QUOTES) ?>"
+             class="<?= htmlspecialchars($class, ENT_QUOTES) ?>"
             <?= $attr ?>>
-
-            <?php
-
-            Image::render([
+            <?php echo Image::render([
                 'url' => APP_PATH . 'assets/images/loader.gif',
                 'alt' => 'loader',
                 'width' => 100,
                 'height' => 100,
                 'attr' => 'class="error-image"',
                 'noLazy' => true
-            ]);
-            ?>
-
+            ]) ?>
         </div>
         <?php
+        return ob_get_clean();
     }
 }
