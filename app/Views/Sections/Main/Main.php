@@ -18,7 +18,7 @@ class Main
             'item' => SectionService::get('main'),
             'section' => 'main',
             'image' => $image,
-            'imagePath' => APP_PATH . 'dist/assets/images/' . ($image['image'] ?? ''),
+            'imagePath' => getAssetPath('dist/assets/images/' . ($image['image'] ?? '')),
             'popups' => $popups,
             'isPopups' => !empty($popups) && is_array($popups),
         ]);

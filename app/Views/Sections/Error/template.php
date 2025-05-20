@@ -10,9 +10,10 @@
             use function Helpers\renderTemplate;
 
             if (!empty($item) && is_array($item)) {
+
                 renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                     'text' => $item['text'],
-                    'image' => ($imagePartPath ?? (APP_PATH . 'dist/assets/images/')) . ($item['image']['image'] ?? ''),
+                    'image' => getAssetPath('dist/assets/images/' . ($item['image']['image'] ?? '')),
                     'item' => $item['image'],
                     'button' => $item['button']
                 ]);
