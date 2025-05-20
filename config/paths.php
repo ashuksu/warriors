@@ -26,7 +26,7 @@ define('SCRIPTS_PATH', DIST_PATH . 'assets/js/');
  */
 function isViteServerRunning(): bool
 {
-//    return true for running vite server; need to check if the server is running
+// todo: return true for running vite server; need to check if the server is running
     static $isRunning = null;
 
     if ($isRunning === null) {
