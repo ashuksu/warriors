@@ -7,17 +7,18 @@
   "scripts": {
     "docker:dev": "docker-compose up && echo 'Server started at http://localhost:8080'",
     "docker:restart": "docker-compose restart && echo 'Server restarted at http://localhost:8080'",
-    "docker:stop": "docker-compose down && echo 'Docker images and server were stoped'",
+    "docker:stop": "docker-compose down",
     "docker:build": "docker-compose up --build && echo 'Docker image rebuilt and server started at http://localhost:8080'",
     "docker:monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
     "docker:clean": "docker system prune -af && echo 'The Docker system has been cleaned'",
     "vite:preview": "vite preview",
-    "clean:ports": "kill-port 5173 8080 || true",
-    "vite:kill": "fuser -k 5173/tcp || true && echo 'Vite process on port 5173 was stopped'",
+    "vite:stop": "kill-port 5173 8080 || true",
+    "vite:kill": "fuser -k 5173/tcp || true",
     "vite:dev": "vite",
     "vite:build": "vite build",
-    "dev": "npm run docker:stop && npm run clean:ports && \nconcurrently \"npm run docker:dev\" \"npm run vite:dev\"",
-    "build": "docker-compose build && vite build",
+    "dev": "composer dump-autoload && \nconcurrently \"npm run docker:dev\" \"npm run vite:dev\"",
+    "build": "composer dump-autoload -o && docker-compose build && vite build",
+    "stop": "npm run docker:stop && nmp run vite:stop",
     "preview": "concurrently \"npm run docker:dev\" \"npm run vite:preview\""
   },
   "devDependencies": {

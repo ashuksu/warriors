@@ -19,7 +19,7 @@ Before you begin, ensure you have the following installed:
 ### Installation
 
 ## Requirements
-- PHP 7.4 or higher
+- PHP 8.0 or higher
 - Composer
 - Node.js and NPM
 
@@ -28,27 +28,77 @@ Before you begin, ensure you have the following installed:
 composer install
 npm install
 ```
+
 ```bash
 # to update startup
 composer dump-autoload
+```
+or
 
+```bash
 # optimized generation, better for production
 composer dump-autoload -o
 ```
 
 ```bash   
-# Rebuild the Docker image (once at first time, or after edition Docker files)
-npm run docker:build
+# Rebuild the Docker image and the Vite build
+npm run build
 ```
 
-### Running the Project (Docker)
+```bash   
+# Once at first time, or after edition/cleaning Docker files
+docker-compose build
+```
+
+### Running the Project (Docker + Vite)
+
+```
+http://localhost:8080
+```
+
+```
+http://localhost:5173/
+```
+
+```bash 
+# Start dev server
+npm run dev
+```
+
+```bash 
+# Start build
+npm run build
+```
+
+```bash  
+# Stop
+npm run stop
+```
+
+```bash  
+# Preview
+npm run preview
+```
+
+### Running Docker
 
 ```bash
-# Install dependencies
+# Start
 npm run docker:dev
 ```
-```bash
+
+```
 http://localhost:8080
+```
+
+```bash 
+# Forced rebuild without cache:
+docker-compose up --build
+```
+
+```bash 
+# Just build:
+docker-compose build
 ```
 
 ### Additional Docker commands
@@ -58,17 +108,19 @@ http://localhost:8080
 npm run docker:restart
 ```
 
-```bash  
-# Stop the container
-npm run docker:stop
-```
-
 ```bash
 # Monitor Docker containers
 npm run docker:monitor
 ```
 
-#### How to clean
+#### How to stop Docker
+
+```bash  
+# Stop the container
+npm run docker:stop
+```
+
+#### How to clean Docker
 
 ```bash 
 # !! Clean unused Docker resources
@@ -85,12 +137,52 @@ docker system prune -a
 docker rmi warriors_web
 ```
 
+### Running Vite
+
 ```bash 
-# Forced rebuild without cache:
-docker-compose up --build
+# Start dev server
+npm run vite:dev
+```
+
+```
+http://localhost:5173/
 ```
 
 ```bash 
-# Just build:
-docker-compose build
+# Start build
+npm run vite:build
+```
+
+### Additional Vite commands
+
+```bash
+# Preview
+npm run vite:preview
+```
+
+#### How to check|clean|stop|kill Vite
+
+```bash  
+# Stop
+npm run vite:stop
+```
+
+```bash
+# Stop (Linux only)
+npm run vite:kill
+```
+
+```bash
+# Find the PID of the process
+lsof -i :5173
+```
+
+```bash
+# Or alternatively
+netstat -tulpn | grep 5173
+```
+
+```bash
+# Kill the process (replace <PID> with the process number from the previous command)
+kill -9 <pid>
 ```
