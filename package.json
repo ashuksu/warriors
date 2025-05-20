@@ -1,7 +1,7 @@
 {
   "name": "warriors",
   "version": "1.0.0",
-  "description": "Warriors project",
+  "description": "PHP + Vite project",
   "type": "module",
   "main": "public/index.php",
   "scripts": {
@@ -16,6 +16,7 @@
     "vite:build": "vite build"
   },
   "devDependencies": {
+    "concurrently": "^8.2.0",
     "vite": "^6.3.5"
   },
   "author": "ashuksu",
