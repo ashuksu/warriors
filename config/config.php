@@ -1,4 +1,10 @@
 <?php
+/**
+ * Main configuration file
+ * 
+ * Loads environment variables and defines application constants.
+ * This file should be included at the beginning of the application bootstrap process.
+ */
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;

@@ -151,6 +151,8 @@ class SectionService
 
     /**
      * Clear the cache
+     * 
+     * @return void
      */
     public static function clearCache()
     {
