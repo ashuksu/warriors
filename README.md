@@ -63,19 +63,17 @@ npm run docker:restart
 npm run docker:stop
 ```
 
-
 ```bash
 # Monitor Docker containers
 npm run docker:monitor
 ```
 
-
+#### How to clean
 
 ```bash 
 # !! Clean unused Docker resources
 npm run docker:clean
 ```
-### Additionally
 
 ```bash 
 # Clean up all unused containers and images
