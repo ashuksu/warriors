@@ -9,16 +9,16 @@ class Vite
 
     public static function assets(): array
     {
-        if (defined('IS_DEV')) {
+        if (defined('IS_DEV') && IS_DEV && isViteServerRunning()) {
             return [
                 'styles' => [
-                    ['href' => 'http://localhost:5173/src/scss/main.scss'],
-                    ['href' => 'http://localhost:5173/src/css/style.css'],
-                    ['href' => 'http://localhost:5173/src/css/criticalStyles.css']
+                    ['href' => getAssetPath('src/scss/main.scss')],
+                    ['href' => getAssetPath('src/css/style.css')],
+                    ['href' => getAssetPath('src/css/criticalStyles.css')]
                 ],
                 'scripts' => [
-                    ['src' => 'http://localhost:5173/@vite/client', 'type' => 'module'],
-                    ['src' => 'http://localhost:5173/src/js/script.js', 'type' => 'module']
+                    ['src' => VITE_DEV_CLIENT, 'type' => 'module'],
+                    ['src' => getAssetPath('src/js/script.js'), 'type' => 'module']
                 ]
             ];
         }

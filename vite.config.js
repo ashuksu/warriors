@@ -2,8 +2,8 @@ import {defineConfig} from 'vite'
 import {viteStaticCopy} from 'vite-plugin-static-copy'
 
 export default defineConfig({
-    root: './',
-    base: '/dist/',
+    // root: './',
+    // base: '/',
     build: {
         outDir: 'public/dist',
         manifest: true,
