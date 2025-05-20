@@ -15,7 +15,7 @@ class Catalog
             'collection' => SectionService::get('catalog', 'items'),
             'section' => 'catalog',
             'title' => SectionService::get('catalog', 'title'),
-            'imagePartPath' => APP_PATH . 'assets/images/items/'
+            'imagePartPath' => APP_PATH . 'dist/assets/images/items/'
         ]);
     }
 }
