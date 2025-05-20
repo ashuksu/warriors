@@ -33,7 +33,7 @@ class Header
 
                         <?php
                         echo Image::render([
-                            'url' => APP_PATH . 'assets/images/logo/logo-1.png',
+                            'url' => APP_PATH . 'dist/assets/images/logo/logo-1.png',
                             'alt' => 'logo',
                             'width' => 30,
                             'height' => 30,

@@ -33,7 +33,7 @@ class Preloader
              class="<?= htmlspecialchars($class, ENT_QUOTES) ?>"
             <?= $attr ?>>
             <?php echo Image::render([
-                'url' => APP_PATH . 'assets/images/loader.gif',
+                'url' => APP_PATH . 'dist/assets/images/loader.gif',
                 'alt' => 'loader',
                 'width' => 100,
                 'height' => 100,
