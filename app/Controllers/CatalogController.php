@@ -21,8 +21,8 @@ class CatalogController
      */
     public static function index(): void
     {
-        define("APP_TITLE", PAGES['main']['title']);
-        define("PAGE", "catalog");
+        define("APP_TITLE", PAGES['catalog']['title']);
+        define("PAGE", PAGES['catalog']['name']);
 
         Layout::render([
             'sections' => [PAGE, 'info']

@@ -21,8 +21,8 @@ class ErrorController
      */
     public static function index(): void
     {
-        define("APP_TITLE", PAGES['main']['title']);
-        define("PAGE", "error");
+        define("APP_TITLE", PAGES['error']['title']);
+        define("PAGE", PAGES['error']['name']);
 
         Layout::render([
             'sections' => [PAGE],

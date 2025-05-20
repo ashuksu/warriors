@@ -33,3 +33,6 @@ Thumbs.db
 # Test
 test
 /vendor/
+
+# Environment variables
+/.env

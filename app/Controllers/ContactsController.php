@@ -21,8 +21,8 @@ class ContactsController
      */
     public static function index(): void
     {
-        define("APP_TITLE", PAGES['main']['title']);
-        define("PAGE", "contacts");
+        define("APP_TITLE", PAGES['contacts']['title']);
+        define("PAGE", PAGES['contacts']['name']);
 
         Layout::render([
             'sections' => [PAGE, 'info']
