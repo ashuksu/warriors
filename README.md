@@ -69,7 +69,25 @@ npm run docker:stop
 npm run docker:monitor
 ```
 
+
+
 ```bash 
 # !! Clean unused Docker resources
 npm run docker:clean
+```
+### Additionally
+
+```bash 
+# Clean up all unused containers and images
+docker system prune -a
+```
+
+```bash 
+# Delete all local project images (PROJECT_DIRECTORY_NAME_web)
+docker rmi warriors_web
+```
+
+```bash 
+# Forced rebuild without cache:
+docker-compose up --build
 ```

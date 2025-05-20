@@ -1,0 +1,28 @@
+# Node.js
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Development files
+.vscode
+.idea
+*.log
+*.md
+*.sh
+
+# Build artifacts
+dist
+public/assets/dist
+
+# Test files
+test
