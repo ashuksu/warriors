@@ -89,3 +89,8 @@ docker rmi warriors_web
 # Forced rebuild without cache:
 docker-compose up --build
 ```
+
+```bash 
+# Just build:
+docker-compose build
+```

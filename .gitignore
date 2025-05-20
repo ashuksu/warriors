@@ -13,7 +13,7 @@ npm-debug.log
 
 # Vite
 dist
-public/assets/dist
+public/dist
 .vite
 *.local
 

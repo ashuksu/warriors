@@ -22,7 +22,7 @@ docker-compose.yml
 
 # Build artifacts
 dist
-public/assets/dist
+public/dist
 
 # Test files
 test
