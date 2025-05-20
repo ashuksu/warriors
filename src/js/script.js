@@ -5,6 +5,7 @@
  *
  * @module script
  */
+console.log('Script loaded');
 
 import preloader from './modules/utils/preloader.js';
 import scrollEvents from './modules/utils/scrollEvents.js';
