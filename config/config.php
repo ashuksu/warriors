@@ -12,4 +12,3 @@ define('DOMAIN', $_ENV['DOMAIN'] ?? 'warriors.example.com');
 define('LINK', $_ENV['LINK'] ?? 'https://github.com/username/');
 define('EMAIL', $_ENV['EMAIL'] ?? 'email@example.com');
 define('TELEGRAM', $_ENV['TELEGRAM'] ?? 'https://t.me/username');
-define('VITE_DEV_SERVER', ($_ENV['VITE_DEV_SERVER'] ?? 'false') === 'true');
