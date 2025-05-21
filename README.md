@@ -53,7 +53,7 @@ needed. It's represented as follows:
 
 ---
 
-## How to Switch Between Versions and View Them
+## How to Switch Between Versions
 
 <details>
   <summary>How to Switch</summary>
@@ -89,7 +89,7 @@ needed. It's represented as follows:
     ```
   If you want to start development based on this tagged state, you should create a new branch:
     ```bash
-    git checkout -b new-feature-for-old-design old-design-v1
+    git checkout -b feature/old-v1-TASK old-design-v1
     ```
 
 </details>
