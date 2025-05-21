@@ -153,6 +153,62 @@ http://localhost:5173/
 npm run vite:build
 ```
 
+### Using the Vite Helper
+
+The project includes a Vite helper class that simplifies asset management in both development and production environments. The helper automatically handles the loading of assets from the Vite development server in development mode and from the built files in production mode.
+
+#### Including Assets in Templates
+
+```markdown
+```js
+input: {
+  script: './src/js/script.js',
+  style: './src/css/style.css',
+  styleHome: './src/css/styleHome.css',
+  animate: './src/css/libs/animate.min.css',
+  criticalStyles: './src/scss/criticalStyles.scss'
+},
+```
+
+> **Important:**  
+> These files must be listed in the `input` option of your `vite.config.js` configuration.  
+> If you do not include them, Vite will not process or output these assets, and you may encounter errors when trying to load them in your templates.
+> Except for those that are connected in modules
+```
+Use the `getAssetPath` method to include assets in your templates:
+
+```php
+<?php
+use App\Helpers\Vite;
+?>
+
+<!-- CSS files -->
+<link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/style.css') ?>">
+<link rel="stylesheet" href="<?= Vite::getAssetPath('src/scss/criticalStyles.scss') ?>">
+
+<!-- JavaScript modules -->
+<script type="module" src="<?= Vite::getAssetPath('src/js/modules/Menu.js') ?>"></script>
+<script type="module" src="<?= Vite::getAssetPath('src/js/modules/utils/Toggle.js') ?>"></script>
+
+<!-- Library CSS files -->
+<link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/libs/animate.min.css') ?>">
+```
+
+#### Development vs Production
+
+The Vite helper automatically detects whether the application is running in development or production mode based on the `IS_DEV` constant defined in the `.env` file:
+
+- In development mode (`IS_DEV=true`), assets are loaded from the Vite development server
+- In production mode (`IS_DEV=false`), assets are loaded from the built files with hashed filenames
+
+#### Supported Asset Types
+
+The Vite helper supports various asset types:
+
+- CSS files (e.g., `src/css/style.css`, `src/css/libs/animate.min.css`)
+- SCSS files (e.g., `src/scss/main.scss`, `src/scss/criticalStyles.scss`)
+- JavaScript files (e.g., `src/js/modules/Menu.js`, `src/js/modules/utils/Toggle.js`)
+
 ### Additional Vite commands
 
 ```bash
