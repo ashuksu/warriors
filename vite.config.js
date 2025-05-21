@@ -43,6 +43,7 @@ export default defineConfig({
         port: 5173,
         strictPort: true,
         host: true,
+        // hmr: false,
         origin: 'http://localhost:5173',
         proxy: {
             '^(?!/[@vite/client|src/]).*': {
