@@ -91,6 +91,11 @@ needed. It's represented as follows:
     ```bash
     git checkout -b feature/old-v1-TASK old-design-v1
     ```
+  
+  Or branch off the `master-old-v1`
+    ```bash
+    git checkout master-old-v1
+    ```
 
 </details>
 
