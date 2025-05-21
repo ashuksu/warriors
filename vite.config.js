@@ -12,8 +12,9 @@ export default defineConfig({
             input: {
                 script: './src/js/script.js',
                 style: './src/css/style.css',
-                criticalStyles: './src/css/criticalStyles.css',
-                main: './src/scss/main.scss'
+                styleHome: './src/css/styleHome.css',
+                animate: './src/css/libs/animate.min.css',
+                criticalStyles: './src/scss/criticalStyles.scss'
             },
             output: {
                 manualChunks: undefined,
