@@ -160,6 +160,10 @@ npm run vite:build
 npm run vite:preview
 ```
 
+```
+http://localhost:4173
+```
+
 #### How to check|clean|stop|kill Vite
 
 ```bash  
