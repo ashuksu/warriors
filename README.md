@@ -1,27 +1,108 @@
-# Warriors Project
+# [WARRIORS](https://ashuksu.github.io/warriors/public)
+
+
+# Repository Structure
 
 <details>
-  <summary>Click to show Preview</summary>
+  <summary>Core Branches</summary>
 
-  ![WARRIORS](https://raw.githubusercontent.com/ashuksu/warriors/refs/heads/main/preview.jpg)
+This repository uses the following branch structure to manage different versions of the project:
+
 </details>
 
+---
 
-## Getting Started
+## Core Branches
 
-### Prerequisites
+<details>
+  <summary>Core Branches</summary>
 
-Before you begin, ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v14 or later)
-- [PHP](https://www.php.net/) (v8.0 or later)
-- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) (optional, for Docker deployment)
+* **`master`**:
+    * This is the **main (production)** branch. It always contains the **latest version of the website with the new
+      design**, which is deployed to production.
+    * Any release-ready changes are merged here.
 
-### Installation
+* **`dev`**:
+    * This is the **development branch**. All new features and bug fixes are initially developed here or in separate
+      feature branches, then merged into `dev`.
+    * `dev` is synchronized with `master` after each successful release.
 
-## Requirements
-- PHP 8.0 or higher
-- Composer
-- Node.js and NPM
+</details>
+
+---
+
+## Old Website Version (Pre-Redesign)
+
+<details>
+  <summary>Pre-Redesign</summary>
+
+We've preserved the previous version of the website (before the major redesign) for historical access or in case it's
+needed. It's represented as follows:
+
+* **`master-old-v1` (Branch)**:
+    * This is a **dedicated branch** that holds the **complete history of the old website design**.
+    * If minor changes or fixes are ever needed for the old version, they can be made within this branch.
+
+* **`old-design-v1` (Tag)**:
+    * This is a **permanent tag** that points to the **last commit of the old website version** (at the time it was "
+      frozen" before the redesign).
+    * Tags serve as static "snapshots" of the code's state at a specific point in time. It acts as a reference point for
+      the old design.
+
+</details>
+
+---
+
+## How to Switch Between Versions
+
+<details>
+  <summary>How to Switch</summary>
+
+### Switching to the Main or Dev Branch:
+
+* To work on the new version or synchronize with it:
+    ```bash
+    git checkout master
+    # or
+    git checkout dev
+    ```
+
+### Switching to the Old Branch:
+
+* If you need to work with the code of the old design:
+    ```bash
+    git checkout master-old-v1
+    ```
+
+### Viewing and Checking Out Tags:
+
+* To see all available tags:
+    ```bash
+    git tag
+    ```
+  You'll see a list, including `old-design-v1`.
+
+* To "check out" the state that a tag points to (this will put you in a "detached HEAD" state, which is fine for viewing
+  but not for active development):
+    ```bash
+    git checkout old-design-v1
+    ```
+  If you want to start development based on this tagged state, you should create a new branch:
+    ```bash
+    git checkout -b feature/old-v1-TASK old-design-v1
+    ```
+
+</details>
+
+By adhering to this structure, we ensure a clear separation between active development, current production, and
+historical versions of the project.
+
+---
+
+# Installation
+
+<details>
+  <summary>Installation</summary>
 
 ```bash
 # Install dependencies
@@ -50,7 +131,14 @@ npm run build
 docker-compose build
 ```
 
+</details>
+
+---
+
 ### Running the Project (Docker + Vite)
+
+<details>
+  <summary>Docker + Vite</summary>
 
 ```
 http://localhost:8080
@@ -80,7 +168,14 @@ npm run stop
 npm run preview
 ```
 
+</details>
+
+---
+
 ### Running Docker
+
+<details>
+  <summary>Docker</summary>
 
 ```bash
 # Start
@@ -137,7 +232,14 @@ docker system prune -a
 docker rmi warriors_web
 ```
 
+</details>
+
+---
+
 ### Running Vite
+
+<details>
+  <summary>Vite</summary>
 
 ```bash 
 # Start dev server
@@ -153,11 +255,56 @@ http://localhost:5173/
 npm run vite:build
 ```
 
+### Additional Vite commands
+
+```bash
+# Preview
+npm run vite:preview
+```
+
+```
+http://localhost:4173
+```
+
+#### How to check|clean|stop|kill Vite
+
+```bash  
+# Stop
+npm run vite:stop
+```
+
+```bash
+# Stop (Linux only)
+npm run vite:kill
+```
+
+```bash
+# Find the PID of the process
+lsof -i :5173
+```
+
+```bash
+# Or alternatively
+netstat -tulpn | grep 5173
+```
+
+```bash
+# Kill the process (replace <PID> with the process number from the previous command)
+kill -9 <pid>
+```
+
+</details>
+
+---
+
 ### Using the Vite Helper
 
 The project includes a Vite helper class that simplifies asset management in both development and production environments. The helper automatically handles the loading of assets from the Vite development server in development mode and from the built files in production mode.
 
 #### Including Assets in Templates
+
+<details>
+  <summary>Vite Helper</summary>
 
 ```markdown
 ```js
@@ -209,40 +356,6 @@ The Vite helper supports various asset types:
 - SCSS files (e.g., `src/scss/main.scss`, `src/scss/criticalStyles.scss`)
 - JavaScript files (e.g., `src/js/modules/Menu.js`, `src/js/modules/utils/Toggle.js`)
 
-### Additional Vite commands
+</details>
 
-```bash
-# Preview
-npm run vite:preview
-```
-
-```
-http://localhost:4173
-```
-
-#### How to check|clean|stop|kill Vite
-
-```bash  
-# Stop
-npm run vite:stop
-```
-
-```bash
-# Stop (Linux only)
-npm run vite:kill
-```
-
-```bash
-# Find the PID of the process
-lsof -i :5173
-```
-
-```bash
-# Or alternatively
-netstat -tulpn | grep 5173
-```
-
-```bash
-# Kill the process (replace <PID> with the process number from the previous command)
-kill -9 <pid>
-```
+---
