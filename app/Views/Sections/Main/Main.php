@@ -4,6 +4,7 @@ namespace Views\Sections\Main;
 
 use Services\SectionService;
 use function Helpers\renderTemplate;
+use function Helpers\getPath;
 
 class Main
 {
@@ -18,7 +19,7 @@ class Main
             'item' => SectionService::get('main'),
             'section' => 'main',
             'image' => $image,
-            'imagePath' => getAssetPath('dist/assets/images/' . ($image['image'] ?? '')),
+            'imagePath' => getPath('dist/assets/images/' . ($image['image'] ?? '')),
             'popups' => $popups,
             'isPopups' => !empty($popups) && is_array($popups),
         ]);

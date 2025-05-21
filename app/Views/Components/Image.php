@@ -2,6 +2,8 @@
 
 namespace Views\Components;
 
+use Services\ConfigVarResolver;
+
 /**
  * Component for rendering images
  */
@@ -35,7 +37,7 @@ class Image
 
         // Resolve variables in URL
         if (is_string($url) && strpos($url, '$') !== false) {
-            $url = \Services\ConfigVarResolver::getInstance()->resolveValue($url);
+            $url = ConfigVarResolver::getInstance()->resolveValue($url);
         }
 
         // Escape attribute values

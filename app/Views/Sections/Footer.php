@@ -3,19 +3,20 @@
 namespace Views\Sections;
 
 use Views\Components\Image;
+use function Helpers\getPath;
 
 /**
  * Footer section class
- * 
+ *
  * Handles rendering of the site footer with logo, copyright information, and links
  */
 class Footer
 {
     /**
      * Render the footer section
-     * 
+     *
      * Outputs the footer with logo, copyright text, and external links
-     * 
+     *
      * @param array $params Parameters for the footer section
      * @return void
      */
@@ -34,7 +35,7 @@ class Footer
 
                         <?php
                         echo Image::render([
-                            'url' => getAssetPath('dist/assets/images/logo/logo-3.png'),
+                            'url' => getPath('dist/assets/images/logo/logo-3.png'),
                             'alt' => 'logo-footer',
                             'width' => 70,
                             'height' => 70,

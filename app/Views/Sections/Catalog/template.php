@@ -10,12 +10,13 @@
                 <?php
 
                 use function Helpers\renderTemplate;
+                use function Helpers\getPath;
 
                 if (!empty($collection) && is_array($collection)) {
                     foreach ($collection as $item) {
                         renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
-                            'image' => getAssetPath('dist/assets/images/items/' . ($item['image'] ?? '')),
+                            'image' => getPath('dist/assets/images/items/' . ($item['image'] ?? '')),
                         ]);
                     }
                 }

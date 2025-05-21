@@ -3,6 +3,7 @@
 namespace Services;
 
 use Exception;
+use Services\ConfigVarResolver;
 
 /**
  * Utility class for loading data from JSON files

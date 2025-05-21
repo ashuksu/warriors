@@ -3,6 +3,7 @@
 namespace Views\Components;
 
 use Views\Components\Image;
+use function Helpers\getPath;
 
 /**
  * Component for rendering preloader
@@ -33,7 +34,7 @@ class Preloader
              class="<?= htmlspecialchars($class, ENT_QUOTES) ?>"
             <?= $attr ?>>
             <?php echo Image::render([
-                'url' => getAssetPath('dist/assets/images/loader.gif'),
+                'url' => getPath('dist/assets/images/loader.gif'),
                 'alt' => 'loader',
                 'width' => 100,
                 'height' => 100,

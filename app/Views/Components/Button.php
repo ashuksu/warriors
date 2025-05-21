@@ -2,6 +2,8 @@
 
 namespace Views\Components;
 
+use Services\ConfigVarResolver;
+
 /**
  * Button component class
  * 
@@ -43,7 +45,7 @@ class Button
                 }
             } else {
                 // Otherwise, use the ConfigVarResolver to resolve any variables in the URL
-                $url = \Services\ConfigVarResolver::getInstance()->resolveValue($url);
+                $url = ConfigVarResolver::getInstance()->resolveValue($url);
             }
         }
 

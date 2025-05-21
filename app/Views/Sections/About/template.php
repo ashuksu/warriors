@@ -4,13 +4,14 @@
         <?php
 
         use function Helpers\renderTemplate;
+        use function Helpers\getPath;
 
         if (!empty($collection) && is_array($collection)) {
             foreach ($collection as $index => $item) {
                 renderTemplate($itemPath ?? __DIR__ . '/item.php', [
                     'item' => $item,
                     'isReverse' => $index % 2 !== 0,
-                    'image' => getAssetPath('dist/assets/images/' . ($item['image'] ?? '')),
+                    'image' => getPath('dist/assets/images/' . ($item['image'] ?? '')),
                 ]);
             }
         }
