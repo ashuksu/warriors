@@ -1,0 +1,23 @@
+{
+    "name": "ashuksu/warriors",
+    "description": "Warriors Project",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "app/Core/",
+            "Services\\": "app/Services/",
+            "Controllers\\": "app/Controllers/",
+            "Views\\": "app/Views/"
+        },
+        "files": [
+            "config/config.php",
+            "config/constants.php",
+            "app/Helpers/helpers.php"
+        ]
+    },
+    "require": {
+        "php": "^8.0",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

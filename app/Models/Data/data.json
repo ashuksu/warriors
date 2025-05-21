@@ -1,0 +1,209 @@
+{
+  "about": {
+    "items": [
+      {
+        "id": "a001",
+        "image": "w1.svg",
+        "alt": "w1",
+        "title": "Lorem ipsum dolor sit amet.",
+        "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur adipiscing"
+      },
+      {
+        "id": "a002",
+        "image": "w12.svg",
+        "alt": "w12",
+        "title": "Lorem ipsum dolor sit amet, consectetur.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi, dicta distinctio dolorum eos inventore ipsum laboriosam magni minima neque officiis placeat quam quisquam quod similique sit soluta vel voluptatum?"
+      },
+      {
+        "id": "a003",
+        "image": "w2.svg",
+        "alt": "w2",
+        "title": "Lorem ipsum dolor sit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dicta explicabo, nisi omnis possimus quia quis sapiente. Alias animi atque, autem enim esse eveniet expedita id illum molestias non voluptatem."
+      }
+    ]
+  },
+  "catalog": {
+    "title": "lorem ipsum dolor sit",
+    "items": [
+      {
+        "id": "cat001",
+        "image": "1.png",
+        "alt": "image-1"
+      },
+      {
+        "id": "cat002",
+        "image": "2.png",
+        "alt": "image-2"
+      },
+      {
+        "id": "cat003",
+        "image": "3.png",
+        "alt": "image-3"
+      },
+      {
+        "id": "cat004",
+        "image": "4.png",
+        "alt": "image-4"
+      },
+      {
+        "id": "cat005",
+        "image": "5.png",
+        "alt": "image-5"
+      },
+      {
+        "id": "cat006",
+        "image": "6.png",
+        "alt": "image-6"
+      },
+      {
+        "id": "cat007",
+        "image": "7.png",
+        "alt": "image-7"
+      },
+      {
+        "id": "cat008",
+        "image": "8.png",
+        "alt": "image-8"
+      },
+      {
+        "id": "cat009",
+        "image": "9.png",
+        "alt": "image-9"
+      }
+    ]
+  },
+  "contacts": {
+    "title": "Contacts",
+    "items": [
+      {
+        "id": "c001",
+        "title": "Email",
+        "text": "lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ",
+        "url": "mailto:$EMAIL"
+      },
+      {
+        "id": "c002",
+        "title": "Telegram",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur dolore eum fuga itaque quasi qui quisquam sequi tenetur.",
+        "url": "$TELEGRAM"
+      }
+    ]
+  },
+  "error": {
+    "title": "404",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum cupiditate dicta earum enim ipsum iure pariatur porro possimus",
+    "image": {
+      "image": "w4.gif",
+      "alt": "w4",
+      "width": "600",
+      "height": "600"
+    },
+    "button": {
+      "url": "APP_PATH",
+      "class": "error-button wow pixFadeUp",
+      "attr": "data-wow-delay='0.5s' target='_blank'",
+      "content": "to the Home page"
+    }
+  },
+  "faq": {
+    "title": "Have Questions? <br> <span>Cluely Has Answers</span>",
+    "items": [
+      {
+        "id": "f001",
+        "title": "Lorem ipsum dolor sit amet.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi illo natus numquam qui quidem quod, sit? Adipisci a"
+      },
+      {
+        "id": "f002",
+        "title": "Lorem ipsum dolor sit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipi"
+      },
+      {
+        "id": "f003",
+        "title": "Lorem ipsum dolor sit amet, consectetur.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eos excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
+      }
+    ]
+  },
+  "main": {
+    "title": "Lorem ipsum dolor sit amet",
+    "text": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur",
+    "image": {
+      "image": "w3r.svg",
+      "alt": "w3r",
+      "width": "600",
+      "height": "600"
+    }
+  },
+  "popup": {
+    "items": [
+      {
+        "id": "p001",
+        "name": "First",
+        "title": "First Popup",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?",
+        "button": {
+          "url": "APP_PATH",
+          "content": "Go Home"
+        }
+      },
+      {
+        "id": "p002",
+        "name": "Second",
+        "title": "Second Popup",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
+        "button": {
+          "url": "$LINK",
+          "attr": "target='_blank'",
+          "content": "GitHub"
+        }
+      }
+    ]
+  },
+  "info": {
+    "items": [
+      {
+        "id": "info-main",
+        "title": "An Info Section on the Home page.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eoss excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!  excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
+      },
+      {
+        "id": "info-catalog",
+        "title": "The Catalog page and an Info section",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum labore maiores nostrum similique! Adipisci, alias, repellat. Assumenda consectetur dolorem illo nihil saepe tenetur ullam. A accusantium adipisci architecto at atque eaque eum inventore iste labore maiores, natus nulla perferendis possimus quis, recusandae repudiandae tempore vel, vitae. Deserunt in ipsa itaque iure laborum laudantium necessitatibus nihil odit praesentium quam, sapiente temporibus voluptate. Aspernatur autem cum deleniti, error incidunt minus quos reiciendis vel voluptatem? Ad doloribus ex incidunt nulla rerum suscipit ullam vel veniam voluptates voluptatum? Accusamus, dicta exercitationem facilis harum ipsa non numquam quia reprehenderit voluptates? Alias aliquam aliquid autem beatae commodi consequatur cum cumque debitis deserunt dolorum facere, illum iste laboriosam, laborum modi nam natus nemo nihil officiis quas reiciendis saepe soluta velit? Ab accusamus accusantium, dignissimos ea ipsum nihil nostrum perspiciatis quis sed tempora? Amet atque dolorum id incidunt laborum magni molestiae, molestias nemo numquam obcaecati perferendis provident, quam quas ratione sit suscipit temporibus vel velit vero voluptatem? Accusantium adipisci aliquid atque, beatae commodi cum cumque ducimus earum et explicabo illo inventore ipsam iusto nostrum numquam officiis omnis optio pariatur perferendis praesentium rem reprehenderit saepe sit sunt tempore vero voluptatibus! Iure odio praesentium quidem ratione. Atque error eum maxime nostrum. Adipisci alias architecto consequatur delectus dicta distinctio dolore dolorum earum eligendi fugiat harum inventore iste maiores minima necessitatibus nisi nostrum, placeat possimus quibusdam ratione rem tempora temporibus tenetur unde vel. Eaque est illum, ipsa iure magnam nisi repudiandae ut velit? Accusamus accusantium assumenda consequatur dicta dolore expedita inventore iste, magnam nostrum quae quam quas quasi ratione rem similique sit, sunt, unde voluptas voluptate voluptates. Eaque omnis placeat quibusdam quis? Id repellat similique sint sunt voluptas! Amet ipsa mollitia, nemo officia quas quia sequi sunt vitae! Dolore ea et facere provident repellendus suscipit, velit! Asperiores aspernatur autem commodi consequuntur ea eligendi enim error et, expedita id illo illum iusto magni molestiae nam neque nesciunt numquam, odit, pariatur possimus quae quia quo repudiandae sint unde veniam voluptatibus. Aliquam autem corporis, eaque earum exercitationem facilis laboriosam nostrum, optio porro quasi quisquam recusandae voluptas voluptate, voluptates voluptatum! A ab adipisci amet animi assumenda, consequatur deserunt dignissimos doloribus eius eligendi fugit impedit libero magnam nihil nisi, officia rerum temporibus totam velit veritatis vero voluptas voluptates. Ab alias ipsa iste laudantium minima natus quas quis sed temporibus unde. Accusantium animi aut consectetur culpa deleniti dicta dolor dolorem doloremque doloribus eaque eius eos est excepturi expedita fuga iusto magnam maiores molestiae mollitia necessitatibus nesciunt nisi nobis officia, quam quasi quis rem repellat repellendus sapiente sunt tempora tempore totam ut? Ab asperiores aut consectetur cupiditate dolore dolorum, eligendi et facere ipsa ipsam, magni maiores modi nulla obcaecati sed tenetur veniam! Accusamus animi assumenda debitis dignissimos doloremque, doloribus eius fugit, harum ipsam neque numquam optio perferendis quo ullam voluptatem. Itaque molestiae, nam! A ab adipisci, assumenda deserunt doloribus, esse facilis laborum optio, perspiciatis reiciendis ullam veniam! Adipisci blanditiis, ducimus earum eos, eum explicabo harum id illum inventore odio odit qui repellat, sint. Deserunt dolor eos esse eveniet impedit mollitia provident tenetur totam. Accusantium architecto beatae deleniti dolorum eveniet, explicabo facere fugit iste iusto laboriosam magnam nisi optio, quasi quod veritatis voluptas voluptatem? Assumenda aut corporis earum, id, incidunt magni maiores officiis perferendis praesentium quas quasi quis quod soluta, suscipit ut veniam voluptatum? Illo qui quis suscipit. Modi nesciunt numquam sapiente tenetur. At atque autem beatae, cum dolore doloremque ea eum eveniet excepturi expedita fuga ipsa iste laboriosam maiores modi nam necessitatibus nihil nostrum nulla numquam repellat tenetur, veritatis voluptates. Amet iure neque repudiandae sint. At, deserunt dolorem dolores earum, enim excepturi facere illum incidunt, ipsum iste labore magni molestiae nihil odio odit porro quis rerum temporibus unde veniam. Alias amet cum perspiciatis provident? Accusantium ad architecto, atque, consequatur culpa cum cumque cupiditate dignissimos, dolore eius et expedita fuga incidunt iure iusto laborum libero magnam maxime mollitia nam nobis qui quo reiciendis repudiandae soluta unde voluptate voluptatem? Amet harum minus ratione totam. Ab accusamus at atque blanditiis consequuntur cumque earum excepturi laboriosam magni minus nemo nostrum, nulla perspiciatis praesentium quos rem repellendus soluta temporibus veniam voluptate. Aspernatur atque blanditiis consectetur cum cumque delectus dolorem, ducimus eligendi esse explicabo facere fugit inventore ipsa ipsam labore laborum magni minima mollitia natus necessitatibus nisi obcaecati odio officiis omnis porro quae rem repellat reprehenderit sequi similique temporibus totam velit voluptatem. Minima, officiis perspiciatis quas quos saepe soluta. Amet assumenda aut deserunt, eligendi iste numquam porro saepe. Ab accusantium autem blanditiis dolor eaque facilis placeat provident reprehenderit totam voluptates! Beatae debitis dicta et exercitationem harum, modi necessitatibus nemo nihil placeat velit? A, accusantium adipisci aperiam commodi consequuntur deserunt doloribus ducimus ea error facere fuga illo illum impedit, iure libero magni natus necessitatibus nulla obcaecati omnis perferendis praesentium provident quas quasi quidem quo recusandae sequi soluta unde voluptatem. Architecto blanditiis consequuntur doloremque, hic laboriosam ratione voluptatem. Architecto dignissimos facere minima minus quod temporibus ullam. Aperiam esse ipsam non nostrum quia repudiandae tempore voluptatum. A dolore eius error labore quo repudiandae suscipit tempora? Aliquam dolore enim ipsum molestias odio quisquam, repudiandae vero. Architecto dicta dolorum, ducimus eius et excepturi fuga ipsam, laudantium maiores nam, nostrum nulla numquam possimus quam reiciendis repellendus saepe sapiente vitae. Alias asperiores earum hic laboriosam minima perferendis, quisquam quos saepe sint tenetur. A architecto aspernatur autem debitis eveniet excepturi exercitationem explicabo facere fugiat incidunt ipsa iure libero, maiores numquam perspiciatis quaerat quam quia quidem quos suscipit? Accusantium alias cupiditate dolor dolorem dolorum ea fugiat hic id in incidunt iusto laudantium molestias nemo nobis numquam odit officiis praesentium quo quos ratione suscipit, ullam veritatis! A, accusamus animi assumenda, culpa dolor eius eum eveniet facilis fuga itaque libero magni nam natus nulla obcaecati, omnis porro possimus quod soluta tenetur ut vel velit vero. Culpa doloremque earum explicabo labore laborum magnam omnis quod quos. Delectus ea in maiores nobis sapiente tempore unde? Aliquam aliquid asperiores debitis distinctio, est fugiat id illo ipsa iure labore odit officia placeat quae, quibusdam quo sed sunt. Cum eius excepturi iusto laboriosam molestias, mollitia, nisi non perferendis placeat quae vel!"
+      },
+      {
+        "id": "info-contacts",
+        "title": "The Title for the Contact page",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipi"
+      }
+    ]
+  },
+  "menu": {
+    "items": [
+      {
+        "id": "about",
+        "hash": "#",
+        "name": "About"
+      },{
+        "id": "catalog",
+        "hash": "",
+        "name": "Catalog"
+      },{
+        "id": "faq",
+        "hash": "#",
+        "name": "FAQ"
+      },{
+        "id": "info",
+        "hash": "#",
+        "name": "Info"
+      },{
+        "id": "contacts",
+        "hash": "",
+        "name": "Contacts"
+      }
+    ]
+  }
+}

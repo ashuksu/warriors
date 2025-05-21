@@ -11,6 +11,12 @@ docker-compose.yml
 node_modules
 npm-debug.log
 
+# Vite
+dist
+public/dist
+.vite
+*.local
+
 # IDE files
 .idea
 .idea/
@@ -26,3 +32,7 @@ Thumbs.db
 
 # Test
 test
+/vendor/
+
+# Environment variables
+/.env
