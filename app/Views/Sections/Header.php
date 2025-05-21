@@ -5,19 +5,20 @@ namespace Views\Sections;
 use Views\Sections\Menu;
 use Views\Components\Button;
 use Views\Components\Image;
+use function Helpers\getPath;
 
 /**
  * Header section class
- * 
+ *
  * Handles rendering of the site header with logo, menu button, and navigation
  */
 class Header
 {
     /**
      * Render the header section
-     * 
+     *
      * Outputs the header with logo, menu button, and navigation menu
-     * 
+     *
      * @param array $params Parameters for the header section
      * @return void
      */
@@ -33,7 +34,7 @@ class Header
 
                         <?php
                         echo Image::render([
-                            'url' => getAssetPath('dist/assets/images/logo/logo-1.png'),
+                            'url' => getPath('dist/assets/images/logo/logo-1.png'),
                             'alt' => 'logo',
                             'width' => 30,
                             'height' => 30,
