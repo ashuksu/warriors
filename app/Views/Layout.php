@@ -12,16 +12,16 @@ use function Helpers\renderTemplate;
 
 /**
  * Main layout class for rendering the page structure
- * 
+ *
  * Handles the overall page layout including header, footer, and content sections
  */
 class Layout
 {
     /**
      * Render the complete page layout
-     * 
+     *
      * Renders the head, header, content sections, footer, and additional components
-     * 
+     *
      * @param array $data Data to be passed to the layout and sections
      * @return void
      */
@@ -29,24 +29,21 @@ class Layout
     {
         extract($data);
 
-        Head::render([
-            'title' => APP_TITLE ?? 'Warriors',
-            'page' => PAGE ?? ''
-        ]);
+        Head::render([]);
 
         ?>
 
-        <body data-style="default" class="<?= 'page-' . PAGE ?>">
-        <div class="wrapper">
+		<body data-style="default" class="<?= 'page-' . PAGE ?>">
+		<div class="wrapper">
 
             <?php
 
-            echo Preloader::render();
+            echo Preloader::render(['attr' => 'data-delay="0.1"']);
 
             Header::render();
             ?>
 
-            <main id="content" class="content">
+			<main id="content" class="content">
 
                 <?php
                 if (!empty($sections) && is_array($sections)) {
@@ -59,13 +56,13 @@ class Layout
                 }
                 ?>
 
-            </main>
+			</main>
 
             <?php
             Footer::render();
             ?>
 
-        </div>
+		</div>
 
         <?php
         echo Button::render([
@@ -79,8 +76,8 @@ class Layout
         renderTemplate(__DIR__ . '/Sections/footer-links.php', []);
         ?>
 
-        </body>
-        </html>
+		</body>
+		</html>
 
         <?php
     }
