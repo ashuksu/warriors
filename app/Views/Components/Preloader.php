@@ -28,11 +28,12 @@ class Preloader
         $id = $id ?? 'preloader';
         $class = $class ?? 'preloader';
         $attr = $attr ?? '';
-
         ob_start(); ?>
-        <div id="<?= htmlspecialchars($id, ENT_QUOTES) ?>"
-             class="<?= htmlspecialchars($class, ENT_QUOTES) ?>"
+
+		<div id="<?= htmlspecialchars($id, ENT_QUOTES) ?>"
+			 class="<?= htmlspecialchars($class, ENT_QUOTES) ?>"
             <?= $attr ?>>
+
             <?php echo Image::render([
                 'url' => getPath('dist/assets/images/loader.gif'),
                 'alt' => 'loader',
@@ -41,7 +42,9 @@ class Preloader
                 'attr' => 'class="error-image"',
                 'noLazy' => true
             ]) ?>
-        </div>
+
+		</div>
+
         <?php
         return ob_get_clean();
     }

@@ -1,0 +1,44 @@
+@use "index";
+
+.faq {
+	&__inner {
+		padding-bottom: 0;
+		padding-top: 3rem;
+	}
+
+	&__item {
+		position: relative;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--main);
+		}
+	}
+
+	&__item-title {
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 3rem 8rem 3rem 0;
+		font-size: 3rem;
+	}
+
+	&__item-text {
+		padding: 0 0 3rem;
+		padding-right: 8rem;
+	}
+
+	&__item-inner {
+		max-height: 0;
+		overflow: hidden;
+		transition: all 0.5s ease-in-out;
+	}
+
+	&__item-inner.active {
+		max-height: 20rem;
+	}
+
+	&__item-button {
+		position: absolute;
+		right: 0;
+		top: 3rem;
+	}
+}

@@ -2,8 +2,6 @@ import {defineConfig} from 'vite'
 import {viteStaticCopy} from 'vite-plugin-static-copy'
 
 export default defineConfig({
-    // root: './',
-    // base: '/',
     build: {
         outDir: 'public/dist',
         manifest: true,
@@ -11,10 +9,10 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 script: './src/js/script.js',
-                style: './src/css/style.css',
-                styleHome: './src/css/styleHome.css',
-                animate: './src/css/libs/animate.min.css',
-                criticalStyles: './src/scss/criticalStyles.scss'
+                main: './src/styles/main.scss',
+                page_home: './src/styles/page_home.scss',
+                page_home_critical: './src/styles/page_home_critical.scss',
+                critical: './src/styles/critical.scss'
             },
             output: {
                 manualChunks: undefined,
@@ -25,7 +23,7 @@ export default defineConfig({
                         return 'assets/[name].[hash][extname]'
                     }
                     if (/\.(css|scss)$/.test(name ?? '')) {
-                        return 'css/[name].[hash].min[extname]'
+                        return 'styles/[name].[hash].min[extname]'
                     }
                     return 'assets/[name]-[hash].min[extname]'
                 }

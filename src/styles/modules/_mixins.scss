@@ -1,0 +1,27 @@
+@use "var";
+
+@mixin response($size) {
+	@media only screen and (max-width: $size) {
+		@content;
+	}
+}
+
+@mixin response-min($size) {
+	@media only screen and (min-width: $size) {
+		@content;
+	}
+}
+
+@mixin response-range($min, $max) {
+	@media only screen and (min-width: $min) and (max-width: $max) {
+		@content;
+	}
+}
+
+@mixin hover() {
+	@media only screen and (min-width: var.$md) {
+		&:hover {
+			@content;
+		}
+	}
+}

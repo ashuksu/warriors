@@ -1,0 +1,70 @@
+@use "index";
+
+.popup {
+	display: none;
+	max-width: calc(100vw - 30px);
+	width: max-content;
+	overflow: hidden;
+	visibility: hidden;
+	opacity: 0;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	transition: opacity 0.3s ease-in-out;
+
+
+	&.active {
+		display: block !important;
+		visibility: visible;
+		opacity: 1;
+	}
+
+	&__inner {
+		display: flex;
+		flex-direction: column;
+		max-width: 60rem;
+		width: 100%;
+		background: var(--gradient-light);
+		border-radius: 2rem;
+		position: relative;
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-shrink: 0;
+		gap: 3rem;
+		padding: 1rem 2rem;
+		background: var(--gray-light);
+		border-top-right-radius: 2rem;
+		border-top-left-radius: 2rem;
+	}
+
+	&__body {
+		flex: 1 1 auto;
+		padding: 2rem .5rem 2rem 2rem;
+	}
+
+	&__content {
+		padding-right: 1.5rem;
+		height: 100%;
+		max-height: calc(100vh - 30rem);
+		overflow-x: visible;
+		overflow-y: auto;
+	}
+
+	&__footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		flex-shrink: 0;
+		padding: 0 2rem 2rem;
+	}
+
+	&__footer .button {
+		margin-left: auto;
+	}
+}

@@ -10,30 +10,38 @@ use App\Helpers\Vite;
 
 <!-- Google Fonts - loaded asynchronously -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;900&display=swap"
-      media="print" onload="this.media='all'">
+	  media="print" onload="this.media='all'">
 <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;900&display=swap">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;900&display=swap">
 </noscript>
+
 
 <?php if (defined('IS_DEV') && IS_DEV): ?>
-    <!-- Vite client (only in dev mode) -->
-    <script type="module" src="<?= VITE_DEV_CLIENT ?>"></script>
+	<!-- Vite client (only in dev mode) -->
+	<script type="module" src="<?= VITE_DEV_CLIENT ?>"></script>
 <?php endif; ?>
 
-<!-- Critical CSS - loaded immediately -->
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/scss/criticalStyles.scss') ?>">
 
-<!-- Async loaded styles -->
-<!-- Animation CSS - loaded asynchronously (used by WOW.js) -->
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/libs/animate.min.css') ?>" media="print"
-      onload="this.media='all'">
+<!-- Styles: critical (loaded immediately, blocks rendering) -->
+<link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/critical.scss') ?>">
+
+<!-- Styles: main, not important and interactive elements, popup (async loaded, lower priority than "high", be applied before "high") -->
+<link rel="preload" href="<?= Vite::getAssetPath('src/styles/main.scss') ?>" as="style" onload="this.rel='stylesheet'"
+	  fetchpriority="low">
 <noscript>
-    <link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/libs/animate.min.css') ?>">
+	<link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/main.scss') ?>">
 </noscript>
 
-<!-- Styles -->
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/style.css') ?>">
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/styleHome.css') ?>">
+<!-- Styles: page, important elements (async loaded, higher priority than "low", be applied after "low") -->
+<link rel="preload" href="<?= Vite::getAssetPath('src/styles/page_home.scss') ?>" as="style"
+	  onload="this.rel='stylesheet'">
+<noscript>
+	<link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/page_home.scss') ?>">
+</noscript>
+
+<!-- Styles: first-screen, important elements (blocks rendering) -->
+<link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/page_home_critical.scss') ?>">
+
 
 <!-- Prefetch resources that will be needed soon -->
 <link rel="prefetch" href="<?= Vite::getAssetPath('src/js/modules/Popup.js') ?>" as="script">

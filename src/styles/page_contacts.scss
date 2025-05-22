@@ -1,0 +1,10 @@
+//@use "modules/info";
+@use "modules";
+@forward "modules/compnents/contacts-card";
+
+.contacts {
+	&__inner,
+	&__list {
+		gap: 3rem 0;
+	}
+}

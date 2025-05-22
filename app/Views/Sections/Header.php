@@ -2,7 +2,6 @@
 
 namespace Views\Sections;
 
-use Views\Sections\Menu;
 use Views\Components\Button;
 use Views\Components\Image;
 use function Helpers\getPath;
@@ -27,10 +26,10 @@ class Header
         extract($params);
         ?>
 
-        <header id="header" class="header">
-            <div class="container">
-                <div class="header__inner">
-                    <a href="<?= APP_PATH ?>" class="logo">
+		<header id="header" class="header">
+			<div class="container">
+				<div class="header__inner">
+					<a href="<?= APP_PATH ?>" class="logo">
 
                         <?php
                         echo Image::render([
@@ -40,7 +39,7 @@ class Header
                             'height' => 30,
                         ]);
                         ?>
-                    </a>
+					</a>
 
                     <?php
                     echo Button::render([
@@ -52,9 +51,9 @@ class Header
                     Menu::render([]);
                     ?>
 
-                </div>
-            </div>
-        </header>
+				</div>
+			</div>
+		</header>
 
         <?php
     }

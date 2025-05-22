@@ -13,7 +13,6 @@ export default class Overlay {
             this.overlay.hidden = true;
             document.body.appendChild(this.overlay);
         }
-        ;
     }
 
     /**

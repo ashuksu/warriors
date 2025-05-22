@@ -1,0 +1,39 @@
+//@forward "modules/info";
+@use "modules";
+
+.catalog {
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem 2rem;
+
+		@include modules.response-min(modules.$sm) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@include modules.response-min(modules.$md) {
+			grid-template-columns: repeat(5, 1fr);
+			gap: 3rem;
+		}
+
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__item-inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		max-width: 24rem;
+		padding: 3rem;
+		background: var(--gradient-light);
+		border-radius: 3rem;
+		text-align: center;
+		box-shadow: 0 -5px 20px 0 rgba(51, 51, 51, 0.2);
+	}
+}

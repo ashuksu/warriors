@@ -1,0 +1,7 @@
+@use "index";
+
+.info {
+	&__inner {
+		background: var(--gradient);
+	}
+}

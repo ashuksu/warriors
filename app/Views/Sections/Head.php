@@ -26,23 +26,24 @@ class Head
         extract($params);
         ?>
 
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <!-- Basic meta tags -->
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<!DOCTYPE html>
+		<html lang="en">
+	<head <?php if (defined('IS_DEV') && IS_DEV) echo 'data-mode="dev"'; ?>>
 
-            <!-- Page title and favicon -->
-            <title><?= APP_TITLE ?></title>
-            <link rel="shortcut icon" href="<?= getPath('favicon.ico') ?>">
+		<!-- Basic meta tags -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-            <?php
-            renderTemplate(__DIR__ . '/head-links.php', []);
-            ?>
+		<!-- Page title and favicon -->
+		<title><?= APP_TITLE ?></title>
+		<link rel="shortcut icon" href="<?= getPath('favicon.ico') ?>">
 
-        </head>
+        <?php
+        renderTemplate(__DIR__ . '/head-links.php', []);
+        ?>
+
+	</head>
 
         <?php
     }

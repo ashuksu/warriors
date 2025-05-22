@@ -1,0 +1,51 @@
+@use "index";
+
+.footer {
+	&__inner {
+		align-items: center;
+		justify-content: space-between;
+		border-radius: 3rem 3rem 0 0;
+		background: var(--gradient-vertical);
+
+		@include index.response-min(index.$sm) {
+			flex-direction: row;
+
+			@include index.response-min(index.$md) {
+				border-radius: 5rem 5rem 0 0;
+			}
+		}
+	}
+
+	.logo {
+		width: 7rem;
+
+		@include index.response-min(index.$md) {
+			width: 10rem;
+		}
+	}
+
+	&__text {
+		color: var(--white);
+		font-size: 2rem;
+	}
+
+	&__link {
+		background: none;
+		color: var(--white);
+		text-transform: uppercase;
+		font-size: 2.3rem;
+
+		@include index.response-min(index.$md) {
+			font-size: 3rem;
+		}
+
+		&:focus,
+		&:active {
+			color: var(--red-light);
+		}
+
+		@include index.hover() {
+			color: index.$red;
+		}
+	}
+}

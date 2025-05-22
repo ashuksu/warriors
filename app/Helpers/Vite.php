@@ -34,7 +34,7 @@ class Vite
      *
      * Supports various file types including
      * - CSS files (src/css/style.css, src/css/libs/animate.min.css)
-     * - SCSS files (src/scss/main.scss)
+     * - SCSS files (src/styles/main.scss)
      * - JavaScript files (src/js/modules/Menu.js, src/js/modules/utils/Toggle.js)
      *
      * @param string $file Source file path (e.g., 'src/scss/criticalStyles.scss', 'src/js/modules/Menu.js')
