@@ -1,0 +1,24 @@
+:root {
+	--main: #333;
+	--hover: #222;
+	--pressed: #2E3946;
+
+	--blue: #0d6efd;
+	--primary-emphasis: #055160;
+	--primary: #052c65;
+
+	--red: #e80000;
+	--red-light: #dc3545;
+
+	--gray-dark: #888880;
+	--bs-gray-100: #f8f9fa;
+	--bs-gray-200: #e9ecef;
+	--gray: #c0d3de;
+	--gray-light: #D5EAF7;
+	--white: #fff;
+
+	--gradient: linear-gradient(164deg, var(--gray-dark) 0%, var(--gray) 35%, var(--gray-dark) 120%);
+	--gradient-easy: linear-gradient(150deg, var(--gray-dark) -20%, var(--bs-gray-100) 20%, var(--bs-gray-100) 50%, var(--gray-dark) 130%);
+	--gradient-light: linear-gradient(0deg, var(--gray) 0%, var(--bs-gray-100) 100%);
+	--gradient-vertical: linear-gradient(180deg, var(--main) 3%, var(--gray-dark) 77%, var(--gray) 100%);
+}

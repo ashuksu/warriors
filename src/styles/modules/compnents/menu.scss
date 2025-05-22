@@ -1,0 +1,52 @@
+@use "../index";
+
+.menu {
+	display: flex;
+
+	@include index.response-min(index.$md) {
+		justify-content: space-between;
+	}
+
+	@include index.response(index.$md) {
+		flex-direction: column;
+		position: fixed;
+		max-width: 320px;
+		width: 100%;
+		height: 100vh;
+		padding: 15px;
+		background: var(--gradient-light);
+		top: 0;
+		right: -110%;
+		transition: all 0.3s ease-in-out;
+		overflow: auto;
+		box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+
+		.menu-opened & {
+			right: 0;
+		}
+	}
+
+	&__list {
+		display: flex;
+		gap: 1rem 4.5rem;
+
+		@include index.response-min(index.$md) {
+			align-items: center;
+		}
+
+		@include index.response(index.$md) {
+			flex-direction: column;
+			width: 100%;
+			margin: 1rem 0 3rem;
+
+			.link {
+				padding: 1.2rem 1rem;
+				font-size: 2.3rem;
+			}
+		}
+
+		.button--close {
+			align-self: flex-end;
+		}
+	}
+}

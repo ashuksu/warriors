@@ -1,0 +1,36 @@
+@use "../index";
+
+.link {
+	display: flex;
+	align-items: center;
+	color: var(--main);
+	font-weight: 900;
+	padding: 1rem 0;
+	font-size: 2rem;
+	line-height: 1;
+	text-decoration: none;
+	transition: all 0.3s ease-in-out;
+	position: relative;
+	background: linear-gradient(to right, var(--main) 0%, var(--main) 100%) 0 100% /var(--d, 0) 3px no-repeat;
+
+	.menu-opened & {
+		background: none;
+	}
+
+	@include index.hover() {
+		&:focus,
+		&:active {
+			color: index.$pressed;
+		}
+
+		color: index.$hover;
+		text-decoration: none;
+		--d: 80%;
+	}
+
+	@include index.response(index.$md) {
+		&:hover {
+			background: none;
+		}
+	}
+}

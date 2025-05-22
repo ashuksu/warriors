@@ -1,0 +1,18 @@
+@use "../index";
+
+.logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 4rem;
+
+	@include index.response-min(index.$md) {
+		width: 5rem;
+	}
+
+	img {
+		width: 100%;
+	}
+}
+

@@ -1,0 +1,13 @@
+@use "index";
+
+.main {
+	&__inner {
+		gap: 2rem;
+		height: 100%;
+
+		@include index.response-min(index.$md) {
+			gap: 3rem;
+		}
+	}
+}
+
