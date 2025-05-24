@@ -391,10 +391,18 @@ sudo npm install -g live-server
 ---
 
 ```bash
+cd ~/projects/warriors
+
 # stop docker, vite, live-server
 docker-compose down
 docker stop $(docker ps -aq)
 kill-port 4173 5173 8080 9000 || true
+```
+
+disable development mode in .env
+
+```
+IS_DEV=false
 ```
 
 ```bash
@@ -434,15 +442,20 @@ docker stop $(docker ps -aq)
 live-server gh-pages/public --port=9000 --open=.
 ```
 
-or
+check the result at
+
+```bash
+# stop localhost
+kill-port 4173 5173 8080 9000 || true
+```
+
+#### Additional Commands
 
 ```bash
 # start local server
 cd gh-pages/public
 live-server
 ```
-
-#### Additional Commands
 
 ```bash
 # Check the list of auto-started containers
@@ -477,30 +490,6 @@ kill-port 4173 5173 8080 9000 || true
 <details>
   <summary>inside</summary>
 
-```bash
-# stop docker, vite, live-server
-
-# build (docker in background)
-
-# Delete gh-pages/public/dist
-
-# Copy root as public
-
-# Copy dist to public
-
-# Delete .vite
-
-# get the pages-html from http://localhost:8080/
-
-# stop Docker -d (detach mode)
-
-# Start local server 
-
-# run preview:publish
-
-# push to gh-pages
-
-```
 
 </details>
 
@@ -512,6 +501,50 @@ kill-port 4173 5173 8080 9000 || true
   <summary>Deployment</summary>
 
 ```bash
+# creation `gh-pages`
+cd ~/projects/warriors
+mkdir -p gh-pages/root
+# add 'gh-pages/' to the .gitignore 
+
+cd gh-pages/root
+
+git init
+# add as SSH
+git remote add origin git@github.com:ashuksu/warriors.git
+git branch -m 'feature/GH-PAGES'
+
+```
+
+## DO RUNNING WGET
+
+> In the Build and deployment block, set on github pages
+> Source: `Deploy from a branch`
+> Branch: select `feature/GH-PAGES`
+> Folder: select `/ (root)`
+> https://ashuksu.github.io/warriors/
+
+```bash
+touch .nojekyll .gitignore
+# set up .gitignore
+# add .gitignore and .nojekyll
+git add . -f
+git commit -m "Update GH-Pages build $(date +%F\ %T)"
+git push -u origin feature/GH-PAGES --force
+```
+
+```bash
+# Manual Publishing to GitHub Pages (after generation)
+cd gh-pages/public
+git add . -f
+git commit -m "Update GH-Pages build $(date +%F\ %T)"
+git push -u origin feature/GH-PAGES --force
+```
+
+---
+
+### 'gh-pages' publishing
+
+```bash
 # Install gh-pages npm package
 npm install gh-pages --save-dev
 ```
@@ -519,7 +552,7 @@ npm install gh-pages --save-dev
 ```
 # -d deploy/public - is the path to the folder you want to upload.
 "scripts": {
-"preview:publish": "gh-pages -d deploy/public -b feature/GH-PAGES -m \"Update GH-Pages build $(date +%F\\ %T)\""
+"preview:publish": "gh-pages -d gh-pages/public -b feature/GH-PAGES -m 'Update GH-Pages build $(date +%F\ %T)'"
 }
 ```
 
@@ -538,38 +571,6 @@ npm install gh-pages --save-dev
 # Launch
 npm run preview:publish
 ```
-
----
-
-```bash
-cd ~/projects/warriors
-git checkout [work branch]
-mkdir -p gh-pages/root
-cd gh-pages/root
-# SSH
-git init
-git remote add origin git@github.com:ashuksu/warriors.git
-git checkout -b feature/GH-PAGES
-```
-
-# Publishing to GitHub Pages
-
-```bash
-# add and set up .gitignore into `gh-pages`
-git add .
-git commit -m "Update GH-Pages build $(date +%F\ %T)"
-git push -u origin feature/GH-PAGES --force
-
-```
-
-## DO RUNNING WGET
-
-> In the Build and deployment block, set on github pages
-> Source: `Deploy from a branch`
-> Branch: select `gh-pages`
-> Folder: select `/ (root)`
-> https://ashuksu.github.io/warriors/public/
-
 
 </details>
 
