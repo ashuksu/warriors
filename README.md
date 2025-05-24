@@ -388,9 +388,121 @@ sudo apt update && sudo apt install wget
 sudo npm install -g live-server
 ```
 
----
+</details>
+
+## GitHub Pages
+
+### Make branches
+
+<details>
+  <summary>preparation</summary>
+
+> be in the root of the project
 
 ```bash
+cd ~/projects/warriors
+# add 'gh-pages/' to the .gitignore 
+
+# creation `gh-pages`
+mkdir -p gh-pages/root
+
+cd gh-pages/root
+
+git init
+# add as SSH
+git remote add origin git@github.com:ashuksu/warriors.git
+git branch -m 'feature/GH-PAGES'
+```
+
+```bash
+# be in gh-pages/root 
+cd ~/projects/warriors/gh-pages/root
+
+touch .nojekyll .gitignore
+# set up .gitignore
+```
+
+```bash
+# be in gh-pages/root 
+cd ~/projects/warriors/gh-pages/root
+git add . -f
+git commit -m "Update GH-Pages build $(date +%F\ %T)"
+git push -u origin feature/GH-PAGES --force
+```
+
+---
+
+> In the Build and deployment block, set on github pages
+> Source: `Deploy from a branch`
+> Branch: select `feature/GH-PAGES`
+> Folder: select `/ (root)`
+> https://ashuksu.github.io/warriors/
+
+---
+
+</details>
+
+### Deploy to GitHub Pages (manually)
+
+<details>
+  <summary>push deploy</summary>
+
+```bash
+# be in gh-pages/public 
+cd ~/projects/warriors/gh-pages/public
+git add . -f
+git commit -m "Update GH-Pages build $(date +%F\ %T)"
+git push -u origin feature/GH-PAGES --force
+```
+
+</details>
+
+### Deploy to GitHub Pages ('gh-pages' publishing)
+
+<details>
+  <summary>publish deploy</summary>
+
+```bash
+# Install gh-pages npm package
+npm install gh-pages --save-dev
+```
+
+```
+# -d deploy/public - is the path to the folder you want to upload.
+"scripts": {
+"preview:publish": "gh-pages -d gh-pages/public -b feature/GH-PAGES -m 'Update GH-Pages build $(date +%F\ %T)'"
+}
+```
+
+**Explanation:**
+
+* `-d deploy/public` — specifies the folder containing the built site.
+* `-b feature/GH-PAGES` — specifies the branch to which the files will be pushed.
+* `-m "Update GH-Pages build $(date +%F\ %T)"` — sets the commit message with the current date and time.
+
+**Escaping:**
+
+* Inside a JSON string, double quotes must be escaped as `\"`.
+* Inside a Bash command, spaces in the `date` format must be escaped as `\ `, so it becomes `+%F\ %T`.
+
+```bash
+# Launch
+npm run preview:publish
+```
+
+</details>
+
+---
+
+## Running WGET
+
+<details>
+  <summary>Running</summary>
+
+> be in the root of the project
+
+```bash
+
 cd ~/projects/warriors
 
 # stop docker, vite, live-server
@@ -399,9 +511,8 @@ docker stop $(docker ps -aq)
 kill-port 4173 5173 8080 9000 || true
 ```
 
-disable development mode in .env
-
 ```
+# disable development mode in .env
 IS_DEV=false
 ```
 
@@ -416,6 +527,9 @@ vite build
 ```bash
 # Delete gh-pages/public/dist
 rm -rf gh-pages/public
+```
+
+```bash
 
 # Copy root as public
 cp -a gh-pages/root gh-pages/public
@@ -449,6 +563,8 @@ check the result at
 kill-port 4173 5173 8080 9000 || true
 ```
 
+---
+
 #### Additional Commands
 
 ```bash
@@ -460,6 +576,12 @@ live-server
 ```bash
 # Check the list of auto-started containers
 docker ps -a
+```
+
+```bash
+# stop Docker -d (detach mode)
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 ```
 
 ```bash
@@ -483,94 +605,4 @@ kill-port 4173 5173 8080 9000 || true
 
 </details>
 
-### RUNNING WGET
-
-> be in the root of the project
-
-<details>
-  <summary>inside</summary>
-
-
-</details>
-
 ---
-
-## Deploy to GitHub Pages
-
-<details>
-  <summary>Deployment</summary>
-
-```bash
-# creation `gh-pages`
-cd ~/projects/warriors
-mkdir -p gh-pages/root
-# add 'gh-pages/' to the .gitignore 
-
-cd gh-pages/root
-
-git init
-# add as SSH
-git remote add origin git@github.com:ashuksu/warriors.git
-git branch -m 'feature/GH-PAGES'
-
-```
-
-## DO RUNNING WGET
-
-> In the Build and deployment block, set on github pages
-> Source: `Deploy from a branch`
-> Branch: select `feature/GH-PAGES`
-> Folder: select `/ (root)`
-> https://ashuksu.github.io/warriors/
-
-```bash
-touch .nojekyll .gitignore
-# set up .gitignore
-# add .gitignore and .nojekyll
-git add . -f
-git commit -m "Update GH-Pages build $(date +%F\ %T)"
-git push -u origin feature/GH-PAGES --force
-```
-
-```bash
-# Manual Publishing to GitHub Pages (after generation)
-cd gh-pages/public
-git add . -f
-git commit -m "Update GH-Pages build $(date +%F\ %T)"
-git push -u origin feature/GH-PAGES --force
-```
-
----
-
-### 'gh-pages' publishing
-
-```bash
-# Install gh-pages npm package
-npm install gh-pages --save-dev
-```
-
-```
-# -d deploy/public - is the path to the folder you want to upload.
-"scripts": {
-"preview:publish": "gh-pages -d gh-pages/public -b feature/GH-PAGES -m 'Update GH-Pages build $(date +%F\ %T)'"
-}
-```
-
-**Explanation:**
-
-* `-d deploy/public` — specifies the folder containing the built site.
-* `-b feature/GH-PAGES` — specifies the branch to which the files will be pushed.
-* `-m "Update GH-Pages build $(date +%F\ %T)"` — sets the commit message with the current date and time.
-
-**Escaping:**
-
-* Inside a JSON string, double quotes must be escaped as `\"`.
-* Inside a Bash command, spaces in the `date` format must be escaped as `\ `, so it becomes `+%F\ %T`.
-
-```bash
-# Launch
-npm run preview:publish
-```
-
-</details>
-
