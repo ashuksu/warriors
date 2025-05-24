@@ -1,6 +1,6 @@
 # Git
 .git
-deploy/
+gh-pages/
 
 # Docker
 Dockerfile
