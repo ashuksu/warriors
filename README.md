@@ -1,6 +1,5 @@
 # [WARRIORS](https://ashuksu.github.io/warriors/public)
 
-
 # Repository Structure
 
 <details>
@@ -91,7 +90,7 @@ needed. It's represented as follows:
     ```bash
     git checkout -b feature/old-v1-TASK old-design-v1
     ```
-  
+
   Or branch off the `master-old-v1`
     ```bash
     git checkout master-old-v1
@@ -115,25 +114,22 @@ composer install
 npm install
 ```
 
+```bash   
+# Build the Docker image and the Vite build
+docker-compose up --build
+vite build
+```
+
 ```bash
 # to update startup
 composer dump-autoload
 ```
+
 or
 
 ```bash
 # optimized generation, better for production
 composer dump-autoload -o
-```
-
-```bash   
-# Rebuild the Docker image and the Vite build
-npm run build
-```
-
-```bash   
-# Once at first time, or after edition/cleaning Docker files
-docker-compose build
 ```
 
 </details>
@@ -309,7 +305,9 @@ kill -9 <pid>
 
 ### Using the Vite Helper
 
-The project includes a Vite helper class that simplifies asset management in both development and production environments. The helper automatically handles the loading of assets from the Vite development server in development mode and from the built files in production mode.
+The project includes a Vite helper class that simplifies asset management in both development and production
+environments. The helper automatically handles the loading of assets from the Vite development server in development
+mode and from the built files in production mode.
 
 #### Including Assets in Templates
 
@@ -329,8 +327,10 @@ input: {
 
 > **Important:**  
 > These files must be listed in the `input` option of your `vite.config.js` configuration.  
-> If you do not include them, Vite will not process or output these assets, and you may encounter errors when trying to load them in your templates.
+> If you do not include them, Vite will not process or output these assets, and you may encounter errors when trying to
+> load them in your templates.
 > Except for those that are connected in modules
+
 ```
 Use the `getAssetPath` method to include assets in your templates:
 
@@ -353,7 +353,8 @@ use App\Helpers\Vite;
 
 #### Development vs Production
 
-The Vite helper automatically detects whether the application is running in development or production mode based on the `IS_DEV` constant defined in the `.env` file:
+The Vite helper automatically detects whether the application is running in development or production mode based on the
+`IS_DEV` constant defined in the `.env` file:
 
 - In development mode (`IS_DEV=true`), assets are loaded from the Vite development server
 - In production mode (`IS_DEV=false`), assets are loaded from the built files with hashed filenames
@@ -369,3 +370,206 @@ The Vite helper supports various asset types:
 </details>
 
 ---
+
+## Experiment WGET
+
+<details>
+  <summary>Preparation</summary>
+
+```bash
+# check if wget is installed
+which wget
+which live-server
+```
+
+```bash
+# Install wget and live-server
+sudo apt update && sudo apt install wget
+sudo npm install -g live-server
+```
+
+---
+
+```bash
+# stop docker, vite, live-server
+docker-compose down
+docker stop $(docker ps -aq)
+kill-port 4173 5173 8080 9000 || true
+```
+
+```bash
+# build (docker in background)
+docker-compose up -d --build
+composer install
+composer dump-autoload -o
+vite build
+```
+
+```bash
+# Delete gh-pages/public/dist
+rm -rf gh-pages/public
+
+# Copy root as public
+cp -a gh-pages/root gh-pages/public
+
+# Copy dist to public
+cp -r public/dist gh-pages/public/dist
+
+# Delete .vite
+rm -rf gh-pages/public/dist/.vite
+```
+
+```bash
+# get the pages-html from http://localhost:8080/
+wget --convert-links --adjust-extension --page-requisites --no-parent -P gh-pages/public -nH http://localhost:8080/contacts  http://localhost:8080/catalog  http://localhost:8080/404  http://localhost:8080
+```
+
+```bash
+# stop Docker -d (detach mode)
+docker stop $(docker ps -aq)
+```
+
+```bash
+# Start local server 
+live-server gh-pages/public --port=9000 --open=.
+```
+
+or
+
+```bash
+# start local server
+cd gh-pages/public
+live-server
+```
+
+#### Additional Commands
+
+```bash
+# Check the list of auto-started containers
+docker ps -a
+```
+
+```bash
+# show list of processes
+ps aux | grep live-server | grep -v grep
+```
+
+```bash
+# username  113726 79.6  1.2 1033532 197504 pts/0  Sl+  00:09   0:07 node /usr/local/bin/live-server
+kill 113726
+
+# forcedly
+kill -9 113726
+```
+
+or
+
+```bash
+kill-port 4173 5173 8080 9000 || true
+```
+
+</details>
+
+### RUNNING WGET
+
+> be in the root of the project
+
+<details>
+  <summary>inside</summary>
+
+```bash
+# stop docker, vite, live-server
+
+# build (docker in background)
+
+# Delete gh-pages/public/dist
+
+# Copy root as public
+
+# Copy dist to public
+
+# Delete .vite
+
+# get the pages-html from http://localhost:8080/
+
+# stop Docker -d (detach mode)
+
+# Start local server 
+
+# run preview:publish
+
+# push to gh-pages
+
+```
+
+</details>
+
+---
+
+## Deploy to GitHub Pages
+
+<details>
+  <summary>Deployment</summary>
+
+```bash
+# Install gh-pages npm package
+npm install gh-pages --save-dev
+```
+
+```
+# -d deploy/public - is the path to the folder you want to upload.
+"scripts": {
+"preview:publish": "gh-pages -d deploy/public -b feature/GH-PAGES -m \"Update GH-Pages build $(date +%F\\ %T)\""
+}
+```
+
+**Explanation:**
+
+* `-d deploy/public` — specifies the folder containing the built site.
+* `-b feature/GH-PAGES` — specifies the branch to which the files will be pushed.
+* `-m "Update GH-Pages build $(date +%F\ %T)"` — sets the commit message with the current date and time.
+
+**Escaping:**
+
+* Inside a JSON string, double quotes must be escaped as `\"`.
+* Inside a Bash command, spaces in the `date` format must be escaped as `\ `, so it becomes `+%F\ %T`.
+
+```bash
+# Launch
+npm run preview:publish
+```
+
+---
+
+```bash
+cd ~/projects/warriors
+git checkout [work branch]
+mkdir -p gh-pages/root
+cd gh-pages/root
+# SSH
+git init
+git remote add origin git@github.com:ashuksu/warriors.git
+git checkout -b feature/GH-PAGES
+```
+
+# Publishing to GitHub Pages
+
+```bash
+# add and set up .gitignore into `gh-pages`
+git add .
+git commit -m "Update GH-Pages build $(date +%F\ %T)"
+git push -u origin feature/GH-PAGES --force
+
+```
+
+## DO RUNNING WGET
+
+> In the Build and deployment block, set on github pages
+> Source: `Deploy from a branch`
+> Branch: select `gh-pages`
+> Folder: select `/ (root)`
+> https://ashuksu.github.io/warriors/public/
+
+
+</details>
+
