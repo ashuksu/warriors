@@ -414,12 +414,56 @@ git remote add origin git@github.com:ashuksu/warriors.git
 git branch -m 'feature/GH-PAGES'
 ```
 
+> `gh-pages` directory should be in main `.gitignore`
+
 ```bash
 # be in gh-pages/root 
 cd ~/projects/warriors/gh-pages/root
 
 touch .nojekyll .gitignore
-# set up .gitignore
+```
+
+set up gh-pages/root/.gitignore
+
+> this is the initial guide ignore if something needed is added here update
+
+```gitignore
+# Node.js
+node_modules/
+npm-debug.log
+
+# Vite
+.vite/
+*.local
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Tests and vendors (if any)
+test/
+vendor/
+
+#hide gh-pages from PRs
+*
+!important/dist/
+!important/.gitignore
+!important/.nojekyll
+!important/404.html
+!important/catalog.html
+!important/contacts.html
+!important/favicon.ico
+!important/index.html
+!important/robots.txt
 ```
 
 ```bash
@@ -442,10 +486,12 @@ git push -u origin feature/GH-PAGES --force
 
 </details>
 
-### Deploy to GitHub Pages (manually)
+### Deploy to GitHub Pages
 
 <details>
   <summary>push deploy</summary>
+
+> first fill the `public` folder according to [Running WGET](#running-wget)
 
 ```bash
 # be in gh-pages/public 
@@ -457,66 +503,29 @@ git push -u origin feature/GH-PAGES --force
 
 </details>
 
-### Deploy to GitHub Pages ('gh-pages' publishing)
-
-<details>
-  <summary>publish deploy</summary>
-
-```bash
-# Install gh-pages npm package
-npm install gh-pages --save-dev
-```
-
-```
-# -d deploy/public - is the path to the folder you want to upload.
-"scripts": {
-"preview:publish": "gh-pages -d gh-pages/public -b feature/GH-PAGES -m 'Update GH-Pages build $(date +%F\ %T)'"
-}
-```
-
-**Explanation:**
-
-* `-d deploy/public` — specifies the folder containing the built site.
-* `-b feature/GH-PAGES` — specifies the branch to which the files will be pushed.
-* `-m "Update GH-Pages build $(date +%F\ %T)"` — sets the commit message with the current date and time.
-
-**Escaping:**
-
-* Inside a JSON string, double quotes must be escaped as `\"`.
-* Inside a Bash command, spaces in the `date` format must be escaped as `\ `, so it becomes `+%F\ %T`.
-
-```bash
-# Launch
-npm run preview:publish
-```
-
-</details>
-
 ---
 
-## Running WGET
+# Running WGET
 
 <details>
   <summary>Running</summary>
 
 > be in the root of the project
 
-```bash
+disable development mode in .env
 
+```
+`IS_DEV=false`
+```
+
+```bash
 cd ~/projects/warriors
 
 # stop docker, vite, live-server
 docker-compose down
 docker stop $(docker ps -aq)
 kill-port 4173 5173 8080 9000 || true
-```
 
-```
-# disable development mode in .env
-IS_DEV=false
-```
-
-```bash
 # build (docker in background)
 docker-compose up -d --build
 composer install
@@ -527,9 +536,6 @@ vite build
 ```bash
 # Delete gh-pages/public/dist
 rm -rf gh-pages/public
-```
-
-```bash
 
 # Copy root as public
 cp -a gh-pages/root gh-pages/public
@@ -547,11 +553,6 @@ wget --convert-links --adjust-extension --page-requisites --no-parent -P gh-page
 ```
 
 ```bash
-# stop Docker -d (detach mode)
-docker stop $(docker ps -aq)
-```
-
-```bash
 # Start local server 
 live-server gh-pages/public --port=9000 --open=.
 ```
@@ -560,6 +561,7 @@ check the result at
 
 ```bash
 # stop localhost
+docker stop $(docker ps -aq)
 kill-port 4173 5173 8080 9000 || true
 ```
 
