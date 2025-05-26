@@ -19,12 +19,10 @@
     "dev": "composer dump-autoload && \nconcurrently \"npm run docker:dev\" \"npm run vite:dev\"",
     "build": "composer dump-autoload -o && docker-compose build && vite build",
     "stop": "npm run docker:stop && npm run vite:stop",
-    "preview": "concurrently \"npm run docker:dev\" \"npm run vite:preview\"",
-    "preview:publish": "gh-pages -d gh-pages/public -b feature/GH-PAGES -m \"Update GH-Pages build $(date +%F\\ %T)\""
+    "preview": "concurrently \"npm run docker:dev\" \"npm run vite:preview\""
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
-    "gh-pages": "^6.3.0",
     "kill-port": "^2.0.1",
     "sass-embedded": "^1.89.0",
     "vite": "^6.3.5",
