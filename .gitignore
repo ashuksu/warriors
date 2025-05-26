@@ -1,6 +1,6 @@
 # Git
 .git
-.gitignore
+gh-pages/
 
 # Docker
 Dockerfile
@@ -8,31 +8,31 @@ docker-compose.yml
 .dockerignore
 
 # Node.js
-node_modules
+node_modules/
 npm-debug.log
 
 # Vite
-dist
-public/dist
-.vite
+dist/
+public/dist/
+.vite/
 *.local
 
-# IDE files
-.idea
+# IDEs and editors
 .idea/
-.vscode
 .vscode/
 *.sublime-workspace
 *.sublime-project
-/.htaccess
 
-# OS files
+# Apache
+.htaccess
+
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Test
-test
-/vendor/
+# Environment files
+.env
 
-# Environment variables
-/.env
+# Tests
+test/
+vendor/
