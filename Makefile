@@ -1,4 +1,13 @@
-.PHONY: help install dev dev-hmr build deploy clean config autoload docker-up docker-down docker-restart docker-build docker-monitor docker-clean preview stop vite-kill test
+.PHONY: help install config dev build deploy clean \
+        pre-install autoload autoload-o \
+        composer-install \
+        docker-up docker-up-d docker-up--build docker-up-d--build \
+        docker-build docker-restart docker-down docker-stop docker-rm \
+        docker-clean docker-purge docker-destroy docker-monitor \
+        vite vite-build vite-kill \
+        wget wget-preparation wget-generation \
+        gh-pages gh-pages-init gh-pages-gitignore \
+        gh-pages-push-root gh-pages-push-public
 
 
 # Path variables
@@ -26,26 +35,37 @@ RESET   := $(shell tput -Txterm sgr0)    # Reset to default color
 
 # Help
 help:
-	@echo '${BLUE}Available commands:${RESET}'
-	@echo '${GREEN}make install${RESET}         - Install dependencies'
-	@echo '${CYAN}make config${RESET}          - Setup environment configuration'
-	@echo '${CYAN}make dev${RESET}             - Start development environment'
-	@echo '${CYAN}make dev-hmr${RESET}         - Start development with HMR'
-	@echo '${MAGENTA}make build${RESET}           - Build project'
-	@echo '${MAGENTA}make deploy${RESET}          - Deploy to GitHub Pages'
-	@echo '${RED}make clean${RESET}           - Clean temporary files'
-	@echo '${GREEN}make autoload${RESET}        - Update composer autoloader'
-	@echo '${CYAN}make docker-up${RESET}       - Start Docker'
-	@echo '${RED}make docker-down${RESET}     - Stop Docker'
-	@echo '${YELLOW}make docker-restart${RESET}  - Restart Docker'
-	@echo '${MAGENTA}make docker-build${RESET}    - Build Docker image'
-	@echo '${BLUE}make docker-monitor${RESET}  - Monitor Docker containers'
-	@echo '${RED}make docker-clean${RESET}    - Clean Docker system'
-	@echo '${CYAN}make preview${RESET}         - Preview production build'
-	@echo '${RED}make stop${RESET}            - Stop all services'
-	@echo '${RED}make vite-kill${RESET}       - Kill Vite server'
-
-
+	@echo '${BLUE}=== Core Commands ===${RESET}'
+	@echo '${GREEN}make install${RESET}         - Install dependencies, setup env, build Docker and Vite'
+	@echo '${GREEN}make config${RESET}          - Create .env from .env.example'
+	@echo '${GREEN}make dev${RESET}             - Start development environment (Docker + Vite)'
+	@echo '${GREEN}make build${RESET}           - Build project for production (Vite + Docker)'
+	@echo '${GREEN}make stop${RESET}            - Stop development services'
+	@echo '${GREEN}make kill${RESET}            - Force stop all services and ports'
+	@echo '${GREEN}make clean${RESET}           - Remove all temporary files and dependencies'
+	@echo
+	@echo '${BLUE}=== Docker Commands ===${RESET}'
+	@echo '${CYAN}make docker-up${RESET}        - Start Docker containers'
+	@echo '${CYAN}make docker-up-d${RESET}      - Start Docker in background'
+	@echo '${CYAN}make docker-build${RESET}     - Build Docker image'
+	@echo '${CYAN}make docker-down${RESET}      - Stop Docker containers'
+	@echo '${CYAN}make docker-destroy${RESET}   - Complete Docker cleanup'
+	@echo '${CYAN}make docker-monitor${RESET}   - Monitor Docker containers'
+	@echo
+	@echo '${BLUE}=== Asset Commands ===${RESET}'
+	@echo '${CYAN}make vite${RESET}             - Start Vite dev server'
+	@echo '${CYAN}make vite-build${RESET}       - Build frontend assets'
+	@echo '${CYAN}make vite-kill${RESET}        - Stop Vite server'
+	@echo
+	@echo '${BLUE}=== Composer Commands ===${RESET}'
+	@echo '${CYAN}make composer-install${RESET}  - Install PHP dependencies'
+	@echo '${CYAN}make autoload${RESET}         - Update composer autoloader'
+	@echo '${CYAN}make autoload-o${RESET}       - Update optimized autoloader'
+	@echo
+	@echo '${BLUE}=== Deployment ===${RESET}'
+	@echo '${MAGENTA}make deploy${RESET}          - Build and deploy to GitHub Pages'
+	@echo '${MAGENTA}make wget${RESET}            - Generate static site and preview'
+	@echo '${MAGENTA}make gh-pages${RESET}        - Initialize GitHub Pages repository'
 # Environment setup
 config:
 	@echo '${BLUE}Setting up environment...${RESET}'
@@ -55,12 +75,12 @@ config:
 
 
 # Install dependencies
-pre-install: config composer-install
+pre-install: composer-install
 	@echo '${BLUE}Installing dependencies...${RESET}'
 	npm install
 	@echo '${GREEN}✔ Dependency installation complete${RESET}'
 
-install: pre-install vite-build docker-up--build vite
+install: config pre-install vite-build docker-up--build vite
 	@echo '${GREEN}✔ Project installation completed (dependencies, Docker, Vite)...${RESET}'
 
 
@@ -97,6 +117,14 @@ autoload-o:
 	@echo '${BLUE}Updating optimized composer autoloader...${RESET}'
 	yes | composer dump-autoload -o
 
+# Cleaning
+clean: docker-destroy
+	@echo '${BLUE}Cleaning project...${RESET}'
+	@rm -rf public/dist || true
+	@rm -rf node_modules || true
+	@rm -rf vendor || true
+	@rm -rf gh-pages/public || true
+	@echo '${GREEN}✔ Project cleaned${RESET}'
 
 # Docker commands
 docker-up: autoload
@@ -180,6 +208,24 @@ vite-kill:
 	@echo '${GREEN}✔ Vita server stopped, ports: 4173, 5173 destroyed.${RESET}'
 
 
+# Deployment to GitHub Pages
+deploy: wget
+	@bash -c '\
+		echo "${MAGENTA}Would you like to deploy? (Enter=yes, Any key=no)${RESET}"; \
+		read -n 1 -s key; \
+		if [[ -z "$$key" ]]; then \
+			make kill; \
+			echo -e "\r${GREEN}✔ Deploy selected${RESET}"; \
+			make gh-pages-push-public; \
+		else \
+			make kill; \
+			echo -e "\r${YELLOW}Deploy cancelled by user${RESET}"; \
+			echo "${MAGENTA}You can now:${RESET}"; \
+			echo "- ${YELLOW}make deploy${RESET} to push to GitHub Pages"; \
+		fi \
+	'
+
+
 # WGET commands
 wget: wget-preparation wget-generation
 	@echo "${GREEN}Generation completed successfully${RESET}"
@@ -231,23 +277,6 @@ wget-generation:
 		http://localhost:8080
 	@echo '${GREEN}✔ WGET static files generated successfully${RESET}'
 
-
-# Deployment to GitHub Pages
-deploy: wget
-	@bash -c '\
-		echo "${MAGENTA}Would you like to deploy? (Enter=yes, Any key=no)${RESET}"; \
-		read -n 1 -s key; \
-		if [[ -z "$$key" ]]; then \
-			make kill; \
-			echo -e "\r${GREEN}✔ Deploy selected${RESET}"; \
-			make gh-pages-push-public; \
-		else \
-			make kill; \
-			echo -e "\r${YELLOW}Deploy cancelled by user${RESET}"; \
-			echo "${MAGENTA}You can now:${RESET}"; \
-			echo "- ${YELLOW}make deploy${RESET} to push to GitHub Pages"; \
-		fi \
-	'
 
 # GitHub Pages
 gh-pages: gh-pages-init gh-pages-gitignore gh-pages-push-root
