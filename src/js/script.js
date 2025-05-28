@@ -24,20 +24,25 @@ async function initCoreFeatures() {
  * Initialize non-critical components with delayed loading
  */
 function initDelayedComponents() {
-    // Load Menu with low priority using requestIdleCallback
     if ('requestIdleCallback' in window) {
         requestIdleCallback(async () => {
-            const {default: Menu} = await import(
-                /* webpackChunkName: "menu" */
-                './modules/Menu.js'
-                );
+            const [{default: Menu}, {default: SeeMore}] = await Promise.all([
+                import(/* webpackChunkName: "menu" */ './modules/Menu.js'),
+                import('./modules/utils/SeeMore.js')
+            ]);
+
             new Menu();
+            SeeMore('[data-action="see-more"]');
         });
     } else {
-        // Fallback for browsers that don't support requestIdleCallback
         setTimeout(async () => {
-            const {default: Menu} = await import('./modules/Menu.js');
+            const [{default: Menu}, {default: SeeMore}] = await Promise.all([
+                import('./modules/Menu.js'),
+                import('./modules/utils/SeeMore.js')
+            ]);
+
             new Menu();
+            SeeMore('[data-action="see-more"]');
         }, 200);
     }
 }

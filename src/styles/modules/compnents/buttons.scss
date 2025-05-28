@@ -40,18 +40,6 @@
 		text-decoration: none;
 		transition: all 0.3s ease-in-out;
 	}
-
-
-	@media (hover: hover) {
-		&:hover,
-		&:hover i,
-		&:hover::before,
-		&:hover::after {
-			background: var(--hover);
-			color: var(--white);
-			text-decoration: none;
-		}
-	}
 }
 
 
@@ -152,26 +140,38 @@
 	transform: translate(-50%, -25%) rotate(45deg);
 }
 
-.button:focus,
-.button:focus i,
-.button:active,
-.button:active i {
-	border: none;
-}
+.button {
+	&:focus,
+	&:focus i,
+	&:active,
+	&:active i {
+		border: none;
+	}
 
-.button:focus,
-.button:focus i,
-.button:focus::before,
-.button:focus::after,
-.button:active,
-.button:active i,
-.button:active::before,
-.button:active::after {
-	background: var(--pressed);
-	outline: none;
-	color: var(--white);
-}
+	&:focus,
+	&:focus i,
+	&:focus::before,
+	&:focus::after,
+	&:active,
+	&:active i,
+	&:active::before,
+	&:active::after {
+		background: var(--pressed);
+		outline: none;
+		color: var(--white);
+	}
 
+	@media (hover: hover) {
+		&:hover,
+		&:hover i,
+		&:hover::before,
+		&:hover::after {
+			background: var(--hover);
+			color: var(--white);
+			text-decoration: none;
+		}
+	}
+}
 
 .button--transparent {
 	background: none;

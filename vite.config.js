@@ -15,7 +15,16 @@ export default defineConfig({
                 critical: './src/styles/critical.scss'
             },
             output: {
-                manualChunks: undefined,
+                manualChunks(id) {
+                    const moduleChunks = {
+                        'modules/Menu.js': 'menu',
+                        'modules/Overlay.js': 'menu',
+                        'modules/utils/SeeMore.js': 'utils'
+                    };
+                    
+                    const chunk = Object.entries(moduleChunks).find(([path]) => id.includes(path));
+                    return chunk ? chunk[1] : undefined;
+                },
                 entryFileNames: 'js/[name].[hash].js',
                 chunkFileNames: 'js/[name].[hash].js',
                 assetFileNames: ({name}) => {
