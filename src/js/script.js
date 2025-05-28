@@ -33,11 +33,23 @@ function initDelayedComponents() {
                 );
             new Menu();
         });
+
+        requestIdleCallback(async () => {
+            const {default: SeeMore} = await import(
+                './modules/utils/SeeMore.js'
+                );
+            SeeMore('[data-action="see-more"]');
+        });
     } else {
         // Fallback for browsers that don't support requestIdleCallback
         setTimeout(async () => {
             const {default: Menu} = await import('./modules/Menu.js');
             new Menu();
+        }, 200);
+
+        setTimeout(async () => {
+            const {default: SeeMore} = await import('./modules/utils/SeeMore.js');
+            SeeMore('[data-action="see-more"]');
         }, 200);
     }
 }

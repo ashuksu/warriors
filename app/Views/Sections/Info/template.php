@@ -4,7 +4,9 @@
 			<h2 class="title">
                 <?= $item['title'] ?>
 			</h2>
-			<div id="<?= $section ?? '' ?>-see-more" class="see-more__content">
+			<div id="<?= $section ?? '' ?>-see-more"
+				 class="see-more__content"
+				 data-max-height="300">
 				<p class="text-justify">
                     <?= $item['text'] ?>
 				</p>

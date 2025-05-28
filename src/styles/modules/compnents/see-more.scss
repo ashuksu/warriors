@@ -6,6 +6,12 @@
 		overflow: hidden;
 		padding-right: 1.5rem;
 
+		@for $i from 1 through 4 {
+			&[data-max-height="#{$i}00"] {
+				max-height: #{$i}0rem;
+			}
+		}
+
 		&.active {
 			overflow-x: hidden;
 			overflow-y: auto;
