@@ -79,9 +79,11 @@ a {
 		color: index.$primary-emphasis;
 	}
 
-	@include index.hover() {
-		color: index.$primary;
-		text-decoration: underline;
+	@media (hover: hover) {
+		&:hover {
+			color: index.$primary;
+			text-decoration: underline;
+		}
 	}
 }
 

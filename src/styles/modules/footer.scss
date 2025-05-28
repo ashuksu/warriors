@@ -44,8 +44,10 @@
 			color: var(--red-light);
 		}
 
-		@include index.hover() {
-			color: index.$red;
+		@media (hover: hover) {
+			&:hover {
+				color: index.$red;
+			}
 		}
 	}
 }
