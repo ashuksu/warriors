@@ -67,41 +67,45 @@ A modern PHP application template with Vite bundling, Docker support, and deploy
 
 ## Quick Start
 
-1. Clone the repository
-
 ```bash
-
+# Clone the repository
 git clone https://github.com/ashuksu/warriors.git
 cd warriors
 ```
 
-2. Set up environment
-
 ```bash
-
-cp .env.example .env
+# Install dependencies and start development server
+make install # Initialize environment configuration
 ```
 
-[More details](docs/config.md#configuration-and-environment-variables)
+> Set up an environment in .env
 
-3. Install dependencies and start development server
+<details>
+  <summary>alternative</summary>
 
 ```bash
+cp .env.example .env # Copy example environment file
 
 composer install          # Install dependencies
 npm install
-docker-compose up --build # Build the Docker image
-composer dump-autoload    # to update startup
+
 vite build                # the Vite build
+composer dump-autoload    # to update startup
+docker-compose up --build # Build the Docker image
 vite                      # Start dev server
 ```
+
+</details>
 
 Visit [localhost:8080](http://localhost:8080) or [localhost:5173](http://localhost:5173) to see the application in
 action.
 
-See [More details](docker.md#installation) for detailed instructions on Docker setup
+See [More details](docs/docker.md#configuration-and-environment-variables) - contains all available environment
+variables and settings
 
-See [More details](Vite.md#installation) for detailed instructions on Vite setup
+See [More details](docs/docker.md#installation) for detailed instructions on Docker setup
+
+See [More details](docs/vite.md#installation) for detailed instructions on Vite setup
 
 ## Development
 
@@ -125,11 +129,45 @@ DOMAIN=your-domain.com
 ### Available Commands
 
 ```bash
+# Start development server
+make dev      
+```
+
+```bash
+# Build for production
+make build 
+```
+
+```bash
+# Stop development server
+make stop 
+```
+
+```bash
+# Stop all containers and servers
+make kill
+```
+
+```bash
+# Preview production build after Docker rebuild
+make wget
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 
 npm run dev    # Start development server
 npm run build  # Build for production
 npm run stop   # Stop development server
+npm run kill   # Stop all containers and servers
+
+# Preview production build after Docker rebuild
+npm run docker:build && vite preview 
 ```
+
+</details>
 
 ## Documentation
 
