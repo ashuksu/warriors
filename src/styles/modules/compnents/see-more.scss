@@ -1,0 +1,53 @@
+@use "../index";
+
+.see-more {
+	&__content {
+		max-height: 20rem;
+		overflow: hidden;
+		padding-right: 1.5rem;
+
+		&.active {
+			overflow-x: hidden;
+			overflow-y: auto;
+			max-height: 50vh;
+
+			&::-webkit-scrollbar {
+				border-radius: .5rem;
+				width: 1rem;
+				background-color: var(--gray);
+			}
+
+			&::-webkit-scrollbar-thumb {
+				min-height: 15rem !important;
+				border-radius: .5rem;
+				width: 1rem;
+				background-color: var(--gray-dark);
+				cursor: pointer;
+			}
+
+			&::-webkit-scrollbar-track {
+				background-color: transparent
+			}
+		}
+	}
+
+	&__button {
+		&[hidden] {
+			display: none;
+		}
+
+		position: relative;
+		right: 0;
+		bottom: 0;
+		z-index: 1;
+		visibility: visible;
+		opacity: 1;
+		transform: rotate(180deg);
+
+		&.active {
+			right: 0;
+			bottom: 0;
+			transform: rotate(0deg);
+		}
+	}
+}
