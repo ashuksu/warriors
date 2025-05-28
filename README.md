@@ -133,6 +133,17 @@ DOMAIN=your-domain.com
 make dev      
 ```
 
+<details>
+  <summary>additionally</summary>
+
+```bash
+# Start development servers
+make docker-up      
+make vite      
+```
+
+</details>
+
 ```bash
 # Build for production
 make build 

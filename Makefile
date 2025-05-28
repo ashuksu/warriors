@@ -80,14 +80,23 @@ pre-install: composer-install
 	npm install
 	@echo '${GREEN}✔ Dependency installation complete${RESET}'
 
-install: config pre-install vite-build docker-up--build vite
+install: config pre-install vite-build
+	@make vite & sleep 3
+	@make docker-up--build
 	@echo '${GREEN}✔ Project installation completed (dependencies, Docker, Vite)...${RESET}'
 
 
 # Development
-dev: docker-up vite
-	@echo '${CYAN}Development environment is running (Docker, Vite server)...${RESET}'
-
+dev:
+	@echo '${BLUE}Starting development environment...${RESET}'
+	@echo '${CYAN}Starting Docker on http://localhost:8080/...${RESET}'
+	@gnome-terminal --tab --title="Docker" -- make docker-up || \
+	xterm -e "make docker-up" || \
+	open -a Terminal.app make docker-up || \
+	start cmd /k make docker-up || \
+	echo '${RED}Could not open new terminal. Run manually:${RESET}\nmake docker-up'
+	@echo '${CYAN}Starting Vite server...${RESET}'
+	@make vite
 
 # Build
 build: vite-build docker-build
