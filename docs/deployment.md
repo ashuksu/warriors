@@ -141,6 +141,13 @@ git push -u origin gh-pages --force
 
 ---
 
+Production mode:
+
+```.env
+IS_DEV=false
+DOMAIN=your-domain.com
+```
+
 ```bash
 #generate static pages in public and push to gh-pages
 make deploy
