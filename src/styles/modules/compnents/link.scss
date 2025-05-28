@@ -17,15 +17,17 @@
 		background: none;
 	}
 
-	@include index.hover() {
+	@media (hover: hover) {
 		&:focus,
 		&:active {
 			color: index.$pressed;
 		}
 
-		color: index.$hover;
-		text-decoration: none;
-		--d: 80%;
+		&:hover {
+			color: index.$hover;
+			text-decoration: none;
+			--d: 80%;
+		}
 	}
 
 	@include index.response(index.$md) {

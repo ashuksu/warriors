@@ -39,30 +39,21 @@
 		color: var(--white);
 		text-decoration: none;
 		transition: all 0.3s ease-in-out;
+	}
 
-		@include index.hover() {
-			&,
-			&:hover i,
-			&:hover::before,
-			& :hover::after {
-				background: var(--hover);
-				color: var(--white);
-				text-decoration: none;
-			}
+
+	@media (hover: hover) {
+		&:hover,
+		&:hover i,
+		&:hover::before,
+		&:hover::after {
+			background: var(--hover);
+			color: var(--white);
+			text-decoration: none;
 		}
 	}
 }
 
-@media (hover: hover) {
-	.button:hover,
-	.button:hover i,
-	.button:hover::before,
-	.button:hover::after {
-		background: var(--hover);
-		color: var(--white);
-		text-decoration: none;
-	}
-}
 
 .button--up,
 .button--plus,
@@ -181,6 +172,7 @@
 	color: var(--white);
 }
 
+
 .button--transparent {
 	background: none;
 
@@ -189,8 +181,10 @@
 		background: none;
 	}
 
-	@include index.hover() {
-		background: none;
+	@media (hover: hover) {
+		&:hover {
+			background: none;
+		}
 	}
 }
 
