@@ -32,7 +32,6 @@ needed. It's represented as follows:
 ### Switching to the Old Branch:
 
 ```bash
-
 # If you need to work with the code of the old design:
 git checkout archive/OLD-DESIGN-v1
 ```
@@ -40,7 +39,6 @@ git checkout archive/OLD-DESIGN-v1
 ### Viewing and Checking Out Tags:
 
 ```bash
-
 # To see all available tags:
 git tag
 ```
@@ -57,14 +55,12 @@ git checkout old-design-v1
 If you want to start development based on this tagged state, you should create a new branch:
 
 ```bash
-
 git checkout -b feature/old-v1-TASK old-design-v1
 ```
 
 Or branch off the `archive/OLD-DESIGN-v1`
 
 ```bash
-
 git checkout archive/OLD-DESIGN-v1
 ```
 
