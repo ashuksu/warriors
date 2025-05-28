@@ -37,24 +37,48 @@ npm install -g vite
 ---
 
 ```bash
-
 # Start dev server
+make vite
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 vite
 ```
+
+</details>
 
 ➡️️ [localhost:5173](http://localhost:5173)
 
 ```bash
-
 # Start build
+make vite-build
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 vite build
 ```
 
-```bash
+</details>
 
+```bash
 # Preview
+make vite-preview
+```
+
+<details>
+  <summary>additionally</summary>
+
+```bash
 vite preview
 ```
+
+</details>
 
 ➡️️ [localhost:4173](http://localhost:4173)
 
@@ -94,15 +118,23 @@ npm install -g kill-port
 </details>
 
 ```bash
-
 # Stop the port used by Vite
+make vite-kill
+```
+
+<details>
+  <summary>Kill Port</summary>
+
+```bash
 kill-port 4173 5173 || true
 ```
+
+</details>
 
 ---
 
 <details>
-  <summary>fuser</summary>
+  <summary>Fuser (Linux only)</summary>
 
 ️️➡️ [Fuser](https://man7.org/linux/man-pages/man1/fuser.1.html)
 
@@ -158,13 +190,17 @@ mode and from the built files in production mode.
 
 ```js
 
-input: {
-  script: './src/js/script.js',
-  style: './src/css/style.css',
-  styleHome: './src/css/styleHome.css',
-  animate: './src/styles/libs/animate.min.css',
-  critical: './src/scss/critical.scss'
-},
+export default defineConfig({
+    build: {
+        input: {
+            script: './src/js/script.js',
+            style: './src/css/style.css',
+            styleHome: './src/css/styleHome.css',
+            animate: './src/styles/libs/animate.min.css',
+            critical: './src/scss/critical.scss'
+        }
+    }
+})
 ```
 
 > **Important:**  

@@ -20,19 +20,7 @@
 
 [Installing Docker Compose](https://docs.docker.com/compose/install/)
 
-```bash
-
-# For Ubuntu/Debian, you can install gnome-terminal for convenience
-sudo apt install gnome-terminal
-```
-
 ## Docker Compose
-
-⬆️ [Back to Top](#docker-usage)
-
-⬅️ [Back to Home](../README.md)
-
----
 
 ### Common Usage
 
@@ -44,6 +32,7 @@ docker-compose up [OPTIONS]
 
 | Option             | Description                                                                      |
 |--------------------|----------------------------------------------------------------------------------|
+| `-h`               | Help.                                                                            |
 | `--build`          | Builds images **before** starting containers (if changes were made).             |
 | `--no-cache`       | Builds images **without using cache**, useful for forced clean builds.           |
 | `-d`               | Runs containers in the **background (detached mode)**.                           |
@@ -61,48 +50,92 @@ docker-compose up [OPTIONS]
 ---
 
 ```bash
+# Start the app:
+make docker-up
+```
 
-# Start the app (builds only if needed):
+<details>
+  <summary>alternative</summary>
+
+```bash
 docker-compose up && echo 'Server started at http://localhost:8080'",
 ```
+
+</details>
 
 Visit [localhost:8080](http://localhost:8080)
 
 ```bash
-
 # Force rebuild before starting:
-docker-compose up --build
+make docker-up--build
 ```
 
-```bash 
+<details>
+  <summary>alternative</summary>
 
+```bash
+docker-compose up --build
+
+```
+
+</details>
+
+```bash 
 # Just build:
+make docker-build:
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash 
 docker-compose build
 ```
 
-```bash 
-
-# Force rebuild without cache:
-docker-compose up --build --no-cache
-```
+</details>
 
 ```bash
-
 # Start in background:
+make docker-up-d
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 docker-compose up -d
 ```
 
-```bash
+</details>
 
+```bash
+# Stop containers, networks, etc.
+make docker-down
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 # Stop containers, networks, etc.
 docker-compose down
 ```
 
-```bash
+</details>
 
+```bash
 # Restart the container
+make docker-restart
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 docker-compose restart
 ```
+
+</details>
 
 ## Additional Commands
 
@@ -112,49 +145,90 @@ docker-compose restart
 
 ---
 
-```bash
+```bash 
+# Force rebuild without cache:
+docker-compose up --build --no-cache
+```
 
+```bash
 # View current status of all project containers
 docker ps
 ```
 
 ```bash
-
 # Monitor Docker containers
+make docker-monitor
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest
 ```
 
+</details>
+
 ### How to stop Docker (running)
 
-```bash 
-
+```bash
 # Stop containers
-docker stop $(docker ps -aq)
+make docker-stop
+```
 
+<details>
+  <summary>alternative</summary>
+
+```bash
+docker stop $(docker ps -aq)
+```
+
+</details>
+
+```bash
 # Remove containers
+make docker-rm
+```
+
+<details>
+  <summary>alternative</summary>
+
+```bash
 docker rm $(docker ps -aq)
 ```
+
+</details>
 
 Visit [How to work with ports (:8080) ](vite.md#how-to-stop-ports)
 
 ### How to clean Docker and Rebuild (running)
 
-> Stop the containers first
+> STOP the containers first
+
+```bash
+# Total rebuild (clean and build from scratch)
+make docker-purge
+make docker-build
+```
+
+<details>
+  <summary>alternative</summary>
 
 ```bash 
-
-# Clean unused Docker resources
+# Clean unused Docker resources: containers, images, volumes and networks
 docker system prune -af
+docker volume prune -f
+docker network prune -f 
+docker rmi warriors_web || true
 
-# Clean up all unused containers and images
-docker system prune -a
+# Update autoloader
+yes | composer dump-autoload -o
 
-# Delete all local project images (PROJECT_DIRECTORY_NAME_web)
-docker rmi warriors_web
-
-# Just build:
+# Rebuild Docker image
 docker-compose build
 ```
+
+</details>
 
 ---
 
