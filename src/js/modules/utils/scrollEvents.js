@@ -23,7 +23,7 @@ export default function scrollEvents() {
  */
 export function setHeaderScrolledState() {
     const html = document.documentElement;
-    const header = document.getElementById('header').offsetHeight
+    const header = document.getElementById('header').offsetHeight;
     html.dataset.scrolled = isWindowScroll(header);
 }
 

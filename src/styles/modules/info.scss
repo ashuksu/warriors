@@ -4,4 +4,12 @@
 	&__inner {
 		background: var(--gradient);
 	}
+
+	&__button {
+		&.link {
+			max-width: max-content;
+		}
+
+		align-self: center;
+	}
 }
