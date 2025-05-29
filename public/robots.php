@@ -26,6 +26,20 @@ echo "Disallow: /admin/      # Admin area\n";
 echo "Disallow: /.git/       # Git repository\n";
 echo "Disallow: /.idea/      # IDE files\n\n";
 
+echo "# Allow specific file types\n";
+echo "Allow: /*.css$\n";
+echo "Allow: /*.js$\n";
+echo "Allow: /*.png$\n";
+echo "Allow: /*.jpg$\n";
+echo "Allow: /*.gif$\n";
+echo "Allow: /*.svg$\n";
+echo "Allow: /*.webp$\n\n";
+
+echo "# Block specific parameters\n";
+echo "Disallow: *?*sort=\n";
+echo "Disallow: *?*filter=\n";
+echo "Disallow: *?*page=\n\n";
+
 echo "# Crawl-delay to prevent server overload (in seconds)\n";
 echo "Crawl-delay: 5\n\n";
 

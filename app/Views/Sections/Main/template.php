@@ -1,14 +1,14 @@
 <section id="<?= $section ?? '' ?>" class="section main <?= $section ?? '' ?>">
-    <div class="container">
-        <div class="row">
-            <div class="col col-lg-5 col-md-6 mb-1 mb-md-0">
-                <div class="inner main__inner">
-                    <h1 class="title main__title">
+	<div class="container">
+		<div class="row">
+			<div class="col col-lg-5 col-md-6 mb-1 mb-md-0">
+				<div class="inner main__inner">
+					<h2 class="title main__title">
                         <?= $item['title'] ?? '' ?>
-                    </h1>
-                    <p class="main__text">
+					</h2>
+					<p class="main__text">
                         <?= $item['text'] ?? '' ?>
-                    </p>
+					</p>
 
                     <?php
 
@@ -25,10 +25,10 @@
                     }
                     ?>
 
-                </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="image">
+				</div>
+			</div>
+			<div class="col col-md-6">
+				<div class="image">
 
                     <?php
 
@@ -43,8 +43,8 @@
                     ]);
                     ?>
 
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
