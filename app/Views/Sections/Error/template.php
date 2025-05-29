@@ -1,6 +1,6 @@
 <section id="<?= $section ?? '' ?>" class="section error <?= $section ?? '' ?>">
 	<div class="container">
-		<div class="inner error__inner text-center">
+		<div class="inner error__inner text-center mx-auto">
 			<h2 class="title mb-3 wow pixFadeUp" data-wow-delay="0.2s">
                 <?= $title ?? '' ?>
 			</h2>
