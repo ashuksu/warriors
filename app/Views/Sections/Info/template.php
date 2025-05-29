@@ -6,7 +6,10 @@
 			</h2>
 			<div id="<?= $section ?? '' ?>-see-more"
 				 class="see-more__content"
-				 data-max-height="300">
+				 data-max-height="300"
+				 aria-expanded="false"
+				 role="region"
+				 aria-label="Additional content">
 				<p class="text-justify">
                     <?= $item['text'] ?>
 				</p>
@@ -20,6 +23,10 @@
                 'url' => '#' . ($section ?? '') . '-see-more',
                 'class' => 'info__button see-more__button button button--up',
                 'attr' => 'hidden data-element="toggle" data-action="see-more"',
+                'aria-label' => 'Toggle additional content',
+                'aria-expanded' => false,
+                'aria-controls' => $section . '-see-more',
+                'role' => 'button'
             ]);
             ?>
 

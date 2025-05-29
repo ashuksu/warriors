@@ -7,16 +7,16 @@ use Views\Components\Button;
 
 /**
  * Menu section class
- * 
+ *
  * Handles rendering of the site navigation menu with links and popup button
  */
 class Menu
 {
     /**
      * Render the menu section
-     * 
+     *
      * Outputs the navigation menu with close button, menu links, and popup button
-     * 
+     *
      * @param array $params Parameters for the menu section
      * @return void
      */
@@ -28,16 +28,20 @@ class Menu
         $menu = SectionService::get('menu', 'items');
         ?>
 
-        <nav id="menu" class="menu" data-block="menu">
+		<nav id="menu" class="menu" data-block="menu" role="navigation" aria-label="Main Menu">
 
             <?php
             echo Button::render([
                 'class' => 'button--close button--transparent',
-                'attr' => 'data-element="menu-close"'
+                'attr' => 'data-element="menu-close"', // Corrected line: 'б' changed to "'"
+                'aria-label' => 'Close Main Menu',
+                'aria-expanded' => true,
+                'aria-controls' => 'menu',
+                'role' => 'button'
             ]);
             ?>
 
-            <div class="menu__list">
+			<div class="menu__list" role="menubar">
                 <?php
                 if (!empty($menu) && is_array($menu)) {
                     foreach ($menu as $item) {
@@ -47,25 +51,32 @@ class Menu
                         $url = APP_PATH . $hash . $id;
                         ?>
 
-                        <a href="<?= $url ?>" class="menu__link link" data-element="link">
+						<a href="<?= $url ?>"
+						   class="menu__link link"
+						   data-element="link"
+						   role="menuitem">
                             <?= $name ?? '' ?>
-                        </a>
+						</a>
 
                         <?php
                     }
                 }
                 ?>
-            </div>
+			</div>
 
             <?php
             echo Button::render([
                 'url' => '#popup-' . ($popup['id'] ?? ''),
                 'attr' => 'data-element="popup-open"',
                 'content' => 'Open ' . ($popup['name'] ?? ''),
+                'aria-label' => 'Open ' . ($popup['name'] ?? '') . ' Popup',
+                'aria-expanded' => false,
+                'aria-controls' => 'popup-' . ($popup['id'] ?? ''),
+                'role' => 'button'
             ]);
             ?>
 
-        </nav>
+		</nav>
         <?php
     }
 }

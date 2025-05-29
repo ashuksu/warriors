@@ -99,12 +99,6 @@
       "alt": "w4",
       "width": "600",
       "height": "600"
-    },
-    "button": {
-      "url": "APP_PATH",
-      "class": "error-button wow pixFadeUp",
-      "attr": "data-wow-delay='0.5s' target='_blank'",
-      "content": "to the Home page"
     }
   },
   "faq": {
@@ -156,7 +150,7 @@
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.",
         "button": {
           "url": "$LINK",
-          "attr": "target='_blank'",
+          "attr": "target='_blank' rel='noopener noreferrer'",
           "content": "GitHub"
         }
       }
@@ -187,19 +181,23 @@
         "id": "about",
         "hash": "#",
         "name": "About"
-      },{
+      },
+      {
         "id": "catalog",
         "hash": "",
         "name": "Catalog"
-      },{
+      },
+      {
         "id": "faq",
         "hash": "#",
         "name": "FAQ"
-      },{
+      },
+      {
         "id": "info",
         "hash": "#",
         "name": "Info"
-      },{
+      },
+      {
         "id": "contacts",
         "hash": "",
         "name": "Contacts"

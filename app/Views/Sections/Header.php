@@ -26,7 +26,7 @@ class Header
         extract($params);
         ?>
 
-		<header id="header" class="header">
+		<header id="header" class="header" role="banner">
 			<div class="container">
 				<div class="header__inner">
 					<a href="<?= APP_PATH ?>" class="logo">
@@ -44,8 +44,13 @@ class Header
                     <?php
                     echo Button::render([
                         'class' => 'button button--menu button--transparent',
-                        'attr' => 'data-element="menu-open"',
+                        'attr' => 'data-element="menu-open" hidden',
                         'content' => '<i></i>',
+                        'aria-hidden' => true,
+                        'aria-label' => 'Open Main Menu',
+                        'aria-expanded' => false,
+                        'aria-controls' => 'menu',
+                        'role' => 'button'
                     ]);
 
                     Menu::render([]);
