@@ -35,7 +35,7 @@ class Footer
 
                         <?php
                         echo Image::render([
-                            'url' => getPath('dist/assets/images/logo/logo-3.png'),
+                            'url' => getPath('dist/assets/images/logo/logo-3.svg'),
                             'alt' => 'logo-footer',
                             'width' => 70,
                             'height' => 70,

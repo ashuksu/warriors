@@ -33,7 +33,7 @@ class Header
 
                         <?php
                         echo Image::render([
-                            'url' => getPath('dist/assets/images/logo/logo-1.png'),
+                            'url' => getPath('dist/assets/images/logo/logo-1.svg'),
                             'alt' => 'logo',
                             'width' => 30,
                             'height' => 30,
