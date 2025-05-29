@@ -1,11 +1,11 @@
 <section id="<?= $section ?? '' ?>" class="section catalog <?= $section ?? '' ?>">
-    <div class="container">
-        <div class="inner catalog__inner">
-            <h1 class="title mb-3 text-center wow pixFadeUp" data-wow-delay="0.2s">
+	<div class="container">
+		<div class="inner catalog__inner">
+			<h2 class="title mb-3 text-center wow pixFadeUp" data-wow-delay="0.2s">
                 <?= $title ?? '' ?>
-            </h1>
+			</h2>
 
-            <div class="catalog__grid">
+			<div class="catalog__grid">
 
                 <?php
 
@@ -22,7 +22,7 @@
                 }
                 ?>
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </section>

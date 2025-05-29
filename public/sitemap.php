@@ -18,7 +18,8 @@ $today = date('Y-m-d');
 // Start XML output
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 echo '<!-- Sitemap for Warriors website -->' . "\n";
-echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+             xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . "\n";
 
 // Define pages with their priorities
 $pages = [
@@ -34,6 +35,13 @@ foreach ($pages as $path => $settings) {
     echo "        <lastmod>{$today}</lastmod>\n";
     echo "        <changefreq>{$settings['changefreq']}</changefreq>\n";
     echo "        <priority>{$settings['priority']}</priority>\n";
+    if (!empty($settings['images'])) {
+        foreach ($settings['images'] as $image) {
+            echo "        <image:image>\n";
+            echo "            <image:loc>https://{$domain}/{$image}</image:loc>\n";
+            echo "        </image:image>\n";
+        }
+    }
     echo "    </url>\n";
 }
 
