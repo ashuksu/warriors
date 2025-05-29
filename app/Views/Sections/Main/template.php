@@ -19,7 +19,11 @@
                             echo Button::render([
                                 'url' => '#popup-' . ($item['id'] ?? ''),
                                 'attr' => 'data-element="popup-open"',
-                                'content' => 'Open popup ' . ($item['name'] ?? '')
+                                'content' => 'Open popup ' . ($item['name'] ?? 'Dialog'),
+                                'aria-label' => 'Open popup ' . ($item['name'] ?? 'Dialog'),
+                                'aria-expanded' => false,
+                                'aria-controls' => 'popup-' . ($item['id'] ?? ''),
+                                'role' => 'button'
                             ]);
                         }
                     }

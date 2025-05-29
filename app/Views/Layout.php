@@ -43,7 +43,7 @@ class Layout
             Header::render();
             ?>
 
-			<main id="content" class="content">
+			<main id="content" class="content" role="<?= PAGE ?? 'main' ?>">
 				<h1 hidden>
                     <?= PAGES[PAGE]['h1'] ?? PAGES[PAGE]['title'] ?>
 				</h1>
@@ -71,7 +71,10 @@ class Layout
         echo Button::render([
             'url' => '#content',
             'class' => 'button--up',
-            'attr' => 'data-element="link" data-action="up"'
+            'attr' => 'data-element="link" data-action="up" hidden',
+            'aria-label' => 'Scroll to top',
+            'role' => 'button',
+            'aria-hidden' => true
         ]);
 
         Popup::render();

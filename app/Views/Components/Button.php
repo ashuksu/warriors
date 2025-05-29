@@ -6,7 +6,7 @@ use Services\ConfigVarResolver;
 
 /**
  * Button component class
- * 
+ *
  * Provides functionality to render HTML buttons or links with button styling
  */
 class Button
@@ -19,7 +19,12 @@ class Button
      *     class?: string,
      *     attr?: string,
      *     content?: string,
-     *     tag?: string
+     *     tag?: string,
+     *     aria-label?: string,
+     *     aria-expanded?: string|bool,
+     *     aria-controls?: string,
+     *     role?: string,
+     *     aria-hidden?: bool
      * } $params Button configuration
      *
      * @return string HTML button
@@ -34,6 +39,13 @@ class Button
         $attr = $attr ?? '';
         $content = $content ?? '';
         $tag = $tag ?? 'link';
+
+        // ADDED: Accessibility attributes
+        $ariaLabel = !empty($params['aria-label']) ? 'aria-label="' . htmlspecialchars($params['aria-label'], ENT_QUOTES) . '"' : '';
+        $ariaExpanded = isset($params['aria-expanded']) ? 'aria-expanded="' . ($params['aria-expanded'] ? 'true' : 'false') . '"' : '';
+        $ariaControls = !empty($params['aria-controls']) ? 'aria-controls="' . htmlspecialchars($params['aria-controls'], ENT_QUOTES) . '"' : '';
+        $role = !empty($params['role']) ? 'role="' . htmlspecialchars($params['role'], ENT_QUOTES) . '"' : '';
+        $ariaHidden = isset($params['aria-hidden']) ? 'aria-hidden="' . ($params['aria-hidden'] ? 'true' : 'false') . '"' : '';
 
         // Resolve variables in URL
         if (is_string($url) && strpos($url, '$') !== false) {
@@ -55,13 +67,22 @@ class Button
         ob_start(); ?>
         <?php if ($tag === 'button'): ?>
 
-            <button class="<?= $class ?>" <?= $attr ?>><?= $content ?></button>
+		<button class="<?= $class ?>" <?= $attr ?> <?= $ariaLabel ?> <?= $ariaExpanded ?> <?= $ariaControls ?> <?= $role ?>><?= $content ?></button>
 
-        <?php else: ?>
+    <?php else: ?>
 
-            <a href="<?= $url ?>" class="<?= $class ?>" <?= $attr ?>><?= $content ?></a>
+		<a href="<?= $url ?>"
+		   class="<?= $class ?>"
+            <?= $attr ?>
+            <?= $ariaLabel ?>
+            <?= $ariaExpanded ?>
+            <?= $ariaControls ?>
+            <?= $role ?>
+            <?= $ariaHidden ?>>
+            <?= $content ?>
+		</a>
 
-        <?php endif;
+    <?php endif;
         return ob_get_clean();
     }
 }
