@@ -13,10 +13,10 @@
             if (!empty($item) && is_array($item)) {
 
                 renderTemplate($itemPath ?? __DIR__ . '/item.php', [
-                    'text' => $item['text'],
+                    'text' => $item['text'] ?? '',
                     'image' => getPath('dist/assets/images/' . ($item['image']['image'] ?? '')),
-                    'item' => $item['image'],
-                    'button' => $item['button']
+                    'item' => $item['image'] ?? '',
+                    'button' => $item['button'] ?? ''
                 ]);
             }
             ?>

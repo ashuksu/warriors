@@ -23,9 +23,11 @@
 use Views\Components\Button;
 
 echo Button::render([
-    'url' => $button['url'] ?? '',
-    'class' => $button['class'] ?? '',
-    'attr' => $button['attr'] ?? '',
-    'content' => $button['content'] ?? ''
+    'url' => $button['url'] ?? APP_PATH,
+    'class' => ($button['class'] ?? '') . ' error-button wow pixFadeUp',
+    'attr' => ($button['attr'] ?? '') . ' data-wow-delay="0.5s"',
+    'content' => $button['content'] ?? 'Back to Homepage',
+    'aria-label' => $button['content'] ?? 'Back to Homepage',
+    'role' => 'button'
 ]);
 ?>
