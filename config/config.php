@@ -1,7 +1,7 @@
 <?php
 /**
  * Main configuration file
- * 
+ *
  * Loads environment variables and defines application constants.
  * This file should be included at the beginning of the application bootstrap process.
  */
@@ -35,3 +35,4 @@ define('DOMAIN', $_ENV['DOMAIN'] ?? 'warriors.example.com');
 define('LINK', $_ENV['LINK'] ?? 'https://github.com/username/');
 define('EMAIL', $_ENV['EMAIL'] ?? 'email@example.com');
 define('TELEGRAM', $_ENV['TELEGRAM'] ?? 'https://t.me/username');
+define('PHONE', $_ENV['PHONE'] ?? '+1234567890');

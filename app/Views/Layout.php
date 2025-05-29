@@ -33,7 +33,7 @@ class Layout
 
         ?>
 
-		<body data-style="default" class="<?= 'page-' . PAGE ?>">
+		<body data-style="default" class="<?= 'page-' . PAGE ?>" itemscope itemtype="https://schema.org/WebPage">
 		<div class="wrapper">
 
             <?php
@@ -44,6 +44,9 @@ class Layout
             ?>
 
 			<main id="content" class="content">
+				<h1 hidden>
+                    <?= PAGES[PAGE]['h1'] ?? PAGES[PAGE]['title'] ?>
+				</h1>
 
                 <?php
                 if (!empty($sections) && is_array($sections)) {
