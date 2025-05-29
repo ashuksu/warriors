@@ -2,15 +2,18 @@
 
 .page-error {
 	background: var(--gray-dark);
+}
 
-	&_inner {
+.error {
+	&__inner {
 		align-items: center;
 		gap: 0;
+		max-width: modules.$md;
 		color: var(--white);
 	}
 
-	&_text,
-	&_image {
+	&__text,
+	&__image {
 		max-width: 60rem;
 	}
 }
