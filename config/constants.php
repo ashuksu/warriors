@@ -1,22 +1,30 @@
 <?php
 /**
- * Application constants
+ * Application Constants
  *
- * Defines constants used throughout the application.
- * Currently, contains page definitions with their names and titles.
+ * This file defines application-wide constants, serving as whitelists
+ * and configuration settings for various functionalities.
  */
 
 /**
- * PAGES - Array of page configurations
+ * PAGES - Array of page configurations.
  *
- * Each page has:
- * - name: Internal identifier for the page
- * - title: Display title for the page
- * - description: SEO description for the page
- * - keywords: SEO keywords for the page
- * - h1: Main heading for the page
- * - schema: Structured data for the page
- * - noindex: Optional flag to exclude the page from search engine indexing
+ * This constant acts as a whitelist for predefined application pages.
+ * Each entry is an associative array defining specific properties for a page.
+ *
+ * Structure of Each Page Entry:
+ * - 'name': (string) Internal identifier for the page.
+ * - 'title': (string) Display title for the page, used in browser tabs and SEO.
+ * - 'description': (string) A concise SEO description for the page.
+ * - 'keywords': (string) Comma-separated SEO keywords relevant to the page content.
+ * - 'h1': (string) The main heading (<h1>) displayed on the page.
+ * - 'schema': (array) Structured data (Schema.org) for SEO. Contains:
+ * - 'type': (string) The Schema.org type (e.g., 'Organization', 'ItemList').
+ * - 'category': (string) A specific category for the schema type.
+ * - (Optional) 'address': (array) Physical address details (e.g., for 'Organization').
+ * - (Optional) 'sameAs': (array) URLs of social media profiles or related web presences.
+ * - 'noindex': (bool, optional) If true, indicates that search engines should not index this page.
+ * Defaults to false if not present.
  */
 define("PAGES", [
     'main' => [
@@ -72,4 +80,19 @@ define("PAGES", [
         'h1' => 'Page Not Found',
         'noindex' => true
     ]
+]);
+
+/**
+ * ALLOWED_IMAGE_DOMAINS - Whitelist for external image domains.
+ *
+ * This constant defines a list of trusted domains from which external images
+ * are permitted to be loaded or processed by the application.
+ * Any image URL originating from a domain NOT present in this list
+ * should be rejected or handled as a broken/unauthorized image.
+ * This helps prevent potential security vulnerabilities (e.g., SSRF)
+ * and ensures content integrity.
+ */
+define("ALLOWED_IMAGE_DOMAINS", [
+    'images.unsplash.com',
+    'img.youtube.com', // Note: This entry format might need adjustment for actual domain matching (e.g., just 'googleusercontent.com')
 ]);
