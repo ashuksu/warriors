@@ -67,7 +67,15 @@ class Button
         ob_start(); ?>
         <?php if ($tag === 'button'): ?>
 
-		<button class="<?= $class ?>" <?= $attr ?> <?= $ariaLabel ?> <?= $ariaExpanded ?> <?= $ariaControls ?> <?= $role ?>><?= $content ?></button>
+		<button class="<?= $class ?>"
+            <?= $attr ?>
+            <?= $ariaLabel ?>
+            <?= $ariaExpanded ?>
+            <?= $ariaControls ?>
+            <?= $role ?>
+		>
+            <?= $content ?>
+		</button>
 
     <?php else: ?>
 

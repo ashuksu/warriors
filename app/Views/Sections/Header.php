@@ -2,6 +2,7 @@
 
 namespace Views\Sections;
 
+use App\Helpers\Device;
 use Views\Components\Button;
 use Views\Components\Image;
 use function Helpers\getPath;
@@ -33,7 +34,7 @@ class Header
 
                         <?php
                         echo Image::render([
-                            'url' => getPath('dist/assets/images/logo/logo-1.png'),
+                            'url' => getPath('dist/assets/images/logo/logo-1.svg'),
                             'alt' => 'logo',
                             'width' => 30,
                             'height' => 30,
@@ -44,9 +45,9 @@ class Header
                     <?php
                     echo Button::render([
                         'class' => 'button button--menu button--transparent',
-                        'attr' => 'data-element="menu-open" hidden',
+                        'attr' => 'data-element="menu-open"' . (Device::isDesktop() ? ' hidden' : ''),
                         'content' => '<i></i>',
-                        'aria-hidden' => true,
+                        'aria-hidden' => Device::isDesktop(),
                         'aria-label' => 'Open Main Menu',
                         'aria-expanded' => false,
                         'aria-controls' => 'menu',

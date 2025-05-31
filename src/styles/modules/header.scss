@@ -23,7 +23,9 @@
 	}
 
 	@include index.response-min(index.$md) {
-		.button {
+		[data-element="menu-close"],
+		[data-element="menu-open"],
+		[data-element="popup-open"] {
 			display: none;
 		}
 	}

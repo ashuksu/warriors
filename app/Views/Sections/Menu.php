@@ -2,6 +2,7 @@
 
 namespace Views\Sections;
 
+use App\Helpers\Device;
 use Services\SectionService;
 use Views\Components\Button;
 
@@ -33,7 +34,7 @@ class Menu
             <?php
             echo Button::render([
                 'class' => 'button--close button--transparent',
-                'attr' => 'data-element="menu-close"', // Corrected line: 'б' changed to "'"
+                'attr' => 'data-element="menu-close"' . (Device::isDesktop() ? ' hidden' : ''),
                 'aria-label' => 'Close Main Menu',
                 'aria-expanded' => true,
                 'aria-controls' => 'menu',
@@ -67,7 +68,7 @@ class Menu
             <?php
             echo Button::render([
                 'url' => '#popup-' . ($popup['id'] ?? ''),
-                'attr' => 'data-element="popup-open"',
+                'attr' => 'data-element="popup-open"' . (Device::isDesktop() ? ' hidden' : ''),
                 'content' => 'Open ' . ($popup['name'] ?? ''),
                 'aria-label' => 'Open ' . ($popup['name'] ?? '') . ' Popup',
                 'aria-expanded' => false,
