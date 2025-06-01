@@ -10,6 +10,12 @@
 
 ## GitHub Pages
 
+Production mode:
+
+```.env
+IS_DEV=false
+```
+
 ```bash
 #init gitignore push-root
 make gh-pages
@@ -145,7 +151,6 @@ Production mode:
 
 ```.env
 IS_DEV=false
-DOMAIN=your-domain.com
 ```
 
 ```bash

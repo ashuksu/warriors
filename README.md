@@ -74,8 +74,43 @@ cd warriors
 ```
 
 ```bash
-# Install dependencies and start development server
+# Install dependencies
 make install # Initialize environment configuration
+```
+
+<details>
+  <summary>alternative</summary>
+
+#### automatically installation of dependencies and building the project in parallel
+
+```bash
+# Install dependencies and start development server
+make install-async # Initialize environment configuration
+```
+
+</details>
+
+---
+
+> after `make install`
+
+```bash
+# Start Vite-build for processing images (long process)
+make vite-build
+```
+
+in parallel terminal
+
+```bash
+# Start docker-build
+make docker-up--build
+```
+
+in parallel terminal
+
+```bash
+# Start frontend server
+make vite
 ```
 
 > Set up an environment in .env
@@ -129,17 +164,17 @@ DOMAIN=your-domain.com
 ### Available Commands
 
 ```bash
-# Start development server
-make dev      
+# Start development servers
+make docker-up      
+make vite   
 ```
 
 <details>
   <summary>additionally</summary>
 
 ```bash
-# Start development servers
-make docker-up      
-make vite      
+# Start development server
+make dev       
 ```
 
 </details>
