@@ -9,13 +9,19 @@ A modern PHP application template with Vite bundling, Docker support, and deploy
 - Hot Module Replacement (HMR) support
 - Containerized development workflow
 - Optimized static site generation
+- Page Speed Optimization
+- SEO Optimization
+- Accessibility (A11y) Enhancements
+- Responsive Image Handling (preparation and adaptive serving, `Sharp` (for image processing))
+- Local Image Caching
+- Device-based Triggers (mobile/tablet/desktop)
 - Manual GitHub Pages deployment
 - Environment-based configuration
 
 **Tech Stack:**
 
 * **Frontend:** `JavaScript` `HTML5` `CSS3` `SCSS`
-* **Build & Style:** `Vite` `npm` `Make` `Autoprefixer`
+* **Build & Style:** `Vite` `npm` `Make` `Autoprefixer` `Sharp`
 * **Template Engine:** `PHP`
 * **Backend Tools:** `Apache` `Composer` `Mod_Rewrite`
 * **DevOps:** `Docker` `GitHub Pages` `Git`
