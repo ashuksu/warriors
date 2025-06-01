@@ -8,11 +8,13 @@
     use Views\Components\Image;
 
     echo Image::render([
-        'url' => $image,
-        'alt' => $item['alt'],
-        'width' => $item['width'],
-        'height' => $item['height'],
-        'attr' => 'class="error-image"'
+        'url' => $image ?? '#',
+        'alt' => $item['alt'] ?? 'image 404',
+        'width' => $item['width'] ?? 600,
+        'height' => $item['height'] ?? 600,
+        'attr' => 'class="error-image"',
+        'noLazy' => true,
+        'fetchpriority' => 'high'
     ]);
     ?>
 

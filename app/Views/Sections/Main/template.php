@@ -39,11 +39,12 @@
                     use Views\Components\Image;
 
                     echo Image::render([
-                        'url' => $imagePath,
-                        'alt' => $image['alt'],
-                        'width' => $image['width'],
-                        'height' => $image['height'],
-                        'noLazy' => true
+                        'url' => $imagePath ?? '#',
+                        'alt' => $image['alt'] ?? 'main-section image',
+                        'width' => $image['width'] ?? 600,
+                        'height' => $image['height'] ?? 600,
+                        'noLazy' => true,
+                        'fetchpriority' => 'high'
                     ]);
                     ?>
 

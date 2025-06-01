@@ -34,14 +34,17 @@ class Preloader
 			 class="<?= htmlspecialchars($class, ENT_QUOTES) ?>"
             <?= $attr ?>>
 
-            <?php echo Image::render([
-                'url' => getPath('dist/assets/images/loader.gif'),
+            <?php
+            echo Image::render([
+                'url' => getPath('dist/assets/images/loader.webp'),
                 'alt' => 'loader',
                 'width' => 100,
                 'height' => 100,
                 'attr' => 'class="error-image"',
-                'noLazy' => true
-            ]) ?>
+                'noLazy' => true,
+                'fetchpriority' => 'high'
+            ]);
+            ?>
 
 		</div>
 

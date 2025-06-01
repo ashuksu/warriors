@@ -5,10 +5,10 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	width: 4rem;
+	width: 3rem;
 
 	@include index.response-min(index.$md) {
-		width: 5rem;
+		width: 4rem;
 	}
 
 	img {
