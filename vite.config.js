@@ -46,11 +46,11 @@ const imageConfig = {
     quality: {
         webp: {
             1200: 85,  // for large: tablets, laptops (DPR=3, DPR=2, Retina, HiDPI)
-            800: 85,  // for medium: tablets, mobile devices (DPR=2, Retina, HiDPI)
+            800: 65,  // for medium: tablets, mobile devices (DPR=2, Retina, HiDPI)
             400: 70  // for small: mobile devices (DPR=1)
         },
-        jpeg: 80,
-        png: 80
+        jpeg: 75,
+        png: 75
     },
     paths: {
         src: 'src/assets/images',
