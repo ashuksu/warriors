@@ -292,11 +292,5 @@ export default defineConfig({
         host: true,
         // hmr: false,
         origin: 'http://localhost:5173',
-        proxy: {
-            '^(?!/[@vite/client|src/]).*': {
-                target: 'http://localhost:8080',
-                changeOrigin: true
-            }
-        }
     }
 })

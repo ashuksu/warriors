@@ -3,21 +3,10 @@
   "version": "1.0.0",
   "description": "PHP + Vite project",
   "type": "module",
-  "main": "public/index.php",
   "scripts": {
-    "docker:dev": "composer dump-autoload && docker-compose up && echo 'Server started at http://localhost:8080'",
-    "docker:restart": "docker-compose restart && echo 'Server restarted at http://localhost:8080'",
-    "docker:build": "composer dump-autoload -o && docker-compose up --build && echo 'Docker image rebuilt and server started at http://localhost:8080'",
-    "docker:stop": "docker-compose down && echo 'Docker server stopped'",
-    "docker:clean": "docker system prune -af && echo 'The Docker system has been cleaned'",
-    "docker:monitor": "docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest",
-    "vite:dev": "vite",
-    "vite:build": "vite build",
-    "vite:kill": "kill-port 4173 5173 || true",
-    "dev": "composer dump-autoload && concurrently \"npm run docker:dev\" \"npm run vite:dev\"",
-    "build": "composer dump-autoload -o && vite build && docker-compose build",
-    "stop": "concurrently \"npm run docker:stop\" \"vite:kill\"",
-    "kill": "docker-compose down; docker stop $(docker ps -aq) || true; kill-port 4173 5173 8080 9000 || true"
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "vite:kill": "kill-port 4173 5173 || true"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",

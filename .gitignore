@@ -2,11 +2,6 @@
 .git
 gh-pages/
 
-# Docker
-Dockerfile
-docker-compose.yml
-.dockerignore
-
 # Node.js
 node_modules/
 npm-debug.log
@@ -24,12 +19,6 @@ public/dist/
 *.sublime-workspace
 *.sublime-project
 
-# Apache
-.htaccess
-
-# Nginx
-storage/logs/nginx/*
-!storage/logs/nginx/.gitkeep
 
 # OS-specific files
 .DS_Store
