@@ -27,6 +27,10 @@ public/dist/
 # Apache
 .htaccess
 
+# Nginx
+storage/logs/nginx/*
+!storage/logs/nginx/.gitkeep
+
 # OS-specific files
 .DS_Store
 Thumbs.db
@@ -37,3 +41,4 @@ Thumbs.db
 # Tests
 test/
 vendor/
+*.log

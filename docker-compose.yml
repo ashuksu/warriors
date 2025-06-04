@@ -1,11 +1,37 @@
-version: '3'
+version: '3.8'
 
 services:
-  web:
-    build: .
+  nginx:
+    build:
+      context: .docker/nginx
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html
+      - .:/var/www/html:ro
+      - nginx_logs:/var/log/nginx
+      - nginx_cache:/var/cache/nginx
+      - nginx_run:/var/run/nginx
+    depends_on:
+      - php
+    networks:
+      - app-network
     restart: unless-stopped
-#    restart: no
+
+  php:
+    build:
+      context: .docker/php
+    volumes:
+      - .:/var/www/html
+      - ./storage:/var/www/html/storage
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  nginx_cache:
+  nginx_logs:
+  nginx_run:
