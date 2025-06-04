@@ -51,7 +51,7 @@ class Vite
         // Production mode
         $manifest = self::getManifest();
         if (!$manifest) {
-            throw new \RuntimeException('Vite manifest file not found. Please run npm run build first.');
+            throw new \RuntimeException('Vite manifest file not found. Please run `npm run build` first.');
         }
 
         // Check if the file exists directly in the manifest
