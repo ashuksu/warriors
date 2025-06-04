@@ -113,9 +113,6 @@ vite                      # Start dev server
 
 </details>
 
-Visit [localhost:8080](http://localhost:8080) or [localhost:5173](http://localhost:5173) to see the application in
-action.
-
 See [More details](docs/docker.md#configuration-and-environment-variables) - contains all available environment
 variables and settings
 
@@ -150,6 +147,9 @@ make docker-up
 make vite
 ```
 
+Visit [localhost:8080](http://localhost:8080) or [localhost:5173](http://localhost:5173) to see the application in
+action.
+
 <details>
   <summary>additionally</summary>
 
@@ -159,11 +159,6 @@ make dev
 ```
 
 </details>
-
-```bash
-# Build for production
-make build
-```
 
 ```bash
 # Stop development server
