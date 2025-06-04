@@ -2,31 +2,20 @@
 
 namespace Controllers;
 
-use Views\Layout;
-
 /**
  * Controller for the contacts page
  *
  * Handles rendering of the contacts page with its sections
  */
-class ContactsController
+class ContactsController extends BaseController
 {
     /**
-     * Render the contacts page
-     *
-     * Sets up page title and name constants, then renders the layout
-     * with contacts and info sections
+     * Render sections: contacts, info
      *
      * @return void
      */
-    public static function index(): void
+    public function index(): void
     {
-        define("APP_TITLE", PAGES['contacts']['title']);
-        define("PAGE", PAGES['contacts']['name']);
-
-        Layout::render([
-            'sections' => [PAGE, 'info'],
-            'metadata' => PAGES[PAGE]
-        ]);
+        $this->render([PAGE, 'info']);
     }
 }
