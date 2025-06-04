@@ -75,36 +75,19 @@ config:
 
 
 # Install dependencies
-pre-install: docker-destroy kill composer-install
+pre-install: kill docker-destroy config
+	@echo '${GREEN}✔ The environment is prepared${RESET}'
+
+install:  composer-install
 	@echo '${BLUE}Installing dependencies...${RESET}'
 	npm install
 	@echo '${GREEN}✔ Dependency installation complete${RESET}'
-
-install:  pre-install
 	@echo '${GREEN}✔ Project installation completed (dependencies)${RESET}'
 	echo "${MAGENTA}You can now:${RESET}"; \
 	echo "- ${YELLOW}make vite-build${RESET}		to start Vite-build for preparing images (long process)"; \
 	echo "- ${YELLOW}make docker-up--build${RESET}	to start docker-build (run in parallel terminal)"; \
 	echo "- ${YELLOW}make vite${RESET}		to start frontend server (run in parallel terminal)"; \
 
-install-async: pre-install
-	@echo '${GREEN}✔ Project installation completed (dependencies)${RESET}'
-	@echo '${BLUE}Starting building...${RESET}'
-	@echo '${CYAN}Starting Vite building...${RESET}'
-	@gnome-terminal --tab --title="Vite-build" -- make vite-build || \
-	xterm -e "make vite-build" || \
-	open -a Terminal.app make vite-build || \
-	start cmd /k make vite-build || \
-	echo '${RED}Could not open new terminal. Run manually:${RESET}\nmake vite-build'
-	@echo '${CYAN}Starting Docker building on http://localhost:8080/...${RESET}'
-	@gnome-terminal --tab --title="Docker" -- make docker-up--build || \
-	xterm -e "make docker-up--build" || \
-	open -a Terminal.app make docker-up--build || \
-	start cmd /k make docker-up--build || \
-	echo '${RED}Could not open new terminal. Run manually:${RESET}\nmake docker-up--build'
-	@echo '${CYAN}Starting Vite server...${RESET}'
-	@make vite
-	@echo '${GREEN}✔ Project installation completed (dependencies, Docker, Vite)...${RESET}'
 
 # Development
 dev:

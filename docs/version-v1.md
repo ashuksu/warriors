@@ -15,7 +15,7 @@ needed. It's represented as follows:
 * This is a **dedicated branch** that holds the **complete history of the old website design**.
 * If minor changes or fixes are ever needed for the old version, they can be made within this branch.
 
-* **`old-design-v1` (Tag)**:
+* **`v1.7.0` (Tag)**:
 * This is a **permanent tag** that points to the **last commit of the old website version** (at the time it was "
   frozen" before the redesign).
 * Tags serve as static "snapshots" of the code's state at a specific point in time. It acts as a reference point for
@@ -43,13 +43,13 @@ git checkout archive/OLD-DESIGN-v1
 git tag
 ```
 
-You'll see a list, including `old-design-v1`.
+You'll see a tags-list, including `v1.7.0`.
 
 ```bash
 
 # To `check out` the state that a tag points to 
 # (this will put you in a `detached HEAD` state, which is fine for viewing
-git checkout old-design-v1
+git checkout v1.7.0
 ```
 
 If you want to start development based on this tagged state, you should create a new branch:

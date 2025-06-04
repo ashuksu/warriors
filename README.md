@@ -59,7 +59,7 @@ A modern PHP application template with Vite bundling, Docker support, and deploy
 
 * **`archive/OLD-DESIGN-v1`**
     - Historical snapshot of the original website design
-    - Tagged as tag `old-design-v1`
+    - Tagged as tag `v1.7.0`
     - **NEVER** merged into active branches
     - [More details](docs/version-v1.md)
 
@@ -80,46 +80,21 @@ cd warriors
 ```
 
 ```bash
+# Pre-Install
+make pre-install # Preparation for installation
+```
+
+```bash
 # Install dependencies
 make install # Initialize environment configuration
 ```
 
-<details>
-  <summary>alternative</summary>
-
-#### automatically installation of dependencies and building the project in parallel
-
-```bash
-# Install dependencies and start development server
-make install-async # Initialize environment configuration
-```
-
-</details>
-
----
-
-> after `make install`
-
-```bash
-# Start Vite-build for processing images (long process)
-make vite-build
-```
-
-in parallel terminal
-
-```bash
-# Start docker-build
-make docker-up--build
-```
-
-in parallel terminal
-
-```bash
-# Start frontend server
-make vite
-```
-
 > Set up an environment in .env
+
+```bash
+# Start Building
+make build
+```
 
 <details>
   <summary>alternative</summary>
@@ -171,28 +146,28 @@ DOMAIN=your-domain.com
 
 ```bash
 # Start development servers
-make docker-up      
-make vite   
+make docker-up
+make vite
 ```
 
 <details>
   <summary>additionally</summary>
 
 ```bash
-# Start development server
-make dev       
+# Start development server asynchronously
+make dev
 ```
 
 </details>
 
 ```bash
 # Build for production
-make build 
+make build
 ```
 
 ```bash
 # Stop development server
-make stop 
+make stop
 ```
 
 ```bash
