@@ -66,26 +66,26 @@ help:
 	@echo '${MAGENTA}make deploy${RESET}          - Build and deploy to GitHub Pages'
 	@echo '${MAGENTA}make wget${RESET}            - Generate static site and preview'
 	@echo '${MAGENTA}make gh-pages${RESET}        - Initialize GitHub Pages repository'
+
+
 # Environment setup
-config:
+env:
 	@echo '${BLUE}Setting up environment...${RESET}'
 	@cd $(ROOT_DIR) && cp .env.example .env
 	@echo '${GREEN}✔ .env copied${RESET}'
 	@echo '${MAGENTA}Set up the environment in .env${RESET}'
 
 
-# Install dependencies
-pre-install: kill docker-destroy config
-	@echo '${GREEN}✔ The environment is prepared${RESET}'
-
-install:  composer-install
-	@echo '${BLUE}Installing dependencies...${RESET}'
+install: kill docker-destroy composer-install
+	@echo '${BLUE}Installing NPM dependencies...${RESET}'
 	npm install
-	@echo '${GREEN}✔ Dependency installation complete${RESET}'
+	@echo '${GREEN}✔ NPM dependency installation complete${RESET}'
 	@echo '${GREEN}✔ Project installation completed (dependencies)${RESET}'
+	@echo '${BLUE}Starting building...${RESET}'
+	make build
+	@echo '${GREEN}✔ Building completed${RESET}'
 	echo "${MAGENTA}You can now:${RESET}"; \
-	echo "- ${YELLOW}make vite-build${RESET}		to start Vite-build for preparing images (long process)"; \
-	echo "- ${YELLOW}make docker-up--build${RESET}	to start docker-build (run in parallel terminal)"; \
+	echo "- ${YELLOW}make docker-up${RESET}	to start backend server"; \
 	echo "- ${YELLOW}make vite${RESET}		to start frontend server (run in parallel terminal)"; \
 
 

@@ -80,20 +80,15 @@ cd warriors
 ```
 
 ```bash
-# Pre-Install
-make pre-install # Preparation for installation
+# Make (copy) the example environment file
+make env
 ```
 
-```bash
-# Install dependencies
-make install # Initialize environment configuration
-```
-
-> Set up an environment in .env
+> [Set up an environment in .env](#environment-configuration)
 
 ```bash
-# Start Building
-make build
+# Initialize environment configuration and building assets
+make install
 ```
 
 <details>
@@ -127,16 +122,16 @@ See [More details](docs/vite.md#installation) for detailed instructions on Vite 
 Development mode:
 
 ```.env
-IS_DEV=true
+DOMAIN=localhost:8080
 VITE_DEV_SERVER=http://localhost:5173/
-DOMAIN=warriors.local
+IS_DEV=true
 ```
 
 Production mode:
 
 ```.env
-IS_DEV=false
 DOMAIN=your-domain.com
+IS_DEV=false
 ```
 
 ### Available Commands
