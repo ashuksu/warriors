@@ -137,23 +137,28 @@ IS_DEV=false
 ### Available Commands
 
 ```bash
-# Start development servers
-make docker-up
-make vite
-```
-
-Visit [localhost:8080](http://localhost:8080) or [localhost:5173](http://localhost:5173) to see the application in
-action.
-
-<details>
-  <summary>additionally</summary>
-
-```bash
-# Start development server asynchronously
+# Start development servers (Force rebuild before starting)
 make dev
 ```
 
-</details>
+```bash
+# Start development servers
+make up
+```
+
+```bash
+# Just building
+make build
+```
+
+Visit [localhost:8080](http://localhost:8080) to see the application in action.
+
+```bash
+# Restarting
+make restart
+```
+
+---
 
 ```bash
 # Stop development server
@@ -166,25 +171,9 @@ make kill
 ```
 
 ```bash
-# Preview production build after Docker rebuild
-make wget
+# Destroying Docker environment (cleaning containers, images, volumes, networks).
+make docker-destroy
 ```
-
-<details>
-  <summary>alternative</summary>
-
-```bash
-
-npm run dev    # Start development server
-npm run build  # Build for production
-npm run stop   # Stop development server
-npm run kill   # Stop all containers and servers
-
-# Preview production build after Docker rebuild
-npm run docker:build && vite preview 
-```
-
-</details>
 
 ## Documentation
 

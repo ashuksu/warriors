@@ -80,30 +80,30 @@ install: kill docker-destroy composer-install
 	@echo '${BLUE}Installing NPM dependencies...${RESET}'
 	npm install
 	@echo '${GREEN}✔ NPM dependency installation complete${RESET}'
-	@echo '${GREEN}✔ Project installation completed (dependencies)${RESET}'
+	chmod +x .docker/php/docker-entrypoint.sh
 	@echo '${BLUE}Starting building...${RESET}'
 	make build
 	@echo '${GREEN}✔ Building completed${RESET}'
-	echo "${MAGENTA}You can now:${RESET}"; \
-	echo "- ${YELLOW}make docker-up${RESET}	to start backend server"; \
-	echo "- ${YELLOW}make vite${RESET}		to start frontend server (run in parallel terminal)"; \
 
 
 # Development
-dev:
-	@echo '${BLUE}Starting development environment...${RESET}'
-	@echo '${CYAN}Starting Docker on http://localhost:8080/...${RESET}'
-	@gnome-terminal --tab --title="Docker" -- make docker-up || \
-	xterm -e "make docker-up" || \
-	open -a Terminal.app make docker-up || \
-	start cmd /k make docker-up || \
-	echo '${RED}Could not open new terminal. Run manually:${RESET}\nmake docker-up'
-	@echo '${CYAN}Starting Vite server...${RESET}'
-	@make vite
+dev: kill vite-build
+	@echo '${BLUE}tarting Docker on http://localhost:8080/...${RESET}'
+	make docker-up--build
+
+up: kill
+	@echo '${BLUE}tarting Docker on http://localhost:8080/...${RESET}'
+	make docker-up
 
 # Build
-build: vite-build docker-build
-	@echo '${GREEN}✔ Project build completed (optimized autoloader, Vite assets, Docker image)...${RESET}'
+build: kill vite-build docker-build
+	@echo '${GREEN}✔ Project build completed (optimized autoloader, Vite assets, Docker images)...${RESET}'
+
+# Restarting
+restart:
+	@echo '${BLUE}Restarting...${RESET}'
+	docker-compose restart
+	@echo '${GREEN}✔ Restarting completed. Visit http://localhost:8080/${RESET}'
 
 
 # Stop
@@ -164,11 +164,6 @@ docker-build: autoload-o
 	docker-compose build
 	@echo '${GREEN}✔ Docker building complete${RESET}'
 
-docker-restart:
-	@echo '${BLUE}Restarting Docker...${RESET}'
-	docker-compose restart
-	@echo '${GREEN}✔ Docker restarted. Visit http://localhost:8080/${RESET}'
-
 docker-down:
 	@echo '${BLUE}Stopping and removing Docker resources...${RESET}'
 	docker-compose down || true
@@ -219,6 +214,15 @@ vite-kill:
 	@echo '${BLUE}Killing Vite server on ports 4173, 5173...${RESET}'
 	kill-port 4173 5173 || true
 	@echo '${GREEN}✔ Vita server stopped, ports: 4173, 5173 destroyed.${RESET}'
+
+vite-restart:
+	@echo '${BLUE}Restarting Vite...${RESET}'
+	docker-compose restart vite
+	@echo '${GREEN}✔ Vite restarted. Visit http://localhost:8080/${RESET}'
+
+vite-monitor:
+	@echo '${BLUE}Monitoring Vite logs...${RESET}'
+	docker-compose logs -f vite
 
 
 # Deployment to GitHub Pages
