@@ -1,10 +1,11 @@
-import {defineConfig} from 'vite'
+import {defineConfig, loadEnv} from 'vite'; // Import loadEnv
 import {viteStaticCopy} from 'vite-plugin-static-copy'
 import sharp from 'sharp'
 import fs from 'fs/promises'
 import path from 'path'
 import cliProgress from 'cli-progress'
 import md5 from 'md5'
+import fullReload from 'vite-plugin-full-reload'
 
 /**
  * @typedef {Object} ImageQualityConfig
@@ -234,47 +235,10 @@ const imagePlugin = () => ({
     }
 })
 
-export default defineConfig({
-    build: {
-        outDir: 'public/dist',
-        manifest: true,
-        copyPublicDir: false,
-        emptyOutDir: true,
-        rollupOptions: {
-            input: {
-                script: './src/js/script.js',
-                main: './src/styles/main.scss',
-                page_home: './src/styles/page_home.scss',
-                page_home_critical: './src/styles/page_home_critical.scss',
-                critical: './src/styles/critical.scss'
-            },
-            output: {
-                manualChunks(id) {
-                    const moduleChunks = {
-                        'modules/Menu.js': 'menu',
-                        'modules/Overlay.js': 'menu',
-                        'modules/utils/SeeMore.js': 'utils'
-                    };
+export default defineConfig(({mode}) => {
+    const env = loadEnv(mode, process.cwd(), '');
 
-                    const chunk = Object.entries(moduleChunks).find(([path]) => id.includes(path));
-                    return chunk ? chunk[1] : undefined;
-                },
-                entryFileNames: 'js/[name].[hash].js',
-                chunkFileNames: 'js/[name].[hash].js',
-                assetFileNames: ({name}) => {
-                    if (/\.(css|scss)$/.test(name ?? '')) {
-                        return 'styles/[name].[hash].min[extname]'
-                    }
-
-                    if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
-                        return 'assets/images/[name].[hash][extname]'
-                    }
-                    return 'assets/[name]-[hash].min[extname]'
-                }
-            }
-        }
-    },
-    plugins: [
+    const plugins = [
         imagePlugin(),
         viteStaticCopy({
             targets: [
@@ -284,13 +248,79 @@ export default defineConfig({
                 //     dest: 'assets/fonts'
                 // },
             ]
-        })
-    ],
-    server: {
-        port: 5173,
-        strictPort: true,
-        host: true,
-        // hmr: false,
-        origin: 'http://localhost:5173',
+        }),
+        // Add fullReload plugin to watch PHP template files and public assets
+        fullReload([
+            './app/Views/**/*',
+            './public/**/*.php',
+            './public/**/*.html',
+            './app/Controllers/**/*',
+            './app/Helpers/**/*'
+        ])
+    ];
+
+    if (env.ENABLE_FULL_RELOAD === 'true') {
+        plugins.push(
+            fullReload([
+                './app/Views/**/*',
+                './app/Controllers/**/*',
+                './app/Helpers/**/*',
+                './public/**/*.php', // Watch PHP and HTML files in public
+                './public/**/*.html'
+            ])
+        );
     }
-})
+
+    return {
+        build: {
+            outDir: 'public/dist',
+            manifest: true,
+            copyPublicDir: false,
+            emptyOutDir: true,
+            rollupOptions: {
+                input: {
+                    script: './src/js/script.js',
+                    main: './src/styles/main.scss',
+                    page_home: './src/styles/page_home.scss',
+                    page_home_critical: './src/styles/page_home_critical.scss',
+                    critical: './src/styles/critical.scss'
+                },
+                output: {
+                    manualChunks(id) {
+                        const moduleChunks = {
+                            'modules/Menu.js': 'menu',
+                            'modules/Overlay.js': 'menu',
+                            'modules/utils/SeeMore.js': 'utils'
+                        };
+
+                        const chunk = Object.entries(moduleChunks).find(([path]) => id.includes(path));
+                        return chunk ? chunk[1] : undefined;
+                    },
+                    entryFileNames: 'js/[name].[hash].js',
+                    chunkFileNames: 'js/[name].[hash].js',
+                    assetFileNames: ({name}) => {
+                        if (/\.(css|scss)$/.test(name ?? '')) {
+                            return 'styles/[name].[hash].min[extname]'
+                        }
+
+                        if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
+                            return 'assets/images/[name].[hash][extname]'
+                        }
+                        return 'assets/[name]-[hash].min[extname]'
+                    }
+                }
+            }
+        },
+        plugins: plugins,
+        server: {
+            port: 5173,
+            strictPort: true,
+            host: '0.0.0.0',
+            hmr: env.ENABLE_HMR === 'true' ? {
+                host: 'localhost',
+                port: 5173,
+            } : false, // Conditionally enable HMR
+            origin: 'http://localhost:5173',
+        }
+    };
+});
