@@ -1,24 +1,23 @@
-.PHONY: help install config dev build deploy clean \
-        pre-install autoload autoload-o \
-        composer-install \
-        docker-up docker-up-d docker-up--build docker-up-d--build \
-        docker-build docker-restart docker-down docker-stop docker-rm \
-        docker-clean docker-purge docker-destroy docker-monitor \
-        vite vite-build vite-kill \
-        wget wget-preparation wget-generation \
-        gh-pages gh-pages-init gh-pages-gitignore \
-        gh-pages-push-root gh-pages-push-public
+.PHONY: help install config \
+        composer-install autoload autoload-o \
+        up dev build prod-up prod \
+        docker-kill docker-clean docker-monitor \
+		vite-build vite-kill \
+		deploy clean-project \
+		wget wget-preparation wget-generation \
+		gh-pages gh-pages-init gh-pages-gitignore \
+		gh-pages-push-root gh-pages-push-public
 
 
 # Path variables
-ROOT_DIR    := $(shell pwd)
-PAGES_ROOT:= $(ROOT_DIR)/gh-pages/root
-PAGES_PUBLIC := $(ROOT_DIR)/gh-pages/public
-
+ROOT_DIR		:= $(shell pwd)
+PAGES_ROOT		:= $(ROOT_DIR)/gh-pages/root
+PAGES_PUBLIC	:= $(ROOT_DIR)/gh-pages/public
+APP_URL			:= http://localhost
 
 # GitHub Pages URLs
 GIT_REPO_SSH_URL	:= git@github.com:ashuksu/warriors.git
-GITHUB_PAGES_URL    := https://ashuksu.github.io/warriors
+PROD_URL	:= https://ashuksu.github.io/warriors
 
 
 # Output colors
@@ -36,193 +35,154 @@ RESET   := $(shell tput -Txterm sgr0)    # Reset to default color
 # Help
 help:
 	@echo '${BLUE}=== Core Commands ===${RESET}'
-	@echo '${GREEN}make install${RESET}         - Install dependencies, setup env, build Docker and Vite'
-	@echo '${GREEN}make config${RESET}          - Create .env from .env.example'
-	@echo '${GREEN}make dev${RESET}             - Start development environment (Docker + Vite)'
-	@echo '${GREEN}make build${RESET}           - Build project for production (Vite + Docker)'
-	@echo '${GREEN}make stop${RESET}            - Stop development services'
-	@echo '${GREEN}make kill${RESET}            - Force stop all services and ports'
-	@echo '${GREEN}make clean${RESET}           - Remove all temporary files and dependencies'
+	@echo '${GREEN}make config${RESET}              - Create .env from .env.example'
+	@echo '${GREEN}make install${RESET}             - Install all project dependencies (Composer, NPM), build Docker images, and frontend assets.'
+	@echo '${GREEN}make up${RESET}                  - Start development environment (Docker containers + Vite dev server) (optimized for deployment).'
+	@echo '${GREEN}make dev${RESET}                 - Build and start development environment (Docker images + Vite dev server) (optimized for deployment).'
+	@echo '${GREEN}make build${RESET}               - Build Docker images and frontend assets (optimized for deployment).'
+	@echo '${GREEN}make prod${RESET}                - Build optimized production Docker images and frontend assets.'
+	@echo '${GREEN}make prod-up${RESET}             - Build optimized production Docker images and start them.'
+	@echo '${GREEN}make kill${RESET}                - Force stop all running Docker containers and Vite servers.'
+	@echo '${GREEN}make clean-project${RESET}       - Remove all temporary files, dependencies, and Docker artifacts.'
 	@echo
 	@echo '${BLUE}=== Docker Commands ===${RESET}'
-	@echo '${CYAN}make docker-up${RESET}        - Start Docker containers'
-	@echo '${CYAN}make docker-up-d${RESET}      - Start Docker in background'
-	@echo '${CYAN}make docker-build${RESET}     - Build Docker image'
-	@echo '${CYAN}make docker-down${RESET}      - Stop Docker containers'
-	@echo '${CYAN}make docker-destroy${RESET}   - Complete Docker cleanup'
-	@echo '${CYAN}make docker-monitor${RESET}   - Monitor Docker containers'
+	@echo '${CYAN}make docker-kill${RESET}         - Stop Docker containers for the current project.'
+	@echo '${CYAN}make docker-clean${RESET}        - Perform a complete Docker system cleanup (containers, images, volumes, networks, cache).'
+	@echo '${CYAN}make docker-monitor${RESET}      - Launch a Docker container monitoring tool (ctop).'
 	@echo
 	@echo '${BLUE}=== Asset Commands ===${RESET}'
-	@echo '${CYAN}make vite${RESET}             - Start Vite dev server'
-	@echo '${CYAN}make vite-build${RESET}       - Build frontend assets'
-	@echo '${CYAN}make vite-kill${RESET}        - Stop Vite server'
+	@echo '${CYAN}make vite-build${RESET}          - Build optimized frontend assets for production.'
+	@echo '${CYAN}make vite-kill${RESET}           - Stop the Vite development server and associated ports.'
 	@echo
 	@echo '${BLUE}=== Composer Commands ===${RESET}'
-	@echo '${CYAN}make composer-install${RESET}  - Install PHP dependencies'
-	@echo '${CYAN}make autoload${RESET}         - Update composer autoloader'
-	@echo '${CYAN}make autoload-o${RESET}       - Update optimized autoloader'
+	@echo '${CYAN}make composer-install${RESET}    - Install PHP dependencies based on composer.lock.'
+	@echo '${CYAN}make autoload${RESET}            - Update Composer autoloader (for development).'
+	@echo '${CYAN}make autoload-o${RESET}          - Update Composer autoloader with optimization (for production).'
 	@echo
-	@echo '${BLUE}=== Deployment ===${RESET}'
-	@echo '${MAGENTA}make deploy${RESET}          - Build and deploy to GitHub Pages'
-	@echo '${MAGENTA}make wget${RESET}            - Generate static site and preview'
-	@echo '${MAGENTA}make gh-pages${RESET}        - Initialize GitHub Pages repository'
+	@echo '${BLUE}=== Deployment (GitHub Pages) ===${RESET}'
+	@echo '${MAGENTA}make deploy${RESET}              - Build and deploy project to GitHub Pages.'
+	@echo '${MAGENTA}make wget${RESET}                - Generate static site using wget and preview locally.'
+	@echo '${MAGENTA}make gh-pages${RESET}            - Initialize GitHub Pages repository.'
+	@echo '${YELLOW}  (See Makefile for more specific gh-pages commands)${RESET}'
 
 
 # Environment setup
-env:
+config:
 	@echo '${BLUE}Setting up environment...${RESET}'
-	@cd $(ROOT_DIR) && cp .env.example .env
-	@echo '${GREEN}✔ .env copied${RESET}'
-	@echo '${MAGENTA}Set up the environment in .env${RESET}'
+	@cd $(ROOT_DIR) && cp .env.example .env && echo '${GREEN}✔ .env copied from .env.example.${RESET}' || echo '${RED}Error: Failed to copy .env.example to .env.${RESET}'
+	@echo '${MAGENTA}Please set up your environment variables in the .env file.${RESET}'
 
 
-install: docker-destroy composer-install
+install: composer-install
 	@echo '${BLUE}Installing NPM dependencies...${RESET}'
-	npm install
-	@echo '${GREEN}✔ NPM dependency installation complete${RESET}'
-	chmod +x .docker/php/docker-entrypoint.sh
-	@echo '${BLUE}Starting building...${RESET}'
-	make build
-	@echo '${GREEN}✔ Building completed${RESET}'
+	@npm install && echo '${GREEN}✔ NPM dependency installation complete.${RESET}' || echo '${RED}Error: NPM dependency installation failed.${RESET}'
+	@echo '${BLUE}Starting project build for initial setup...${RESET}'
+	@make build
+	@echo '${GREEN}✔ Initial project build completed.${RESET}'
 
 
 # Development
-dev: kill vite-build
-	@echo '${BLUE}tarting Docker on http://localhost:8080/...${RESET}'
-	make docker-up--build
+up: kill autoload
+	@echo '${BLUE}Starting Docker development environment at ${APP_URL}...${RESET}'
+	@docker compose -f docker-compose.yml -f docker-compose-dev.yml up && echo '${GREEN}✔ Docker services are up.${RESET}' || echo '${RED}Error: Docker services failed to start.${RESET}'
 
-up: kill
-	@echo '${BLUE}tarting Docker on http://localhost:8080/...${RESET}'
-	make docker-up
 
-# Build
-build: kill vite-build docker-build
+dev: kill vite-build autoload
+	@echo '${BLUE}Building and starting Docker development environment at ${APP_URL}...${RESET}'
+	@docker compose -f docker-compose.yml -f docker-compose-dev.yml up --build && echo '${GREEN}✔ Docker services built and started.${RESET}' || echo '${RED}Error: Docker services failed to build and start.${RESET}'
+
+
+# Build Production (optimized for deployment)
+build: kill vite-build autoload-o
+	@echo '${BLUE}Building optimized for deployment Docker images...${RESET}'
+	@docker compose -f docker-compose.yml -f docker-compose-dev.yml build && echo '${GREEN}✔ Docker images built.${RESET}' || echo '${RED}Error: Docker image build failed.${RESET}'
+	@echo '${GREEN}✔ Project build (optimized for deployment) completed (optimized autoloader, Vite assets, Docker images).${RESET}'
+
+## Build Production (optimized for pprod)
+prod: kill vite-build autoload-o
+	@echo '${BLUE}Building optimized production Docker images...${RESET}'
+	@docker compose build && echo '${GREEN}✔ Docker images built for production.${RESET}' || echo '${RED}Error: Docker image build failed.${RESET}'
 	@echo '${GREEN}✔ Project build completed (optimized autoloader, Vite assets, Docker images)...${RESET}'
 
-# Restarting
-restart:
-	@echo '${BLUE}Restarting...${RESET}'
-	docker-compose restart
-	@echo '${GREEN}✔ Restarting completed. Visit http://localhost:8080/${RESET}'
+## Build Production (optimized for pprod) with Up
+prod-up: kill vite-build autoload-o
+	@echo '${BLUE}Building optimized production Docker images...${RESET}'
+	@docker compose up --build && echo '${GREEN}✔ Docker production environment is up and running at ${APP_URL}!${RESET}' || echo '${RED}Error: Docker production environment failed to start.${RESET}'
 
 
-# Stop
-stop: docker-down vite-kill
-	@echo '${GREEN}✔ Development services stopped (Docker, Vite server)...${RESET}'
-
-kill: stop docker-stop docker-rm
-	@echo '${BLUE}Stopping all services (Docker containers, Vite, ports 4173, 5173 and 8080, 9000)...${RESET}'
-	kill-port 8080 9000 || true
-	@echo '${GREEN}✔ All services stopped, additional ports: 8080, 9000 destroyed.${RESET}'
+# Kill services
+kill: vite-kill docker-kill
+	@echo '${GREEN}✔ All services stopped.${RESET}'
 
 
-# Composer
+# Composer commands
 composer-install:
 	@echo '${BLUE}Installing Composer dependencies...${RESET}'
-	composer install
+	@composer install && echo '${GREEN}✔ Composer dependency installation complete.${RESET}' || echo '${RED}Error: Composer dependency installation failed.${RESET}'
 
 autoload:
-	@echo '${BLUE}Updating composer autoloader...${RESET}'
-	composer dump-autoload
+	@echo '${BLUE}Updating Composer autoloader...${RESET}'
+	@composer dump-autoload && echo '${GREEN}✔ Composer autoloader updated.${RESET}' || echo '${RED}Error: Composer autoloader update failed.${RESET}'
 
 autoload-o:
-	@echo '${BLUE}Updating optimized composer autoloader...${RESET}'
-	yes | composer dump-autoload -o
+	@echo '${BLUE}Updating optimized Composer autoloader...${RESET}'
+	@composer dump-autoload -o && echo '${GREEN}✔ Optimized Composer autoloader updated.${RESET}' || echo '${RED}Error: Optimized Composer autoloader update failed.${RESET}'
 
-# Cleaning
-clean: docker-destroy
-	@echo '${BLUE}Cleaning project...${RESET}'
-	@rm -rf public/dist || true
-	@rm -rf node_modules || true
-	@rm -rf vendor || true
-	@rm -rf gh-pages/public || true
-	@rm -rf .cache || true
-	@echo '${GREEN}✔ Project cleaned${RESET}'
 
 # Docker commands
-docker-up: autoload
-	@echo '${BLUE}Starting Docker on http://localhost:8080/...${RESET}'
-	docker-compose up
-
-docker-up-d: autoload
-	@echo '${BLUE}Starting Docker in background...${RESET}'
-	docker-compose up -d
-	@echo '${CYAN}Docker runs in the background on http://localhost:8080/${RESET}'
-
-docker-up--build: autoload-o
-	@echo '${BLUE}Building Docker image and Starting Docker on http://localhost:8080/...${RESET}'
-	docker-compose up --build
-
-docker-up-d--build: autoload-o
-	@echo '${BLUE}Building Docker image and Starting Docker in background...${RESET}'
-	docker-compose up -d --build
-	@echo '${GREEN}Docker building complete.${RESET}'
-	@echo '${CYAN}Docker runs in background on http://localhost:8080/${RESET}'
-
-docker-build: autoload-o
-	@echo '${BLUE}Building Docker image...${RESET}'
-	docker-compose build
-	@echo '${GREEN}✔ Docker building complete${RESET}'
-
-docker-down:
-	@echo '${BLUE}Stopping and removing Docker resources...${RESET}'
-	docker-compose down || true
-	@echo '${GREEN}✔ Docker resources stopped${RESET}'
-
-docker-stop:
+docker-kill:
 	@echo '${BLUE}Stopping Docker services...${RESET}'
-	@docker ps -q | xargs -r docker stop || true
-	@echo '${GREEN}✔ Docker services stopped${RESET}'
+	@docker compose down && echo '${CYAN}Docker Compose services stopped.${RESET}' || echo '${YELLOW}⚠ Docker Compose services may not have been stopped.${RESET}'
+	@docker ps -q | xargs -r docker stop && echo '${CYAN}Running containers not managed by Compose forcefully stopped.${RESET}' || echo '${YELLOW}⚠ No other running containers to stop.${RESET}'
+	@docker network prune -f && echo '${CYAN}Docker networks pruned.${RESET}' || echo '${YELLOW}⚠ No Docker networks to prune or prune failed.${RESET}'
+	@echo '${GREEN}✔ Docker services stopped.${RESET}'
 
-docker-rm:
-	@echo '${BLUE}Removing stopped containers...${RESET}'
-	@docker ps -aq | xargs -r docker rm || true
-	@echo '${GREEN}✔ Stopped containers have been removed${RESET}'
-
-docker-clean: docker-down
+docker-clean:
 	@echo '${BLUE}Cleaning Docker system...${RESET}'
-	docker system prune -af
-	@echo '${GREEN}✔ Docker system cleaned${RESET}'
-
-docker-purge: docker-down
-	@echo '${BLUE}Performing complete Docker cleanup...${RESET}'
-	@docker system prune -af && echo '${CYAN}System pruned${RESET}' || echo '${YELLOW}⚠ No system resources to prune${RESET}'
-	@docker volume prune -f && echo '${CYAN}Volumes pruned${RESET}' || echo '${YELLOW}⚠ No volumes to prune${RESET}'
-	@docker network prune -f && echo '${CYAN}Networks pruned${RESET}' || echo '${YELLOW}⚠ No networks to prune${RESET}'
-	@docker images "warriors_web" -q | xargs -r docker rmi || echo '${YELLOW}⚠ No warriors_web image found${RESET}'
-	@echo '${GREEN}✔ Docker cleanup completed${RESET}'
-
-docker-destroy: docker-down docker-stop docker-rm docker-purge
-	@echo '${CYAN}Destroying Docker environment (containers, images, volumes, networks)...${RESET}'
-	@echo '${GREEN}✔ Destroying Docker completed.${RESET}'
+	@docker compose down --volumes --remove-orphans && echo '${CYAN}Docker Compose services, volumes, and orphans removed.${RESET}' || echo '${YELLOW}⚠ Docker Compose cleanup failed.${RESET}'
+	@docker ps -qa | xargs -r docker rm -f && echo '${CYAN}All stopped and running containers forcefully removed.${RESET}' || echo '${YELLOW}⚠ No containers to remove.${RESET}'
+	@docker images -qa | xargs -r docker rmi -f && echo '${CYAN}All Docker images forcefully removed.${RESET}' || echo '${YELLOW}⚠ No Docker images to remove or removal failed.${RESET}'
+	@docker system prune -af --volumes && echo '${CYAN}Docker system pruned (images, containers, volumes, networks).${RESET}' || echo '${YELLOW}⚠ Docker system prune failed or nothing to prune.${RESET}'
+	@docker builder prune -af && echo '${CYYAN}Docker build cache pruned.${RESET}' || echo '${YELLOW}⚠ No Docker build cache to prune or prune failed.${RESET}'
+	@docker buildx prune -af && echo '${CYAN}Docker Buildx cache pruned.${RESET}' || echo '${YELLOW}⚠ No Docker Buildx cache to prune or prune failed.${RESET}'
+	@docker network prune -f && echo '${CYAN}Docker networks pruned again (redundant for safety).${RESET}' || echo '${YELLOW}⚠ No Docker networks to prune or prune failed.${RESET}'
+	@echo '${GREEN}✔ Docker system cleaned.${RESET}'
 
 docker-monitor:
-	@echo '${BLUE}Monitoring Docker containers...${RESET}'
-	docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest
+	@echo '${BLUE}Monitoring Docker containers (requires ctop image)...${RESET}'
+	@docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest && echo '${GREEN}✔ ctop exited.${RESET}' || echo '${RED}Error: ctop failed to run or exited abnormally.${RESET}'
 
 
 # Vite commands
-vite:
-	@echo '${BLUE}Starting Vite development server on http://localhost:5173/...${RESET}'
-	vite
-
 vite-build:
-	@echo '${BLUE}Starting Vite building...${RESET}'
-	vite build
+	@echo '${BLUE}Starting Vite frontend assets build...${RESET}'
+	@vite build && echo '${GREEN}✔ Vite build completed.${RESET}' || echo '${RED}Error: Vite build failed. Check Vite output above.${RESET}'
 
 vite-kill:
-	@echo '${BLUE}Killing Vite server on ports 4173, 5173...${RESET}'
-	kill-port 4173 5173 || true
-	@echo '${GREEN}✔ Vita server stopped, ports: 4173, 5173 destroyed.${RESET}'
+	@echo '${BLUE}Stopping Vite development server and associated ports...${RESET}'
+	@kill-port 4173 5173 8080 9000 || true
+	@echo '${GREEN}✔ Ports 4173, 5173, 8080, 9000 killed.${RESET}'
 
-vite-restart:
-	@echo '${BLUE}Restarting Vite...${RESET}'
-	docker-compose restart vite
-	@echo '${GREEN}✔ Vite restarted. Visit http://localhost:8080/${RESET}'
 
-vite-monitor:
-	@echo '${BLUE}Monitoring Vite logs...${RESET}'
-	docker-compose logs -f vite
+# Cleaning
+clean-project:
+	@bash -c '\
+    		echo "${MAGENTA}Would you like to ${RED}CLEAN? ${MAGENTA}(Y=yes, Any key=no)${RESET}"; \
+    		read -n 1 -s key; \
+    		if [[ "$$key" == "y" || "$$key" == "Y" || "$$key" == "н" || "$$key" == "Н" ]]; then \
+    			echo -e "\r${GREEN}✔ Cleaning selected${RESET}"; \
+    			make docker-clean; \
+    			echo -e "\r${BLUE}Cleaning project files...${RESET}"; \
+    			rm -rf public/dist && echo "${CYAN}Removed public/dist.${RESET}" || echo "${YELLOW}⚠ public/dist not found or failed to remove.${RESET}"; \
+				rm -rf node_modules && echo "${CYAN}Removed node_modules.${RESET}" || echo "${YELLOW}⚠ node_modules not found or failed to remove.${RESET}"; \
+				rm -rf vendor && echo "${CYAN}Removed vendor directory.${RESET}" || echo "${YELLOW}⚠ vendor directory not found or failed to remove.${RESET}"; \
+				rm -rf gh-pages/public && echo "${CYAN}Removed gh-pages/public.${RESET}" || echo "${YELLOW}⚠ gh-pages/public not found or failed to remove.${RESET}"; \
+				rm -rf .cache && echo "${CYAN}Removed .cache directory.${RESET}" || echo "${YELLOW}⚠ .cache directory not found or failed to remove.${RESET}"; \
+    			echo -e "\r${GREEN}✔ Project files cleaned.${RESET}"; \
+    		else \
+    			echo -e "\r${YELLOW}Cleaning cancelled by user${RESET}"; \
+    		fi \
+    	'
 
 
 # Deployment to GitHub Pages
@@ -250,9 +210,10 @@ wget: wget-preparation wget-generation
 	@live-server gh-pages/public --port=9000 --open=. > /dev/null 2>&1 &
 	@echo "${CYAN}Preview server running on http://localhost:9000${RESET}"
 
-wget-preparation: kill composer-install vite-build docker-up-d--build
-	@vite & sleep 3
-	@echo '${CYAN}Vite runs in the background on http://localhost:5173${RESET}'
+wget-preparation: composer-install kill vite-build autoload-o
+	@echo '${BLUE}Building optimized production Docker images...${RESET}'
+	@docker compose up -d --build && echo '${GREEN}✔ Docker production environment is up and running at ${APP_URL} in background!${RESET}' || echo '${RED}Error: Docker production environment failed to start.${RESET}'
+	@echo '${CYAN}Docker runs in background on ${APP_URL}.${RESET}'
 	@echo "${MAGENTA}To stop all services, copy and run: ${WHITE}make kill${RESET}"
 	@echo '${GREEN}✔ All services started${RESET}'
 	@echo
@@ -288,10 +249,10 @@ wget-preparation: kill composer-install vite-build docker-up-d--build
 wget-generation:
 	@echo '${BLUE}Starting WGET static files generation...${RESET}'
 	@wget --convert-links --adjust-extension --page-requisites --no-parent -P gh-pages/public -nH \
-		http://localhost:8080/contacts \
-		http://localhost:8080/catalog \
-		http://localhost:8080/404 \
-		http://localhost:8080
+		${APP_URL}/contacts \
+		${APP_URL}/catalog \
+		${APP_URL}/404 \
+		${APP_URL}
 	@echo '${GREEN}✔ WGET static files generated successfully${RESET}'
 
 
@@ -303,7 +264,7 @@ gh-pages: gh-pages-init gh-pages-gitignore gh-pages-push-root
 	echo "   ${CYAN}- Source: Deploy from a branch${RESET}" && \
 	echo "   ${CYAN}- Branch: gh-pages${RESET}" && \
 	echo "   ${CYAN}- Folder: / (root)${RESET}" && \
-	echo "${GREEN}After enabling push, site will be available at: ${GITHUB_PAGES_URL}${RESET}"
+	echo "${GREEN}After enabling push, site will be available at: ${PROD_URL}${RESET}"
 
 gh-pages-push-public:
 	@echo "${BLUE}Deploying to GitHub Pages...${RESET}"
@@ -312,7 +273,7 @@ gh-pages-push-public:
 	git commit -m "Update GH-Pages build $(shell date +%F\ %T)" && \
 	git push -u origin gh-pages --force && \
 	echo "${GREEN}✔ Successfully deployed to GitHub Pages${RESET}" && \
-	echo "${CYAN}Site will be available at: ${GITHUB_PAGES_URL}${RESET}"
+	echo "${CYAN}Site will be available at: ${PROD_URL}${RESET}"
 
 gh-pages-push-root:
 	@echo "${BLUE}Pushing to GitHub Pages...${RESET}"

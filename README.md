@@ -80,8 +80,8 @@ cd warriors
 ```
 
 ```bash
-# Make (copy) the example environment file
-make env
+# Create `.env` file
+make config
 ```
 
 > [Set up an environment in .env](#environment-configuration)
@@ -90,23 +90,6 @@ make env
 # Initialize environment configuration and building assets
 make install
 ```
-
-<details>
-  <summary>alternative</summary>
-
-```bash
-cp .env.example .env # Copy example environment file
-
-composer install          # Install dependencies
-npm install
-
-vite build                # the Vite build
-composer dump-autoload    # to update startup
-docker-compose up --build # Build the Docker image
-vite                      # Start dev server
-```
-
-</details>
 
 See [More details](docs/docker.md#configuration-and-environment-variables) - contains all available environment
 variables and settings
@@ -119,51 +102,56 @@ See [More details](docs/vite.md#installation) for detailed instructions on Vite 
 
 ### Environment Configuration
 
-Development mode:
+Running in Development Mode:
 
 ```.env
+DOMAIN=localhost
 DOMAIN=localhost:8080
 VITE_DEV_SERVER=http://localhost:5173/
 IS_DEV=true
 ```
 
-Production mode:
+```bash
+# Start the development environment (fast) (optimized for deployment)
+make up
+```
+
+or
+
+```bash
+# Start the development environment (Force rebuild before starting) (optimized for deployment)
+make dev
+```
+
+---
+
+Running in Production Mode:
 
 ```.env
 DOMAIN=your-domain.com
 IS_DEV=false
 ```
 
-### Available Commands
-
 ```bash
-# Start development servers (Force rebuild before starting)
-make dev
+# Build optimized production
+make prod
 ```
 
 ```bash
-# Start development servers
-make up
-```
-
-```bash
-# Just building
+# Build Docker images and frontend assets (optimized for deployment)
 make build
 ```
 
-Visit [localhost:8080](http://localhost:8080) to see the application in action.
+### Available Commands
 
 ```bash
-# Restarting
-make restart
+# Build optimized production Docker images and start them
+make prod-up
 ```
+
+Visit [localhos](http://localhost) to see the application in action.
 
 ---
-
-```bash
-# Stop development server
-make stop
-```
 
 ```bash
 # Stop all containers and servers
@@ -172,7 +160,7 @@ make kill
 
 ```bash
 # Destroying Docker environment (cleaning containers, images, volumes, networks).
-make docker-destroy
+make docker-clean
 ```
 
 ## Documentation
