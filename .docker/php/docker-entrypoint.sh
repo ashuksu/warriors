@@ -1,20 +1,18 @@
 #!/bin/sh
-# Custom Docker entrypoint for PHP-FPM service.
-# Selects php.ini configuration based on IS_DEV environment variable.
+set -e
 
-CUSTOM_INI_NAME="99-custom.ini"
+# Config for custom PHP INI files
+CUSTOM_INI_NAME="zz-custom.ini"
 PHP_CONF_DIR="/usr/local/etc/php/conf.d"
 
-echo "Applying PHP configuration based on IS_DEV environment variable..."
-
+# Apply PHP configuration based on IS_DEV environment variable
 if [ "$IS_DEV" = "true" ]; then
-  echo "Development mode detected (IS_DEV=true). Using php-dev.ini."
-  cp "${PHP_CONF_DIR}/php-dev.ini" "${PHP_CONF_DIR}/${CUSTOM_INI_NAME}"
+    echo "PHP-FPM: Development mode (php-dev.ini)"
+    cp "${PHP_CONF_DIR}/php-dev.ini" "${PHP_CONF_DIR}/${CUSTOM_INI_NAME}"
 else
-  echo "Production mode detected (IS_DEV is not true). Using php-prod.ini."
-  cp "${PHP_CONF_DIR}/php-prod.ini" "${PHP_CONF_DIR}/${CUSTOM_INI_NAME}"
+    echo "PHP-FPM: Production mode (php-prod.ini)"
+    cp "${PHP_CONF_DIR}/php-prod.ini" "${PHP_CONF_DIR}/${CUSTOM_INI_NAME}"
 fi
 
-# Execute the original PHP entrypoint, passing all arguments to it.
-# This ensures that PHP-FPM starts correctly with standard Docker PHP setup.
+# Execute the default PHP-FPM entry point
 exec docker-php-entrypoint "$@"

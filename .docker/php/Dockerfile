@@ -3,18 +3,25 @@ FROM php:8.3-fpm-alpine
 # Set working directory for the application code
 WORKDIR /var/www/html
 
-# Install system dependencies required for PHP extensions and common tools
+# Install system dependencies required for PHP extensions
 RUN apk add --no-cache \
+    curl \
     git \
     zip \
     unzip \
     libzip-dev \
-    # For GD extension
+    libsodium-dev \
+    postgresql-dev \
+    imagemagick-dev \
     libpng-dev \
     libjpeg-turbo-dev \
     freetype-dev \
-    # For Intl extension
-    icu-dev
+    icu-dev \
+    linux-headers \
+    # For development, install nodejs and npm
+    # For production, these are not strictly needed in FPM container
+    nodejs \
+    npm
 
 # Configure and install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -25,29 +32,29 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     pdo_mysql \
     gd \
     intl \
-    bcmath
-    # To add more extensions
-    # bcmath \
-    # sockets \
-    # exif
+    bcmath \
+    sockets \
+    exif \
+    sodium \
+    pcntl \
+    pdo_pgsql
 
-# Install Composer globally using multi-stage build.
-# This approach is good for ensuring you always have the latest Composer version.
+# Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy the environment-specific php.ini files into a directory PHP scans.
-# The entrypoint script will then select and activate the correct one.
 COPY conf.d/php-dev.ini /usr/local/etc/php/conf.d/
 COPY conf.d/php-prod.ini /usr/local/etc/php/conf.d/
 
-# Copy the custom entrypoint script.
-COPY docker-entrypoint.sh /usr/local/bin/
-
-# Make the entrypoint script executable. This is crucial for it to run.
+# Copy the custom entrypoint script and make it executable.
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Set the custom entrypoint. This script will execute first.
+# Expose port for PHP-FPM
+EXPOSE 9000
+
+# Use the custom entrypoint
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-# Set the default command for the container. This command is passed to the entrypoint script.
+# Default command if no command is provided
 CMD ["php-fpm"]

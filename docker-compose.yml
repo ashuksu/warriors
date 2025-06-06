@@ -1,21 +1,21 @@
-version: '3.8'
-
 services:
   nginx:
     build:
       context: ./.docker/nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_ENV: prod
     ports:
-      - "8080:80" # Host:Container
+      - "80:80"
+      - "443:443" # Expose HTTPS port for production
     volumes:
-      # Mount application code read-only, 'cached' can improve performance on macOS/Windows
       - .:/var/www/html:ro,cached
-      - nginx_logs:/var/log/nginx
-      - nginx_cache:/var/cache/nginx
+      - ./.docker/nginx/conf.d/default-prod.conf:/etc/nginx/conf.d/default.conf:ro
+      - nginx-logs:/var/log/nginx
+      - nginx-cache:/var/cache/nginx
     depends_on:
       php:
         condition: service_healthy
-      vite:
-        condition: service_started
     networks:
       - app-network
     restart: unless-stopped
@@ -29,20 +29,18 @@ services:
   php:
     build:
       context: ./.docker/php
+      dockerfile: Dockerfile
     volumes:
-      # Mount application code read/write, 'cached' can improve performance
-      - .:/var/www/html:cached
+      - ./:/var/www/html
+      - php-fpm-socket:/var/run/php-fpm
+      - php-logs:/var/log/php
     networks:
       - app-network
-    restart: unless-stopped
+    restart: always
     env_file:
-      # Load environment variables for PHP from .env file
       - ./.env
     environment:
-      # Pass IS_DEV to the container so the entrypoint script can read it.
-      # Defaults to 'false' if not set in .env.
-      IS_DEV: ${IS_DEV:-false}
-      # This path is where PHP scans for .ini files. Our entrypoint places 99-custom.ini here.
+      IS_DEV: "false"
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/"
     healthcheck:
       test: [ "CMD", "php-fpm", "-t" ]
@@ -51,31 +49,12 @@ services:
       retries: 3
       start_period: 30s
 
-  vite:
-    build:
-      context: .
-      dockerfile: .docker/vite/Dockerfile
-    ports:
-      - "5173:5173"
-    volumes:
-      # Mount the entire project for Vite. 'cached' can improve performance.
-      - .:/app:cached
-      # Use an anonymous volume for node_modules
-      - /app/node_modules
-    working_dir: /app
-    command: npm run dev
-    networks:
-      - app-network
-    restart: unless-stopped
-    # No healthcheck needed for Vite dev server usually, 'service_started' is often sufficient.
-    # If you need one, it would typically be a curl to the Vite port.
-
 networks:
   app-network:
     driver: bridge
 
 volumes:
-  nginx_cache:
-  nginx_logs:
-  # nginx_run was used for PID, but Nginx in Alpine typically manages PID in /run/nginx/nginx.pid
-  # which is ephemeral. If you need it persisted via volume, it's fine, but usually not necessary.
+  php-fpm-socket:
+  php-logs:
+  nginx-cache:
+  nginx-logs:
