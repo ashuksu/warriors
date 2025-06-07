@@ -1,33 +1,37 @@
 # Git
 .git
+.gitattributes
 gh-pages/
 
 # Node.js
 node_modules/
 npm-debug.log
+yarn-error.log
 
-# Vite
+# Composer
+vendor/
+#composer.lock
+
+# Vite/Build artifacts
 dist/
 public/dist/
 .vite/
 *.local
 .cache/
 
-# IDEs and editors
+# IDE and OS specific
 .idea/
 .vscode/
 *.sublime-workspace
 *.sublime-project
-
-
-# OS-specific files
-.DS_Store
+.DS_Store/
 Thumbs.db
+*.log
 
 # Environment files
 .env
+.env.*
+!/.env.example
 
 # Tests
 test/
-vendor/
-*.log
