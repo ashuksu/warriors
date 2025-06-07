@@ -23,7 +23,7 @@ class Image
     private const SKIP_PROCESSING_FORMATS = ['svg', 'gif', 'webp'];
     private const FILES_SIZES = [1200, 800, 400];
     private const FALLBACK_IMAGE_SIZE = 800;
-    private const BROKEN_IMAGE_PATH = 'dist/assets/images/broken-image.svg';
+    private const BROKEN_IMAGE_PATH = 'broken-image.svg';
     private const DEFAULT_SIZES_ATTR = '(min-width: 1200px) 1200px, (min-width: 800px) calc(100vw - 30px), (min-width: 400px) calc(100vw - 30px), calc(100vw - 30px)';
 
     private static string $fallbackImagePath = '';
