@@ -1,11 +1,15 @@
-import {defineConfig, loadEnv} from 'vite'; // Import loadEnv
-import {viteStaticCopy} from 'vite-plugin-static-copy'
-import sharp from 'sharp'
-import fs from 'fs/promises'
-import path from 'path'
-import cliProgress from 'cli-progress'
-import md5 from 'md5'
-import fullReload from 'vite-plugin-full-reload'
+import {defineConfig, loadEnv} from 'vite';
+import {viteStaticCopy} from 'vite-plugin-static-copy';
+import sharp from 'sharp';
+import fs from 'fs/promises';
+import path from 'path';
+import cliProgress from 'cli-progress';
+import md5 from 'md5';
+import fullReload from 'vite-plugin-full-reload';
+
+/**
+ * @typedef {import('vite').Plugin} VitePlugin
+ */
 
 /**
  * @typedef {Object} ImageQualityConfig
@@ -235,11 +239,15 @@ const imagePlugin = () => ({
     }
 })
 
+/**
+ * @param {{mode: string}} config
+ * @returns {import('vite').UserConfig}
+ */
 export default defineConfig(({mode}) => {
     const env = loadEnv(mode, process.cwd(), '');
 
+    /** @type {import('vite').Plugin[]} */
     const plugins = [
-        imagePlugin(),
         viteStaticCopy({
             targets: [
                 // example of static files copying
@@ -249,14 +257,7 @@ export default defineConfig(({mode}) => {
                 // },
             ]
         }),
-        // Add fullReload plugin to watch PHP template files and public assets
-        fullReload([
-            './app/Views/**/*',
-            './public/**/*.php',
-            './public/**/*.html',
-            './app/Controllers/**/*',
-            './app/Helpers/**/*'
-        ])
+        imagePlugin()
     ];
 
     if (env.ENABLE_FULL_RELOAD === 'true') {
@@ -266,7 +267,8 @@ export default defineConfig(({mode}) => {
                 './app/Controllers/**/*',
                 './app/Helpers/**/*',
                 './public/**/*.php', // Watch PHP and HTML files in public
-                './public/**/*.html'
+                './public/**/*.html',
+                './src/assets/**/*'
             ])
         );
     }
@@ -292,7 +294,6 @@ export default defineConfig(({mode}) => {
                             'modules/Overlay.js': 'menu',
                             'modules/utils/SeeMore.js': 'utils'
                         };
-
                         const chunk = Object.entries(moduleChunks).find(([path]) => id.includes(path));
                         return chunk ? chunk[1] : undefined;
                     },
@@ -300,13 +301,12 @@ export default defineConfig(({mode}) => {
                     chunkFileNames: 'js/[name].[hash].js',
                     assetFileNames: ({name}) => {
                         if (/\.(css|scss)$/.test(name ?? '')) {
-                            return 'styles/[name].[hash].min[extname]'
+                            return 'styles/[name].[hash].min[extname]';
                         }
-
                         if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
-                            return 'assets/images/[name].[hash][extname]'
+                            return 'assets/images/[name].[hash][extname]';
                         }
-                        return 'assets/[name]-[hash].min[extname]'
+                        return 'assets/[name]-[hash].min[extname]';
                     }
                 }
             }
@@ -316,11 +316,8 @@ export default defineConfig(({mode}) => {
             port: 5173,
             strictPort: true,
             host: '0.0.0.0',
-            hmr: env.ENABLE_HMR === 'true' ? {
-                host: 'localhost',
-                port: 5173,
-            } : false, // Conditionally enable HMR
-            origin: 'http://localhost:5173',
+            hmr: env.ENABLE_HMR === 'true',
+            origin: env.VITE_DEV_SERVER || 'http://localhost:5173',
         }
     };
 });
