@@ -79,7 +79,7 @@ monitor:
 
 # --- Production Targets ---
 
-# Build final production images
+# Build final production images (usually same with `make kill`)
 build-prod:
 	@echo '${BLUE}Building production images...${RESET}'
 	@docker compose $(PROD_COMPOSE_ARGS) build
