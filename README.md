@@ -80,15 +80,15 @@ cd warriors
 ```
 
 ```bash
-# Create `.env` file
-make config
+# Initialize environment configuration and building assets
+make up
 ```
 
 > [Set up an environment in .env](#environment-configuration)
 
 ```bash
-# Initialize environment configuration and building assets
-make install
+# Build frontend assets (each time when added images)
+make npm run build
 ```
 
 See [More details](docs/docker.md#configuration-and-environment-variables) - contains all available environment
@@ -111,20 +111,6 @@ VITE_DEV_SERVER=http://localhost:5173/
 IS_DEV=true
 ```
 
-```bash
-# Start the development environment (fast) (optimized for deployment)
-make up
-```
-
-or
-
-```bash
-# Start the development environment (Force rebuild before starting) (optimized for deployment)
-make dev
-```
-
----
-
 Running in Production Mode:
 
 ```.env
@@ -132,35 +118,16 @@ DOMAIN=your-domain.com
 IS_DEV=false
 ```
 
-```bash
-# Build optimized production
-make prod
-```
-
-```bash
-# Build Docker images and frontend assets (optimized for deployment)
-make build
-```
-
 ### Available Commands
 
 ```bash
-# Build optimized production Docker images and start them
-make prod-up
-```
-
-Visit [localhos](http://localhost) to see the application in action.
-
----
-
-```bash
-# Stop all containers and servers
+# Stop development environment
 make kill
 ```
 
 ```bash
-# Destroying Docker environment (cleaning containers, images, volumes, networks).
-make docker-clean
+# Stop and remove everything: containers, networks, and VOLUMES
+make clean
 ```
 
 ## Documentation
