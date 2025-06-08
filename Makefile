@@ -1,5 +1,3 @@
-# Makefile
-
 .PHONY: help up kill build-prod up-prod kill-prod exec-php exec-vite monitor composer npm clean destroy
 
 # --- Configuration ---
