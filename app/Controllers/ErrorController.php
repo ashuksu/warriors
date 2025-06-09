@@ -2,31 +2,20 @@
 
 namespace Controllers;
 
-use Views\Layout;
-
 /**
- * Controller for the error page
+ * Controller for the error page (404)
  *
- * Handles rendering of the error page when a route is not found
+ * Handles rendering of the error page
  */
-class ErrorController
+class ErrorController extends BaseController
 {
     /**
-     * Render the error page
-     *
-     * Sets up page title and name constants, then renders the layout
-     * with the error section
+     * Render error section
      *
      * @return void
      */
-    public static function index(): void
+    public function index(): void
     {
-        define("APP_TITLE", PAGES['error']['title']);
-        define("PAGE", PAGES['error']['name']);
-
-        Layout::render([
-            'sections' => [PAGE],
-            'metadata' => PAGES[PAGE]
-        ]);
+        $this->render([PAGE]);
     }
 }

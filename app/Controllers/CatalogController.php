@@ -2,31 +2,20 @@
 
 namespace Controllers;
 
-use Views\Layout;
-
 /**
  * Controller for the catalog page
  *
  * Handles rendering of the catalog page with its sections
  */
-class CatalogController
+class CatalogController extends BaseController
 {
     /**
-     * Render the catalog page
-     *
-     * Sets up page title and name constants, then renders the layout
-     * with catalog and info sections
+     * Render sections: catalog, info
      *
      * @return void
      */
-    public static function index(): void
+    public function index(): void
     {
-        define("APP_TITLE", PAGES['catalog']['title']);
-        define("PAGE", PAGES['catalog']['name']);
-
-        Layout::render([
-            'sections' => [PAGE, 'info'],
-            'metadata' => PAGES[PAGE]
-        ]);
+        $this->render([PAGE, 'info']);
     }
 }

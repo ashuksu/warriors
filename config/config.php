@@ -33,6 +33,22 @@ define('SCRIPTS_PATH', DIST_PATH . 'assets/js/');
 // Site configuration
 define('DOMAIN', $_ENV['DOMAIN'] ?? 'warriors.example.com');
 define('LINK', $_ENV['LINK'] ?? 'https://github.com/username/');
-define('EMAIL', $_ENV['EMAIL'] ?? 'email@example.com');
-define('TELEGRAM', $_ENV['TELEGRAM'] ?? 'https://t.me/username');
+define('EMAIL', $_ENV['EMAIL'] ?? 'info@example.com');
+define('TELEGRAM', $_ENV['TELEGRAM'] ?? 'https://t.me/yourtelegram');
 define('PHONE', $_ENV['PHONE'] ?? '+1234567890');
+define('ADDRESS', $_ENV['ADDRESS'] ?? '123 Warrior Street, City, Country');
+define('COMPANY_NAME', $_ENV['COMPANY_NAME'] ?? 'Warriors Inc.');
+
+// Social media links
+define('SOCIAL_FACEBOOK', $_ENV['SOCIAL_FACEBOOK'] ?? '#');
+define('SOCIAL_INSTAGRAM', $_ENV['SOCIAL_INSTAGRAM'] ?? '#');
+define('SOCIAL_TWITTER', $_ENV['SOCIAL_TWITTER'] ?? '#');
+define('SOCIAL_LINKEDIN', $_ENV['SOCIAL_LINKEDIN'] ?? '#');
+define('SOCIAL_YOUTUBE', $_ENV['SOCIAL_YOUTUBE'] ?? '#');
+define('SOCIAL_TELEGRAM', $_ENV['SOCIAL_TELEGRAM'] ?? '#');
+
+// Google Analytics (optional)
+define('GA_TRACKING_ID', $_ENV['GA_TRACKING_ID'] ?? null);
+
+// Load other constants after basic path configurations
+require_once __DIR__ . '/constants.php';

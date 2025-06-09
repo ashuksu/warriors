@@ -2,68 +2,122 @@
 
 namespace Core;
 
-use Controllers\ErrorController;
-
 /**
- * Router class handles URL routing to appropriate controllers
- * 
- * This class maps URL paths to controller methods and resolves
- * incoming requests to the appropriate controller action
+ * Router class handles URL routing and request dispatching
  */
 class Router
 {
     /**
-     * Array of registered routes
-     * 
-     * @var array Associative array where keys are URL paths and values are controller::method strings
+     * Registered routes array
+     * @var array<string,array>
      */
     private array $routes = [];
 
     /**
-     * Constructor initializes the router with default routes
+     * Base path for routing
+     * @var string
+     */
+    private string $basePath;
+
+    /**
+     * Current route parameters
+     * @var array<string,mixed>
+     */
+    private array $params = [];
+
+    /**
+     * Router constructor
+     * @throws \Exception
      */
     public function __construct()
     {
-        $this->register([
-            '' => 'Controllers\HomeController::index',
-            'home' => 'Controllers\HomeController::index',
-            'contacts' => 'Controllers\ContactsController::index',
-            'catalog' => 'Controllers\CatalogController::index'
-        ]);
+        $this->basePath = defined('APP_PATH') ? APP_PATH : '/';
+        $this->initRoutes();
     }
 
     /**
-     * Register routes with the router
-     * 
-     * @param array $routes Associative array of routes to register
-     * @return void
+     * Initialize default routes
+     * @throws \Exception
      */
-    public function register(array $routes): void
+    private function initRoutes(): void
     {
-        $this->routes = $routes;
+        if (!defined('PAGES') || !is_array(PAGES)) {
+            throw new \Exception("PAGES constant is not defined or invalid");
+        }
+
+        foreach (PAGES as $name => $page) {
+            $controllerName = ucfirst($name);
+            $this->routes[$name] = [
+                'path' => $name === 'home' ? '/' : "/{$name}/",
+                'controller' => "Controllers\\{$controllerName}Controller",
+                'action' => 'index',
+                'page' => $name
+            ];
+        }
     }
 
     /**
-     * Resolve the current request to a controller action
-     * 
-     * Extracts the path from the request URI, looks up the corresponding
-     * controller and method, and calls it. If no matching route is found,
-     * the error controller is called.
-     * 
-     * @return void
+     * Get current request URI
+     * @return string Cleaned URI path
+     */
+    private function getUri(): string
+    {
+        $uri = $_SERVER['REQUEST_URI'] ?? '/';
+        if ($this->basePath !== '/') {
+            $uri = str_replace($this->basePath, '', $uri);
+        }
+        return trim(parse_url($uri, PHP_URL_PATH), '/');
+    }
+
+    /**
+     * Match the route to registered routes
+     * @param string $uri Request URI to match
+     * @return bool Whether route was matched
+     */
+    private function matchRoute(string $uri): bool
+    {
+        foreach ($this->routes as $route) {
+            if (!isset($route['path'])) {
+                continue;
+            }
+            $path = trim($route['path'], '/');
+            if ($uri === $path) {
+                $this->params = $route;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Resolve and dispatch the current route
+     * @throws \Exception When route/controller not found
      */
     public function resolve(): void
     {
-        $path = $_SERVER['REQUEST_URI'];
-        $path = trim($path, '/');
-        $path = $path === '' ? '' : $path;
+        $uri = $this->getUri();
 
-        if (isset($this->routes[$path])) {
-            [$controller, $method] = explode('::', $this->routes[$path]);
-            $controller::$method();
-            return;
+        if (!$this->matchRoute($uri)) {
+            if (!isset($this->routes['error'])) {
+                throw new \Exception("Error route is not defined");
+            }
+
+            // Redirect to 404 page
+            $this->params = $this->routes['error'];
         }
 
-        ErrorController::index();
+        $controller = $this->params['controller'];
+        $action = $this->params['action'];
+
+        if (!class_exists($controller)) {
+            throw new \Exception("Controller {$controller} not found");
+        }
+
+        $controllerInstance = new $controller($this->params['page']);
+        if (!method_exists($controllerInstance, $action)) {
+            throw new \Exception("Action {$action} not found in {$controller}");
+        }
+
+        $controllerInstance->$action();
     }
 }

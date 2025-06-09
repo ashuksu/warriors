@@ -1,11 +1,53 @@
-version: '3'
-
 services:
-  web:
-    build: .
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
     ports:
-      - "8080:80"
+      - "80:80"
+      - "443:443"
     volumes:
-      - .:/var/www/html
+      - app_code:/var/www/html:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      php:
+        condition: service_healthy
+    networks:
+      - app-network
     restart: unless-stopped
-#    restart: no
+    healthcheck:
+      test: [ "CMD-SHELL", "nginx -t || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  php:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    volumes:
+      - app_code:/var/www/html
+      - php_logs:/var/log/php
+    env_file:
+      - ./.env
+    environment:
+      IS_DEV: "false"
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "php-fpm", "-t" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  app_code:
+  nginx_logs:
+  php_logs:

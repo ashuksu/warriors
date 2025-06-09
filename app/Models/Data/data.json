@@ -159,7 +159,7 @@
   "info": {
     "items": [
       {
-        "id": "info-main",
+        "id": "info-home",
         "title": "An Info Section on the Home page.",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam cum, dicta dolor ducimus eius, eoss excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!  excepturi fugiat ipsam magni minus perspiciatis provident quisquam suscipit tempore ut vero voluptas voluptatum!"
       },
