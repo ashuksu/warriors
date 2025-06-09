@@ -18,6 +18,8 @@ public/dist/
 .vite/
 *.local
 .cache/
+static/
+logs/
 
 # IDE and OS specific
 .idea/

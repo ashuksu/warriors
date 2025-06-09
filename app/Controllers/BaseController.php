@@ -34,8 +34,13 @@ abstract class BaseController
      */
     protected function setConstants(): void
     {
-        define("APP_TITLE", $this->metadata['title']);
-        define("PAGE", $this->metadata['name']);
+        if (!defined('APP_TITLE')) {
+            define("APP_TITLE", $this->metadata['title']);
+        }
+
+        if (!defined('PAGE')) {
+            define("PAGE", $this->metadata['name']);
+        }
     }
 
     /**
