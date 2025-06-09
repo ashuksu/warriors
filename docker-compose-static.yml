@@ -18,7 +18,7 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-      - ./.cache:/app/.cache
+      - ./src/.cache-images:/app/src/.cache-images
       - vite_node_modules:/app/node_modules
     networks:
       - app-network

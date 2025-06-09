@@ -17,7 +17,7 @@ dist/
 public/dist/
 .vite/
 *.local
-.cache/
+.cache-images/
 static/
 logs/
 

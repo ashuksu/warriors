@@ -60,7 +60,7 @@ const imageConfig = {
     paths: {
         src: 'src/assets/images',
         dest: 'public/dist/assets/images',
-        cache: '.cache'
+        cache: 'src/.cache-images'
     },
     skipProcessing: ['svg', 'gif', 'webp'],
     processFiles: ['jpg', 'jpeg', 'png'],
