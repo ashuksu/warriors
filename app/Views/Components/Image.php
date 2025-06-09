@@ -27,21 +27,22 @@ class Image
     private const DEFAULT_SIZES_ATTR = '(min-width: 1200px) 1200px, (min-width: 800px) calc(100vw - 30px), (min-width: 400px) calc(100vw - 30px), calc(100vw - 30px)';
 
     private static string $fallbackImagePath = '';
+    private const DIST_STATUS_ATTR = 'data-not-dist="not from dist/"';
 
     /**
      * Render a responsive image with appropriate attributes
      *
      * @param array{
-     *   url?: string,            Path to image or external URL
-     *   alt?: string,            Alt text for the image
-     *   width?: int,            Image width
-     *   height?: int,            Image height
-     *   attr?: string,            Additional HTML attributes
-     *   srcset?: string,        Custom srcset attribute
-     *   sizes?: string,        Custom sizes attribute
-     *   fetchpriority?:tring,    Resource loading priority
-     *   decoding?: string,        Image decoding mode
-     *   noLazy?:                bool Disable lazy loading
+     * url?: string,            Path to image or external URL
+     * alt?: string,            Alt text for the image
+     * width?: int,            Image width
+     * height?: int,            Image height
+     * attr?: string,            Additional HTML attributes
+     * srcset?: string,        Custom srcset attribute
+     * sizes?: string,        Custom sizes attribute
+     * fetchpriority?:string,    Resource loading priority
+     * decoding?: string,        Image decoding mode
+     * noLazy?:                bool Disable lazy loading
      * } $params
      * @return string HTML image tag
      */
@@ -50,8 +51,8 @@ class Image
         $alt = !empty($params['alt']) ? htmlspecialchars($params['alt'], ENT_QUOTES) : 'image';
         $width = $params['width'] ?? 600;
         $height = $params['height'] ?? 600;
-        $attr = $params['attr'] ?? '';
-        $url = $params['url'] ?? '#';
+        $attr = ($params['attr'] ?? '');
+        $url = $params['url'] ?? '';
         $pathInfo = pathinfo($url);
 
         if (!$url
@@ -83,46 +84,45 @@ class Image
             );
         }
 
-        // Handle non-processable formats
-        if (in_array($originalExt, self::SKIP_PROCESSING_FORMATS)) {
-            $path = fileExists($url) ? $url : getPath(self::BROKEN_IMAGE_PATH);
+        $fallbackImage = self::updateImage($url) === false ? getPath(self::BROKEN_IMAGE_PATH) : self::updateImage($url);
 
-            return self::renderImage(
-                $path,
-                $alt,
-                $width,
-                $height,
-                $attr,
-                $params
-            );
-        }
+        $statusSrc = (self::updateImage($url) !== false && $fallbackImage === self::transformAssetUrl($url)) ? self::DIST_STATUS_ATTR : '';
 
-        // Handle local images with processing
-        $fallbackImage = $pathInfo['dirname'] . '/' . $pathInfo['filename'] .
-            '-' . self::FALLBACK_IMAGE_SIZE . '.' . $originalExt;
-
-        $fallbackImage = fileExists($fallbackImage) ? $fallbackImage : getPath(self::BROKEN_IMAGE_PATH);
         self::setFallbackImagePath($fallbackImage);
 
-        if (is_string(self::getFilesPaths($pathInfo)) || !is_array(self::getFilesPaths($pathInfo))) {
+        // Handle non-processable formats
+        if (in_array($originalExt, self::SKIP_PROCESSING_FORMATS)) {
             return self::renderImage(
                 self::getFallbackImagePath(),
                 $alt,
                 $width,
                 $height,
-                $attr,
+                $attr . $statusSrc,
                 $params
             );
         }
+
+        // Handle local images with processing
+        $fallbackImagePath = $pathInfo['dirname'] . '/' . $pathInfo['filename'] . '-' . self::FALLBACK_IMAGE_SIZE . '.' . $originalExt;
+
+        $fallbackImage = self::updateImage($fallbackImagePath) === false ? $fallbackImage : self::updateImage($fallbackImagePath);
+
+        $statusSrc = (self::updateImage($fallbackImagePath) === false && $fallbackImage === self::transformAssetUrl($url)) ? self::DIST_STATUS_ATTR : '';
+
+        self::setFallbackImagePath($fallbackImage);
+
+        $responsiveAttrs = is_array(self::getOptimizedFilesPaths($pathInfo))
+            ? self::getResponsiveAttributes(self::getOptimizedFilesPaths($pathInfo))
+            : [];
 
         return self::renderImage(
             self::getFallbackImagePath(),
             $alt,
             $width,
             $height,
-            $attr,
+            $attr . $statusSrc,
             $params,
-            self::getResponsiveAttributes(self::getFilesPaths($pathInfo))
+            $responsiveAttrs
         );
     }
 
@@ -140,6 +140,69 @@ class Image
     public static function getFallbackImagePath(): string
     {
         return self::$fallbackImagePath ?: getPath(self::BROKEN_IMAGE_PATH);
+    }
+
+    /**
+     * Get updated image path of BROKEN_IMAGE
+     */
+    public static function updateImage(string $url): string|bool
+    {
+        $result = false;
+        $Image = fileExists($url);
+        $originalImage = fileExists(self::transformAssetUrl($url));
+
+        if ($Image !== false) {
+            $result = getPath($Image);
+        } else if ($originalImage !== false) {
+            $result = getPath($originalImage);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Transforms the asset URL, replacing '/dist/' with '/src/' only if '/dist/'
+     * is at the beginning of the path after the domain or at the beginning of a relative path.
+     *
+     * @param string $url The URL of the asset (e.g. "http://localhost:5173/dist/assets/images/item.svg" or "/dist/assets/images/items.svg")
+     * @return string The transformed URL
+     */
+    private static function transformAssetUrl(string $url): string
+    {
+        $parts = parse_url($url);
+
+        $scheme = $parts['scheme'] ?? '';
+        $host = $parts['host'] ?? '';
+        $port = $parts['port'] ?? '';
+        $path = $parts['path'] ?? '';
+        $query = $parts['query'] ?? '';
+        $fragment = $parts['fragment'] ?? '';
+
+        $baseUrl = '';
+        if (!empty($scheme) && !empty($host)) {
+            $baseUrl .= $scheme . '://' . $host;
+            if (!empty($port)) {
+                $baseUrl .= ':' . $port;
+            }
+        }
+
+        // Check if the path starts with '/dist/'
+        if (str_starts_with($path, '/dist/')) {
+            // Replace '/dist/' with '/src/' only at the beginning of the path
+            $newPath = '/src/' . substr($path, strlen('/dist/'));
+        } else {
+            $newPath = $path;
+        }
+
+        $newUrl = $baseUrl . $newPath;
+        if (!empty($query)) {
+            $newUrl .= '?' . $query;
+        }
+        if (!empty($fragment)) {
+            $newUrl .= '#' . $fragment;
+        }
+
+        return $newUrl;
     }
 
     /**
@@ -175,7 +238,7 @@ class Image
     /**
      * Get file paths for original and processed images
      */
-    private static function getFilesPaths(array $pathInfo): string|array
+    private static function getOptimizedFilesPaths(array $pathInfo): string|array
     {
         $filePathList = [];
         $fallbackCount = 0;
