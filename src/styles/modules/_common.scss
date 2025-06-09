@@ -175,6 +175,18 @@ img {
 		height: 100%;
 		object-fit: contain;
 	}
+
+	&[data-not-dist] {
+		border: 1px dashed rgba(index.$main, 0.3);
+
+		&:after {
+			content: attr(data-not-dist);
+			display: block;
+			white-space: nowrap;
+			color: var(--red);
+			font-size: 10px;
+		}
+	}
 }
 
 .title {

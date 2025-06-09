@@ -12,7 +12,6 @@
         },
         "files": [
             "config/config.php",
-            "config/constants.php",
             "app/Helpers/helpers.php"
         ]
     },

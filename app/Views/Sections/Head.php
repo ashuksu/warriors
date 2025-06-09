@@ -27,8 +27,8 @@ class Head
         ?>
 
 		<!DOCTYPE html>
-		<html lang="en">
-	<head <?php if (defined('IS_DEV') && IS_DEV) echo 'data-mode="dev"'; ?>>
+	<html lang="en" <?php if (defined('IS_DEV') && IS_DEV) echo 'data-mode="dev"'; ?>>
+	<head>
 
 		<!-- Basic meta tags -->
 		<meta charset="UTF-8">
@@ -81,7 +81,7 @@ class Head
                     }
                     <?php endif; ?>
                     <?php if (!empty(PAGES[PAGE]['schema']['sameAs'])): ?>,
-                    "sameAs": <?= json_encode(PAGES[PAGE]['schema']['sameAs']) ?>
+                    "sameAs": "<?= json_encode(PAGES[PAGE]['schema']['sameAs']) ?>"
                 <?php endif; ?>
 				}
 			</script>

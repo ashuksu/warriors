@@ -16,7 +16,7 @@ class Vite
      *
      * @var string
      */
-    private static string $manifestFile = __DIR__ . '/../../public/dist/.vite/manifest.json';
+    private static string $manifestFile = PROJECT_ROOT . 'public/dist/.vite/manifest.json';
 
     /**
      * Cached manifest data
@@ -48,10 +48,11 @@ class Vite
             return VITE_DEV_SERVER . $file;
         }
 
-        // Production mode
+        // In production, read from manifest
         $manifest = self::getManifest();
-        if (!$manifest) {
-            throw new \RuntimeException('Vite manifest file not found. Please run npm run build first.');
+
+        if ($manifest === null && !$manifest) {
+            throw new \RuntimeException('Vite manifest file not found. Please run `npm run build` or `make build` first.');
         }
 
         // Check if the file exists directly in the manifest
