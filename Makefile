@@ -163,6 +163,25 @@ npm:
 
 
 
+# Новые аргументы для статического деплоя
+STATIC_COMPOSE_ARGS := -f docker-compose.yml -f docker-compose-static.yml
+
+# Target for generating static site for GitHub Pages
+generate-static-site: config
+	@echo "${BLUE}--- Ensuring Docker containers are up for static site generation ---${RESET}"
+	docker compose $(STATIC_COMPOSE_ARGS) up -d gh-pages vite-builder
+
+	@echo "${BLUE}--- Running Vite build in vite-builder container ---${RESET}"
+	docker compose $(STATIC_COMPOSE_ARGS) exec vite-builder npm run build
+
+	@echo "${BLUE}--- Running static site generation script inside PHP container ---${RESET}"
+	docker compose $(STATIC_COMPOSE_ARGS) exec gh-pages \
+	  php -d memory_limit=-1 /app/generate-static-site.php
+	@echo "${GREEN}--- Static site generation completed. Files are in static/public/ ---${RESET}"
+	@echo "${BLUE}--- Stopping Docker services ---${RESET}"
+	docker compose $(STATIC_COMPOSE_ARGS) down
+
+
 
 # Deployment to GitHub Pages
 deploy: wget
