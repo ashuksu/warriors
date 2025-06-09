@@ -1,6 +1,6 @@
 # --- Stage 1: Frontend Builder ---
-# This stage builds frontend assets. Includes Node.js and dev dependencies.
-# It will not be part of the final, lean PHP image.
+# Builds frontend assets. Includes Node.js and dev dependencies.
+# This stage is used to create the /app/public/dist artifact.
 FROM node:20-alpine AS frontend-builder
 
 # Install dependencies needed for `sharp` image processing library.
@@ -19,9 +19,9 @@ COPY . .
 RUN npm run build
 
 
-# --- Stage 2: Final PHP-FPM Image (for Production Deployment) ---
-# This image is optimized for production, with all application code and assets
-# bundled directly into the image. No code volumes are typically mounted.
+# --- Stage 2: Final PHP-FPM Image (for Development & Static Site Generation) ---
+# This image is optimized for development workflows and static site generation,
+# where application code is mounted as a volume from the host.
 FROM php:8.3-fpm-alpine
 
 # Install system dependencies required for PHP extensions and Composer.
@@ -37,28 +37,29 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Install Composer globally.
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory to /app. All application code will be copied here.
+# Set working directory to /app, aligning with volume mounts in docker-compose-dev.yml
+# and docker-compose-static.yml.
 WORKDIR /app
 
-# Copy the entire application source code into the image.
-# This ensures all necessary files are bundled for production deployment.
+# Copy application source code. This acts as a fallback if no volume is mounted,
+# but it will be overridden by bind mounts during development/static generation.
 COPY . .
 
-# Copy built frontend assets from the 'frontend-builder' stage into the final image.
-# This is crucial for production images where assets are not volume-mounted.
-COPY --from=frontend-builder /app/public/dist ./public/dist/
+# Copy environment-specific php.ini files. The entrypoint selects the correct one.
+COPY .docker/php/conf.d/php-dev.ini /usr/local/etc/php/conf.d/
+COPY .docker/php/conf.d/php-prod.ini /usr/local/etc/php/conf.d/
 
-# Copy only the production php.ini file.
-COPY .docker/php/conf.d/php-prod.ini /usr/local/etc/php/conf.d/zz-custom.ini
-
-# Install Composer production dependencies during build.
+# Install Composer production dependencies during build. Development dependencies
+# are handled by the entrypoint script when IS_DEV is true.
 RUN composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader
 
 # Copy the custom entrypoint script and make it executable.
 COPY .docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Ensure application directory has correct ownership for the web server user.
+# Ensure the application directory has correct ownership for the web server user.
+# For mounted volumes, actual permissions are determined by the host. This primarily
+# affects files copied into the image that might not be overridden by a mount.
 RUN chown -R www-data:www-data /app
 
 # Expose port for PHP-FPM.

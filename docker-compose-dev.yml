@@ -13,6 +13,9 @@ services:
         condition: service_started
 
   php:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile-dev
     environment:
       IS_DEV: "true"
     volumes:

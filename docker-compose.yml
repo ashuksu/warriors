@@ -7,7 +7,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - app_code:/var/www/html:ro
       - nginx_logs:/var/log/nginx
     depends_on:
       php:
@@ -27,7 +26,6 @@ services:
       context: .
       dockerfile: .docker/php/Dockerfile
     volumes:
-      - app_code:/var/www/html
       - php_logs:/var/log/php
     env_file:
       - ./.env
@@ -48,6 +46,5 @@ networks:
     driver: bridge
 
 volumes:
-  app_code:
   nginx_logs:
   php_logs:
