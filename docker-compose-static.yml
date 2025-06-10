@@ -1,0 +1,31 @@
+services:
+  gh-pages:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile-dev
+    volumes:
+      - .:/app
+      - ./static:/app/static
+    environment:
+      IS_DEV: "false"
+    networks:
+      - app-network
+
+  vite-builder:
+    build:
+      context: .
+      dockerfile: .docker/vite/Dockerfile
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./src/.cache-images:/app/src/.cache-images
+      - vite_node_modules:/app/node_modules
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  vite_node_modules:

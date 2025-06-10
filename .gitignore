@@ -17,7 +17,9 @@ dist/
 public/dist/
 .vite/
 *.local
-.cache/
+.cache-images/
+static/
+logs/
 
 # IDE and OS specific
 .idea/
