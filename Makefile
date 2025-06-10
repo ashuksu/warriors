@@ -51,12 +51,12 @@ help:
 	@echo '${BLUE}Utility Commands:${RESET}'
 	@echo '  ${YELLOW}make clean${RESET}              - Stop all services and remove all related containers, networks, and volumes (dev & prod).'
 	@echo '  ${YELLOW}make destroy${RESET}            - Purge ALL Docker system resources (containers, images, volumes, cache not in use).'
-	@echo '  ${YELLOW}make config${RESET}             - Copy .env.example to .env.'
+	@echo '  ${YELLOW}make env${RESET}             - Copy .env.example to .env.'
 
 # Development Targets
 
 # Start development environment (and build if needed)
-up: config
+up: env
 	@echo '${BLUE}Starting development environment...${RESET}'
 	@docker compose $(DEV_COMPOSE_ARGS) up --build
 
@@ -99,7 +99,7 @@ kill-prod:
 # Generic Targets
 
 # Create .env from .env.example
-config:
+env:
 	@if [ ! -f .env ]; then \
 		echo '${BLUE}Creating .env file...${RESET}'; \
 		cp .env.example .env; \
