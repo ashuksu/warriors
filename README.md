@@ -93,7 +93,7 @@ cd warriors
 This command copies the example environment file. Review `.env` and adjust variables if needed.
 
 ```bash
-make config
+make env
 ```
 
 See [More details](#environment-configuration) for environment variable setup.
