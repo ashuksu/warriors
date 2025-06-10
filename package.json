@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "vite:kill": "kill-port 4173 5173 || true"
+    "kill-port": "kill-port 4173 5173 8080 9000 || true"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
