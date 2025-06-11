@@ -22,19 +22,40 @@ class Layout
      *
      * Renders the head, header, content sections, footer, and additional components
      *
-     * @param array $data Data to be passed to the layout and sections
+     * @param array $data Data to be passed to the layout and sections.
+     * Expected to contain 'sections' (array) and 'metadata' (array).
      * @return void
      */
-    public static function render($data = [])
+    public static function render(array $data = []): void
     {
-        extract($data);
+        $sections = $data['sections'] ?? [];
+        $metadata = $data['metadata'] ?? [];
 
-        Head::render([]);
+        if (empty($metadata) || !isset($metadata['name']) || !isset($metadata['title'])) {
+            $metadata = [
+                'name' => 'default',
+                'title' => 'Default Title',
+                'h1' => 'Welcome',
+                'description' => 'Default description',
+                'keywords' => 'default, keywords'
+            ];
+            error_log("Warning: Layout::render called without valid metadata.");
+        }
+
+        if (!defined('PAGE')) {
+            define('PAGE', $metadata['name']);
+        }
+
+        if (!defined('APP_TITLE')) {
+            define('APP_TITLE', $metadata['title']);
+        }
+
+        Head::render($metadata);
 
         ?>
 
-		<body data-style="default" class="<?= 'page-' . PAGE ?>" itemscope itemtype="https://schema.org/WebPage">
-		<div class="wrapper">
+       <body data-style="default" class="<?= 'page-' . PAGE ?>" itemscope itemtype="https://schema.org/WebPage">
+       <div class="wrapper">
 
             <?php
 
@@ -45,7 +66,7 @@ class Layout
 
 			<main id="content" class="content" role="<?= PAGE ?? 'main' ?>">
 				<h1 hidden>
-                    <?= PAGES[PAGE]['h1'] ?? PAGES[PAGE]['title'] ?>
+                    <?= $metadata['h1'] ?? $metadata['title'] ?>
 				</h1>
 
                 <?php
@@ -79,7 +100,7 @@ class Layout
 
         Popup::render();
 
-        renderTemplate(__DIR__ . '/Sections/footer-links.php', []);
+        renderTemplate(__DIR__ . '/Sections/footer-links.php');
         ?>
 
 		</body>
