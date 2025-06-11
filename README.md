@@ -109,6 +109,19 @@ and starts `Nginx`, `PHP-FPM`, and `Vite Dev Server`.
 make up
 ```
 
+<details>
+  <summary>recommendations</summary>
+
+> use `make dev ARGS="list of arguments"` for more control over the `docker-compose` command in development mode.
+> example: make dev ARGS="up --build -d"
+
+```bash
+# For first time or after changes in Dockerfile or ..-compose.yml use building without cache
+make dev ARGS="build --no-cache"
+```
+
+</details>
+
 Your development environment is now running!
 Web Application: [localhost](http://localhost) for served by Nginx, proxying to PHP-FPM and Vite Dev Server.
 Vite Dev Server: [localhost:5173](http://localhost:5173) for HMR and direct asset serving.
