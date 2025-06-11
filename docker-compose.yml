@@ -12,8 +12,6 @@ services:
     depends_on:
       php:
         condition: service_healthy
-      db: # if Nginx needs DB, add dependency on db for Nginx (e.g. for dynamic config)
-        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
@@ -28,20 +26,13 @@ services:
     build:
       context: .
       dockerfile: .docker/php/Dockerfile
-    volumes:
-      - app_code:/var/www/html
-      - php_logs:/var/log/php
     env_file:
       - ./.env
     environment:
       IS_DEV: "false"
-      # Database connection variables for production
-      DB_CONNECTION: pgsql
-      DB_HOST: db # Service name in Docker Compose
-      DB_PORT: 5432
-      DB_DATABASE: myapp_db
-      DB_USERNAME: myuser
-      DB_PASSWORD: mypassword
+    volumes:
+      - app_code:/var/www/html
+      - php_logs:/var/log/php
     depends_on:
       db:
         condition: service_healthy # Ensure DB is ready before PHP starts
@@ -55,14 +46,15 @@ services:
       retries: 3
       start_period: 5s
 
-  # Database service for production
   db:
     image: postgres:16-alpine
     restart: always
+    env_file:
+      - ./.env
     environment:
-      POSTGRES_DB: myapp_db
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
@@ -70,6 +62,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - app-network
 
 networks:
   app-network:
