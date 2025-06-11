@@ -79,11 +79,11 @@ A modern, containerized (Docker support) PHP application template featuring Vite
 
 ### Development Branches
 
-  * **`feature/WRRS-task`** - New features (e.g., `feature/WRRS-nginx`)
+* **`feature/WRRS-task`** - New features (e.g., `feature/WRRS-nginx`)
 
-  * **`bugfix/WRRS-task`** - Bug fixes (e.g., `bugfix/WRRS-routing`)
+* **`bugfix/WRRS-task`** - Bug fixes (e.g., `bugfix/WRRS-routing`)
 
-  * **`experiment/[API]`** - Experimental features (e.g., `experiment/WGET`)
+* **`experiment/[API]`** - Experimental features (e.g., `experiment/WGET`)
 
 ## Quick Start
 
@@ -91,7 +91,7 @@ Get your development environment up and running in just a few steps.
 
 **Prerequisites:**
 
-  * [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
 
 **1. Clone the Repository**
 
@@ -108,7 +108,7 @@ make env
 ```
 
 See [More details](#environment-configuration) for environment variable setup.
-See [More details](docs/docker.md#configuration-and-environment-variables) for all available environment variables and settings.
+See [More details](docs/config.md#configuration-and-environment-variables) for all available environment variables and settings.
 
 **3. Start the Development Environment**
 This single command builds necessary Docker images, installs all dependencies (Composer & NPM) inside the containers,
@@ -133,8 +133,8 @@ make dev ARGS="build --no-cache"
 
 Your development environment is now running!
 
-  * **Web Application:** [localhost](http://localhost) served by Nginx, proxying to PHP-FPM and Vite Dev Server.
-  * **Vite Dev Server:** [localhost:5173](http://localhost:5173) for HMR and direct asset serving.
+* **Web Application:** [localhost](http://localhost) served by Nginx, proxying to PHP-FPM and Vite Dev Server.
+* **Vite Dev Server:** [localhost:5173](http://localhost:5173) for HMR and direct asset serving.
 
 *Sources*
 
@@ -147,35 +147,35 @@ Use the Makefile as your primary tool for managing the project. All commands are
 
 ### Core Commands
 
-  * Start everything: `make up`
-  * Stop everything: `make down`
+* Start everything: `make up`
+* Stop everything: `make down`
 
 ### Interacting with Containers
 
 You never need to install PHP, Composer, or Node.js on your host machine. Use these commands to run tools inside their
 respective containers:
 
-  * Run any Composer command:
+* Run any Composer command:
 
 ```bash
 # Example: require a new PHP package
 make composer require phpleague/flysystem
 ```
 
-  * Run any NPM command:
+* Run any NPM command:
 
 ```bash
 # Example: install a new JS package
 make npm install dayjs
 ```
 
-  * Open a shell in the PHP container:
+* Open a shell in the PHP container:
 
 ```bash
 make exec-php
 ```
 
-  * Open a shell in the Vite helper container:
+* Open a shell in the Vite helper container:
 
 ```bash
 make exec-vite
@@ -191,7 +191,7 @@ make monitor
 
 The development environment includes a PostgreSQL database.
 
-  * Run the database seeding script to create schema and initial data:
+* Run the database seeding script to create schema and initial data:
 
 ```bash
 make db-seed
@@ -273,20 +273,20 @@ make up-prod
 
 ## Documentation
 
-  * [Configuration Guide](docs/config.md)
-  * [Docker Setup](docs/docker.md)
-  * [Vite Configuration](docs/vite.md)
-  * [WGET Usage](docs/wget.md)
-  * [Deployment Guide](docs/deployment.md)
-  * [Version History](docs/version-v1.md)
+* [Configuration Guide](docs/config.md)
+* [Docker Setup](docs/docker.md)
+* [Vite Configuration](docs/vite.md)
+* [WGET Usage](docs/wget.md)
+* [Deployment Guide](docs/deployment.md)
+* [Version History](docs/version-v1.md)
 
 ## Deployment
 
 See [Deployment Guide](docs/deployment.md) for detailed instructions on:
 
-  * Production build process
-  * GitHub Pages deployment
-  * Static site generation
+* Production build process
+* GitHub Pages deployment
+* Static site generation
 
 ---
 
