@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: help up kill build-prod up-prod kill-prod exec-php exec-vite monitor composer npm clean destroy \
+.PHONY: help up kill build-prod up-prod kill-prod exec-php exec-vite monitor dev composer npm clean destroy \
     deploy wget wget-preparation gh-pages-deploy live-server-stop \
     gh-pages gh-pages-push-public gh-pages-push-root gh-pages-init gh-pages-gitignore
 
@@ -39,6 +39,7 @@ help:
 	@echo '  ${GREEN}make kill${RESET}               - Stop development environment.'
 	@echo '  ${GREEN}make exec-php${RESET}           - Get a shell inside the PHP container (dev).'
 	@echo '  ${GREEN}make exec-vite${RESET}          - Get a shell inside the Vite helper container (dev).'
+	@echo '  ${GREEN}make dev${RESET}                - Starting development environment with custom arguments.'
 	@echo '  ${GREEN}make composer [...args]${RESET} - Run any Composer command (e.g., "make composer require laravel/pint").'
 	@echo '  ${GREEN}make npm [...args]${RESET}      - Run any NPM command (e.g., "make npm install lodash").'
 	@echo '  ${GREEN}make monitor${RESET}            - Monitor Docker containers (requires ctop image).'
@@ -51,7 +52,7 @@ help:
 	@echo '${BLUE}Utility Commands:${RESET}'
 	@echo '  ${YELLOW}make clean${RESET}              - Stop all services and remove all related containers, networks, and volumes (dev & prod).'
 	@echo '  ${YELLOW}make destroy${RESET}            - Purge ALL Docker system resources (containers, images, volumes, cache not in use).'
-	@echo '  ${YELLOW}make env${RESET}             - Copy .env.example to .env.'
+	@echo '  ${YELLOW}make env${RESET}            	  - Copy .env.example to .env.'
 
 # Development Targets
 
@@ -143,6 +144,12 @@ destroy:
 			echo -e "\r${YELLOW}Cleanup cancelled by user.${RESET}"; \
 		fi \
 	'
+
+# This allows running 'make dev ARGS="build --no-cache"' or 'make dev ARGS="up -d --build"'
+dev: env
+	@echo '${BLUE}Starting development environment with custom arguments...${RESET}'
+	@docker compose $(DEV_COMPOSE_FILES) $(ARGS)
+
 
 # --- Command Proxies ---
 
