@@ -1,3 +1,4 @@
+# BASE - PRODUCTION
 services:
   nginx:
     build:
@@ -16,7 +17,7 @@ services:
       - app-network
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD-SHELL", "nginx -t || exit 1" ]
+      test: ["CMD-SHELL", "nginx -t || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -35,12 +36,12 @@ services:
       - php_logs:/var/log/php
     depends_on:
       db:
-        condition: service_healthy # Ensure DB is ready before PHP starts
+        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "php-fpm", "-t" ]
+      test: ["CMD", "php-fpm", "-t"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -57,13 +58,13 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - app-network
 
 networks:
   app-network:

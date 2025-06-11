@@ -1,3 +1,4 @@
+# OVERRIDE - DEVELOPMENT
 services:
   nginx:
     ports:
@@ -20,7 +21,6 @@ services:
     volumes:
       - .:/var/www/html:cached
       - php_logs:/var/log/php
-      - vendor_data:/var/www/html/vendor
 
   db:
     ports:
@@ -43,4 +43,5 @@ services:
 
 volumes:
   vite_node_modules:
-  vendor_data:
+  nginx_logs:
+  php_logs:
