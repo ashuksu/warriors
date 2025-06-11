@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
-.PHONY: help up kill build-prod up-prod kill-prod exec-php exec-vite monitor dev composer npm clean destroy \
-    deploy wget wget-preparation gh-pages-deploy live-server-stop \
+.PHONY: help up down build-prod up-prod down-prod exec-php exec-vite monitor db-seed dev composer npm clean destroy \
+    deploy wget wget-preparation gh-pages-deploy live-server-kill \
     gh-pages gh-pages-push-public gh-pages-push-root gh-pages-init gh-pages-gitignore
 
 # Configuration
@@ -36,18 +36,19 @@ help:
 	@echo ''
 	@echo '${BLUE}Development Commands:${RESET}'
 	@echo '  ${GREEN}make up${RESET}                 - Start development environment (builds images if necessary).'
-	@echo '  ${GREEN}make kill${RESET}               - Stop development environment.'
+	@echo '  ${GREEN}make down${RESET}               - Stop development environment.'
 	@echo '  ${GREEN}make exec-php${RESET}           - Get a shell inside the PHP container (dev).'
 	@echo '  ${GREEN}make exec-vite${RESET}          - Get a shell inside the Vite helper container (dev).'
 	@echo '  ${GREEN}make dev${RESET}                - Starting development environment with custom arguments.'
 	@echo '  ${GREEN}make composer [...args]${RESET} - Run any Composer command (e.g., "make composer require laravel/pint").'
 	@echo '  ${GREEN}make npm [...args]${RESET}      - Run any NPM command (e.g., "make npm install lodash").'
 	@echo '  ${GREEN}make monitor${RESET}            - Monitor Docker containers (requires ctop image).'
+	@echo '  ${GREEN}make db-seed${RESET}            - Run the database seeding script to create schema and initial data.'
 	@echo ''
 	@echo '${BLUE}Production Commands:${RESET}'
 	@echo '  ${CYAN}make build-prod${RESET}         - Build final, optimized production images.'
 	@echo '  ${CYAN}make up-prod${RESET}            - Start production environment in detached mode.'
-	@echo '  ${CYAN}make kill-prod${RESET}          - Stop production environment.'
+	@echo '  ${CYAN}make down-prod${RESET}          - Stop production environment.'
 	@echo ''
 	@echo '${BLUE}Utility Commands:${RESET}'
 	@echo '  ${YELLOW}make clean${RESET}              - Stop all services and remove all related containers, networks, and volumes (dev & prod).'
@@ -62,7 +63,7 @@ up: env
 	@docker compose $(DEV_COMPOSE_ARGS) up --build
 
 # Stop development environment
-kill:
+down:
 	@echo '${BLUE}Stopping development environment...${RESET}'
 	@docker compose $(DEV_COMPOSE_ARGS) down
 
@@ -93,9 +94,14 @@ up-prod:
 	@docker compose $(PROD_COMPOSE_ARGS) up -d
 
 # Stop production environment
-kill-prod:
+down-prod:
 	@echo '${BLUE}Stopping production environment...${RESET}'
 	@docker compose $(PROD_COMPOSE_ARGS) down
+
+# Run the database seeding script
+db-seed:
+	@echo "${BLUE}Running database seeding script...${RESET}"
+	@docker compose $(DEV_COMPOSE_ARGS) exec php php database/seed.php
 
 # Generic Targets
 
@@ -181,18 +187,19 @@ deploy: wget-preparation wget
 		read -n 1 -s key; \
 		if [[ -z "$$key" ]]; then \
 			printf "\r${GREEN}✔ Deploy selected.${RESET}\n"; \
-			make live-server-stop; \
-			make kill; \
+			make live-server-kill; \
+			make down; \
 			make gh-pages-push-public; \
 			echo "${CYAN}${GREEN}✔ Static site generation and deployment process completed!${RESET}"; \
 		else \
 			printf "\r${YELLOW}Deploy cancelled by user.${RESET}\n"; \
-			make live-server-stop; \
-			make kill; \
+			make live-server-kill; \
+			make down; \
 			echo "${CYAN}${GREEN}✔ Static site generation!${RESET}"; \
 			echo "${CYAN}You can now manually deploy by running: ${YELLOW}make gh-pages-push-public${RESET}"; \
 		fi \
 	'
+
 # Static Generation
 wget:
 	@echo '${BLUE}Static Generation: WGET process${RESET}'
@@ -208,7 +215,7 @@ wget:
 	@$(MAKE) live-server || echo "${RED}Can't start live-server${RESET}"
 
 # Static Preparation
-wget-preparation: kill build-prod up-prod
+wget-preparation: down build-prod up-prod
 	@echo '${GREEN}✔ Docker production environment is up and running at ${APP_URL} in background!${RESET}'
 	@$(MAKE) npm run build || echo "${RED}Some issues with ${YELLOW}'make npm run build'.${RESET}"
 	@echo '${GREEN}✔ Production assets built.${RESET}'
@@ -238,13 +245,13 @@ wget-preparation: kill build-prod up-prod
 	@echo '${CYAN}Special static files copied.${RESET}'
 	@echo '${GREEN}✔ Preparation completed.${RESET}'
 
-live-server: live-server-stop
+live-server: live-server-kill
 	@echo '${BLUE}Starting local preview server...${RESET}'
 	@live-server $(PAGES_PUBLIC) --port=9000 --open=. > /dev/null 2>&1 &
 	@echo '${GREEN}✔ Preview server running on ${APP_URL}:${LIVE_SERVER_PORT}${RESET}'
-	@echo '${YELLOW}make live-server-stop ${CYAN}to stop live-server process ${RESET}'
+	@echo '${YELLOW}make live-server-kill ${CYAN}to stop live-server process ${RESET}'
 
-live-server-stop:
+live-server-kill:
 	@echo '${BLUE}Stopping local preview server...${RESET}'
 	@lsof -t -i :9000 | xargs -r kill 2>/dev/null || true
 	@fuser -k 9000/tcp || true
@@ -278,7 +285,6 @@ gh-pages-push-root:
 	git commit -am "Initial GH-Pages root commit $(shell date +%F\ %T)" || true && \
 	git push -u origin gh-pages --force && \
 	echo "${GREEN}✔ Root changes successfully pushed to gh-pages${RESET}"
-
 
 gh-pages-init:
 	@echo "${BLUE}Initializing GitHub Pages repository...${RESET}"
