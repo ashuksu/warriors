@@ -85,18 +85,23 @@ monitor:
 
 # Build final production images
 build-prod:
-	@echo '${BLUE}Building production images...${RESET}'
+	@echo '${BLUE}Building final, optimized production images...${RESET}'
 	@docker compose $(PROD_COMPOSE_ARGS) build
 
-# Start production environment
+# Starts production environment using existing images and volumes
 up-prod:
 	@echo '${BLUE}Starting production environment...${RESET}'
 	@docker compose $(PROD_COMPOSE_ARGS) up -d
 
-# Stop production environment
+# STOPS production environment and REMOVES VOLUMES (like app_code) to ensure a fresh deployment
 down-prod:
-	@echo '${BLUE}Stopping production environment...${RESET}'
-	@docker compose $(PROD_COMPOSE_ARGS) down
+	@echo '${BLUE}Stopping production services and removing volumes...${RESET}'
+	@docker compose $(PROD_COMPOSE_ARGS) down -v
+
+# A complete, fresh deployment cycle
+deploy-prod: build-prod down-prod up-prod
+	@echo '${GREEN}✔ Fresh production deployment complete.${RESET}'
+
 
 # Run the database seeding script
 db-seed:
