@@ -22,7 +22,7 @@ use App\Helpers\Vite;
 <?php endif; ?>
 
 
-<!-- Styles: critical (loaded immediately, blocks rendering) -->
+<!-- Styles: critical (loaded immediately, blocks' rendering) -->
 <link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/critical.scss') ?>">
 
 <!-- Styles: main, not important and interactive elements, popup (async loaded, lower priority than "high", be applied before "high") -->
