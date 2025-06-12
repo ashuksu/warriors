@@ -209,7 +209,7 @@ wget:
 			${APP_URL}/contacts \
 			${APP_URL}/catalog \
 			${APP_URL}/404 \
-			${APP_URL}
+			${APP_URL} || echo "${RED}WGET failed. Check logs/wget.log for details.${RESET}"
 	@echo '${GREEN}✔ WGET static files generated successfully in "$(PAGES_PUBLIC)" directory.${RESET}'
 	@echo '${CYAN}WGET log saved to logs/wget.log${RESET}'
 	@$(MAKE) live-server || echo "${RED}Can't start live-server${RESET}"

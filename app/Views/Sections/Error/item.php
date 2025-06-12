@@ -28,8 +28,8 @@ echo Button::render([
     'url' => $button['url'] ?? APP_PATH,
     'class' => ($button['class'] ?? '') . ' error-button wow pixFadeUp',
     'attr' => ($button['attr'] ?? '') . ' data-wow-delay="0.5s"',
-    'content' => $button['content'] ?? 'Back to Homepage',
-    'aria-label' => $button['content'] ?? 'Back to Homepage',
+    'content' => $button['content'] ?? 'Back to Home Page',
+    'aria-label' => $button['content'] ?? 'Back to Home Page',
     'role' => 'button'
 ]);
 ?>

@@ -207,7 +207,7 @@ try {
         ],
         "popup" => [
             "items" => [
-                ["id" => "p001", "name" => "First", "title" => "First Popup", "text" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?", "button" => ["url" => "APP_PATH", "content" => "Go Home"]],
+                ["id" => "p001", "name" => "First", "title" => "First Popup", "text" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ad doloremque explicabo fuga officia optio possimus quis rem repellendus voluptatum! Aut blanditiis dolore dolores doloribus ducimus, illo porro quis repellat?", "button" => ["url" => "{{APP_PATH}}error", "content" => "Go 404 Page"]],
                 ["id" => "p002", "name" => "Second", "title" => "Second Popup", "text" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, sunt.", "button" => ["url" => "{{LINK}}", "attr" => "target='_blank' rel='noopener noreferrer'", "content" => "GitHub"]],
             ],
         ],
