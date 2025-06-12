@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Views\Layout;
+use Exception;
 
 /**
  * Base controller class
@@ -15,20 +16,27 @@ use Views\Layout;
 abstract class BaseController
 {
     protected array $metadata;
-    protected string $page;
+    protected string $pageName;
 
     /**
-     * @param string $page Page identifier from PAGES constant
+     * @param array $pageMetadata Complete page metadata fetched from the database
+     * @throws Exception If critical metadata is missing
      */
-    public function __construct(string $page)
+    public function __construct(array $pageMetadata)
     {
-        $this->page = $page;
-        $this->metadata = PAGES[$page];
+        // Ensure essential metadata is present
+        if (!isset($pageMetadata['name']) || !isset($pageMetadata['title'])) {
+            throw new Exception("Missing essential page metadata (name or title).");
+        }
+
+        $this->metadata = $pageMetadata;
+        $this->pageName = $pageMetadata['name']; // Assign page name (PAGE) from metadata
+
         $this->setConstants();
     }
 
     /**
-     * Set required application constants
+     * Set required application constants based on current page metadata.
      *
      * @return void
      */
@@ -39,7 +47,7 @@ abstract class BaseController
         }
 
         if (!defined('PAGE')) {
-            define("PAGE", $this->metadata['name']);
+            define("PAGE", $this->pageName);
         }
     }
 

@@ -1,3 +1,4 @@
+# BASE - PRODUCTION
 services:
   nginx:
     build:
@@ -16,7 +17,7 @@ services:
       - app-network
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD-SHELL", "nginx -t || exit 1" ]
+      test: ["CMD-SHELL", "nginx -t || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -26,22 +27,44 @@ services:
     build:
       context: .
       dockerfile: .docker/php/Dockerfile
-    volumes:
-      - app_code:/var/www/html
-      - php_logs:/var/log/php
     env_file:
       - ./.env
     environment:
       IS_DEV: "false"
+    volumes:
+      - app_code:/var/www/html
+      - php_logs:/var/log/php
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "php-fpm", "-t" ]
+      test: ["CMD", "php-fpm", "-t"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 5s
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   app-network:
@@ -51,3 +74,4 @@ volumes:
   app_code:
   nginx_logs:
   php_logs:
+  db_data:

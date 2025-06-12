@@ -1,29 +1,35 @@
 # [WARRIORS](https://ashuksu.github.io/warriors)
 
-A modern PHP application template with Vite bundling, Docker support, and deployment to GitHub Pages.
+A modern, containerized (Docker support) PHP application template featuring Vite bundling, PostgreSQL, Nginx, and automated deployment to GitHub Pages.
 
 **Key features:**
 
-- Modern Vite bundling system with PHP integration
-- Automated build processes and task runners
-- Hot Module Replacement (HMR) support
-- Containerized development workflow (`Nginx`, `PHP-FPM`, `Vite Dev Server`)
-- Optimized static site generation
-- Page Speed Optimization
-- SEO Optimization
-- Accessibility (A11y) Enhancements
-- Responsive Image Handling (preparation and adaptive serving, `Sharp` for image processing)
-- Local Image Caching
-- Device-based Triggers (mobile/tablet/desktop)
-- Manual GitHub Pages deployment
-- Environment-based configuration
+* Modern `Vite` bundling system with `PHP` integration
+* Modular JavaScript (`ES Modules`)
+* CSS Preprocessing (`SCSS`)
+* Task Automation with `Make`
+* Automated build processes and task runners
+* Hot Module Replacement (`HMR`) support
+* Automatic Reloading for Development (PHP & Frontend)
+* Seamless Dependency Management (Composer for PHP, npm for Node.js)
+* Flexible Environment-based Configuration (`.env` files)
+* Containerized development workflow (`Nginx`, `PHP-FPM`, `PostgreSQL`, `Vite Dev Server`)
+* Optimized Docker Images (`Multi-Stage Builds`)
+* Optimized static site generation
+* Page Speed Optimization
+* `SEO` Optimization
+* `Accessibility` (A11y) Enhancements
+* Responsive Image Handling (preparation and adaptive serving, `Sharp` for image processing)
+* Local Image Caching
+* Device-based Triggers (mobile/tablet/desktop)
+* Semi-Automated GitHub Pages Deployment
 
 **Tech Stack:**
 
 * **Frontend:** `JavaScript` `HTML5` `CSS3` `SCSS`
-* **Build & Style:** `Vite` `npm` `Make` `Autoprefixer` `Sharp`
+* **Build & Style:** `Vite` `npm` `Make` `Autoprefixer` `Sharp` `Node.js`
 * **Template Engine:** `PHP`
-* **Backend Tools:** `Nginx` `PHP-FPM` `Composer`
+* **Backend Tools:** `Nginx` `PHP-FPM` `Composer` `PostgreSQL`
 * **DevOps:** `Docker` `GitHub Pages` `Git`
 * **Documentation:** `Markdown` `PHPDoc` `JSDoc`
 
@@ -32,6 +38,11 @@ A modern PHP application template with Vite bundling, Docker support, and deploy
 * [Repository Structure](#repository-structure)
 * [Quick Start](#quick-start)
 * [Development](#development)
+  * [Core Commands](#core-commands)
+  * [Interacting with Containers](#interacting-with-containers)
+  * [Database Management](#database-management)
+  * [Environment Configuration](#environment-configuration)
+  * [Cleaning Up and Stop](#cleaning-up-and-stop)
 * [Production](#production)
 * [Documentation](#documentation)
 * [Deployment](#deployment)
@@ -43,34 +54,34 @@ A modern PHP application template with Vite bundling, Docker support, and deploy
 ### Core Branches
 
 * **`master`**
-    * Production branch containing the latest stable version
-    * All feature branches are created from here
-    * Receives only tested and approved changes
+  * Production branch containing the latest stable version
+  * All feature branches are created from here
+  * Receives only tested and approved changes
 
 * **`dev`**
-    * Development branch for feature integration
-    * All new features are merged here first
-    * Synced with `master` after testing
+  * Development branch for feature integration
+  * All new features are merged here first
+  * Synced with `master` after testing
 
 * **`gh-pages`**
-    * Deployment branch for GitHub Pages
-    * Submodule in `/public` directory
-    * Contains only built static files
-    * Automatically served at ashuksu.github.io/warriors
-    * Updated manually via deployment script
-    * [More details](docs/deployment.md)
+  * Deployment branch for GitHub Pages
+  * Submodule in `/public` directory
+  * Contains only built static files
+  * Automatically served at ashuksu.github.io/warriors
+  * Updated manually via a deployment script
+  * [More details](docs/deployment.md)
 
 * **`archive/OLD-DESIGN-v1`**
-    * Historical snapshot of the original website design
-    * Tagged as tag `v1.7.0`
-    * **NEVER** merged into active branches
-    * [More details](docs/version-v1.md)
+  * Historical snapshot of the original website design
+  * Tagged as tag `v1.7.0`
+  * **NEVER** merged into active branches
+  * [More details](docs/version-v1.md)
 
 ### Development Branches
 
-* **`feature/WRRS-№`** - New features (e.g., `feature/WRRS-1`)
+* **`feature/WRRS-task`** - New features (e.g., `feature/WRRS-nginx`)
 
-* **`bugfix/WRRS-№`** - Bug fixes (e.g., `bugfix/WRRS-2`)
+* **`bugfix/WRRS-task`** - Bug fixes (e.g., `bugfix/WRRS-routing`)
 
 * **`experiment/[API]`** - Experimental features (e.g., `experiment/WGET`)
 
@@ -85,7 +96,7 @@ Get your development environment up and running in just a few steps.
 **1. Clone the Repository**
 
 ```bash
-git clone [https://github.com/ashuksu/warriors.git](https://github.com/ashuksu/warriors.git)
+git clone https://github.com/ashuksu/warriors.git
 cd warriors
 ```
 
@@ -97,26 +108,38 @@ make env
 ```
 
 See [More details](#environment-configuration) for environment variable setup.
-See [More details](docs/docker.md#configuration-and-environment-variables) for all available environment variables and
-settings.
-variables and settings
+See [More details](docs/config.md#configuration-and-environment-variables) for all available environment variables and settings.
 
 **3. Start the Development Environment**
 This single command builds necessary Docker images, installs all dependencies (Composer & NPM) inside the containers,
-and starts `Nginx`, `PHP-FPM`, and `Vite Dev Server`.
+and starts `Nginx`, `PHP-FPM`, `PostgreSQL`, and `Vite Dev Server`.
 
 ```bash
 make up
 ```
 
+<details>
+  <summary>recommendations</summary>
+
+> Use `make dev ARGS="list of arguments"` for more control over the `docker-compose` command in development mode.
+> Example: `make dev ARGS="up --build -d"`
+
+```bash
+# For first time setup or after changes in Dockerfile or docker-compose.yml, use building without cache:
+make dev ARGS="build --no-cache"
+```
+
+</details>
+
 Your development environment is now running!
-Web Application: [localhost](http://localhost) for served by Nginx, proxying to PHP-FPM and Vite Dev Server.
-Vite Dev Server: [localhost:5173](http://localhost:5173) for HMR and direct asset serving.
+
+* **Web Application:** [localhost](http://localhost) served by Nginx, proxying to PHP-FPM and Vite Dev Server.
+* **Vite Dev Server:** [localhost:5173](http://localhost:5173) for HMR and direct asset serving.
 
 *Sources*
 
-1. See [More details](docs/docker.md#installation) for detailed instructions on Docker setup.
-2. See [More details](docs/vite.md#installation) for detailed instructions on Vite setup.
+1.  See [More details](docs/docker.md#installation) for detailed instructions on Docker setup.
+2.  See [More details](docs/vite.md#installation) for detailed instructions on Vite setup.
 
 ## Development
 
@@ -125,7 +148,7 @@ Use the Makefile as your primary tool for managing the project. All commands are
 ### Core Commands
 
 * Start everything: `make up`
-* Stop everything: `make kill`
+* Stop everything: `make down`
 
 ### Interacting with Containers
 
@@ -137,7 +160,7 @@ respective containers:
 ```bash
 # Example: require a new PHP package
 make composer require phpleague/flysystem
-  ```
+```
 
 * Run any NPM command:
 
@@ -158,15 +181,25 @@ make exec-php
 make exec-vite
 ```
 
-* Monitor Docker containers (requires `ctop` image):
+  * Monitor Docker containers (requires `ctop` image):
 
 ```bash
 make monitor
 ```
 
+### Database Management
+
+The development environment includes a PostgreSQL database.
+
+* Run the database seeding script to create schema and initial data:
+
+```bash
+make db-seed
+```
+
 ### Environment Configuration
 
-`IS_DEV` variable controls environment-specific settings.
+The `IS_DEV` variable controls environment-specific settings.
 
 Running in Development Mode (`.env`):
 
@@ -187,20 +220,20 @@ IS_DEV=false
 
 ### Cleaning Up and Stop
 
-To stop development environment:
+To stop the development environment:
 
 ```bash
-make kill
+make down
 ```
 
-To stop production environment:
+To stop the production environment:
 
 ```bash
-make kill-prod
+make down-prod
 ```
 
 To completely remove all project-specific containers, networks, and persistent data volumes (`node_modules` cache,
-etc.), run:
+database data, etc.), run:
 
 ```bash
 make clean
@@ -224,14 +257,15 @@ dependencies included.
 make build-prod
 ```
 
-for local processing images
+**2. Build Frontend Assets for Local Processing**
+If you need to build frontend assets locally (e.g., for specific deployment pipelines not using the Docker build stage for assets), run:
 
 ```bash
 make npm run build
 ```
 
-**2. Run in Production Mode**
-This command starts the production services (`Nginx` and `PHP-FPM`) in detached (background) mode.
+**3. Run in Production Mode**
+This command starts the production services (`Nginx`, `PHP-FPM`, and `PostgreSQL`) in detached (background) mode.
 
 ```bash
 make up-prod

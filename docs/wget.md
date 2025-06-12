@@ -132,7 +132,7 @@ docker ps -a
 
 ```bash
 # stop all
-make kill
+make down
 ```
 
 <details>
