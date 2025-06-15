@@ -1,13 +1,12 @@
 SHELL := /bin/bash
 
-.PHONY: help up down build-prod up-prod down-prod exec-php exec-vite monitor db-seed dev composer npm clean destroy \
+.PHONY: help up down restart up-prod down-prod build-prod restart-prod db-seed clean destroy \
+	env composer npm dev exec-php exec-vite monitor \
     deploy wget wget-preparation gh-pages-deploy live-server-kill \
     gh-pages gh-pages-push-public gh-pages-push-root gh-pages-init gh-pages-gitignore
 
 # Configuration
-# Use standard docker-compose merging for dev environment
 DEV_COMPOSE_ARGS := -f docker-compose.yml -f docker-compose-dev.yml
-# Production environment uses only the base file
 PROD_COMPOSE_ARGS := -f docker-compose.yml
 
 # Path variables
@@ -32,29 +31,42 @@ RESET := $(shell tput -Txterm sgr0)
 # Default target
 help:
 	@echo '${BLUE}Usage:${RESET}'
-	@echo '  make [command]'
+	@echo '  ${YELLOW}make [command]${RESET}'
 	@echo ''
 	@echo '${BLUE}Development Commands:${RESET}'
 	@echo '  ${GREEN}make up${RESET}                 - Start development environment (builds images if necessary).'
 	@echo '  ${GREEN}make down${RESET}               - Stop development environment.'
+	@echo '  ${GREEN}make restart${RESET}            - Restart development environment.'
 	@echo '  ${GREEN}make exec-php${RESET}           - Get a shell inside the PHP container (dev).'
 	@echo '  ${GREEN}make exec-vite${RESET}          - Get a shell inside the Vite helper container (dev).'
-	@echo '  ${GREEN}make dev${RESET}                - Starting development environment with custom arguments.'
+	@echo '  ${GREEN}make dev [...ARGS]${RESET}      - Start development environment with custom arguments (e.g., "make dev ARGS="up --build"").'
 	@echo '  ${GREEN}make composer [...args]${RESET} - Run any Composer command (e.g., "make composer require laravel/pint").'
 	@echo '  ${GREEN}make npm [...args]${RESET}      - Run any NPM command (e.g., "make npm install lodash").'
 	@echo '  ${GREEN}make monitor${RESET}            - Monitor Docker containers (requires ctop image).'
 	@echo '  ${GREEN}make db-seed${RESET}            - Run the database seeding script to create schema and initial data.'
 	@echo ''
 	@echo '${BLUE}Production Commands:${RESET}'
-	@echo '  ${CYAN}make build-prod${RESET}         - Build final, optimized production images.'
-	@echo '  ${CYAN}make up-prod${RESET}            - Start production environment in detached mode.'
-	@echo '  ${CYAN}make down-prod${RESET}          - Stop production environment.'
+	@echo '  ${YELLOW}make build-prod${RESET}         - Build final, optimized production images.'
+	@echo '  ${YELLOW}make up-prod${RESET}            - Start production environment in detached mode.'
+	@echo '  ${YELLOW}make down-prod${RESET}          - Stop production environment.'
+	@echo '  ${YELLOW}make restart-prod${RESET}       - Restart production environment (builds, stops, then starts).'
+	@echo ''
+	@echo '${BLUE}Static Site Generation & Deployment Commands (GitHub Pages):${RESET}'
+	@echo '  ${CYAN}make deploy${RESET}             - Generate static site via Wget, then optionally deploy to GitHub Pages.'
+	@echo '  ${CYAN}make wget-preparation${RESET}   - Prepare environment (build/up prod) for static site generation.'
+	@echo '  ${CYAN}make wget${RESET}               - Generate static HTML files using Wget from the running prod env.'
+	@echo '  ${CYAN}make live-server${RESET}        - Start a local preview server for the generated static site.'
+	@echo '  ${CYAN}make live-server-kill${RESET}   - Stop the local preview server.'
+	@echo '  ${CYAN}make gh-pages${RESET}           - Overall target: Initialize GH Pages repo, create .gitignore, push root files.'
+	@echo '  ${CYAN}make gh-pages-init${RESET}      - Initialize the GitHub Pages repository structure.'
+	@echo '  ${CYAN}make gh-pages-gitignore${RESET} - Create a .gitignore file for the GitHub Pages directory.'
+	@echo '  ${CYAN}make gh-pages-push-root${RESET} - Push initial root files to the GitHub Pages branch.'
+	@echo '  ${CYAN}make gh-pages-push-public${RESET} - Deploy the generated public static files to GitHub Pages.'
 	@echo ''
 	@echo '${BLUE}Utility Commands:${RESET}'
-	@echo '  ${YELLOW}make clean${RESET}              - Stop all services and remove all related containers, networks, and volumes (dev & prod).'
-	@echo '  ${YELLOW}make destroy${RESET}            - Purge ALL Docker system resources (containers, images, volumes, cache not in use).'
-	@echo '  ${YELLOW}make env${RESET}            	  - Copy .env.example to .env.'
-
+	@echo '  ${RED}make clean${RESET}              - Stop all services and remove project-related containers, networks, and volumes (dev & prod).'
+	@echo '  ${RED}make destroy${RESET}            - Purge ALL Docker system resources (containers, images, volumes, cache not in use) - USE WITH EXTREME CAUTION!'
+	@echo '  ${YELLOW}make env${RESET}                - Copy .env.example to .env (if it doesn''t exist).'
 # Development Targets
 
 # Start development environment (and build if needed)
@@ -66,6 +78,89 @@ up: env
 down:
 	@echo '${BLUE}Stopping development environment...${RESET}'
 	@docker compose $(DEV_COMPOSE_ARGS) down
+
+# Restart development environment
+restart:
+	@$(MAKE) down
+	@$(MAKE) up
+
+# Starts production environment using existing images and volumes
+up-prod:
+	@echo '${BLUE}Starting production environment in detached mode...${RESET}'
+	@docker compose $(PROD_COMPOSE_ARGS) up -d
+
+# Stop production environment
+down-prod:
+	@echo '${BLUE}Stopping production services...${RESET}'
+	@docker compose $(PROD_COMPOSE_ARGS) down --remove-orphans
+
+# Build final, optimized production images
+build-prod:
+	@echo '${BLUE}Building final, optimized production images (using cache)...${RESET}'
+	@$(MAKE) npm run build || echo "${RED}Some issues with ${YELLOW}'make npm run build'.${RESET}"
+	@docker compose $(PROD_COMPOSE_ARGS) build
+
+# Restart production environment
+restart-prod: build-prod down-prod up-prod
+	@echo '${GREEN}✔ Fresh production deployment complete.${RESET}'
+
+# Run the database seeding script
+db-seed:
+	@echo "${BLUE}Running database seeding script...${RESET}"
+	@docker compose $(DEV_COMPOSE_ARGS) exec php php database/seed.php
+
+# Stop and remove all containers, networks, and VOLUMES for this project
+clean:
+	@echo '${RED}WARNING: This will remove all containers, networks, and project volumes!${RESET}'
+	@read -p "Are you sure? [y/N] " ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
+	@docker compose $(DEV_COMPOSE_ARGS) down -v --remove-orphans 2>/dev/null || true
+	@docker compose $(PROD_COMPOSE_ARGS) down -v --remove-orphans 2>/dev/null || true
+	@echo '${GREEN}✔ Project cleanup complete.${RESET}'
+
+# DANGER: Prune ALL Docker system resources (containers, images, volumes, cache not in use, etc.)
+# USE WITH EXTREME CAUTION! This removes all Docker resources on your system, not just project-specific ones.
+destroy:
+	@$(MAKE) clean
+	@echo; \
+	echo "${RED}███ DANGER ZONE! ███"; \
+	echo "${YELLOW}This will purge ALL unused Docker resources on your system, not just for this project.${RESET}"; \
+	read -p "Are you absolutely sure you want to proceed? [y/N] " ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
+	@echo "${BLUE}Starting system-wide Docker prune...${RESET}"
+	@docker compose down --volumes --remove-orphans && echo "${CYAN}Docker Compose services, volumes, and orphans removed.${RESET}" || echo "${YELLOW}⚠ Docker Compose cleanup failed.${RESET}"
+	@docker ps -qa | xargs -r docker rm -f && echo "${CYAN}All stopped and running containers forcefully removed.${RESET}" || echo "${YELLOW}⚠ No containers to remove.${RESET}"
+	@docker images -qa | xargs -r docker rmi -f && echo "${CYAN}All Docker images forcefully removed.${RESET}" || echo "${YELLOW}⚠ No Docker images to remove or removal failed.${RESET}"
+	@docker system prune -af --volumes && echo "${CYAN}Docker system pruned (images, containers, volumes, networks).${RESET}" || echo "${YELLOW}⚠ Docker system prune failed or nothing to prune.${RESET}"
+	@docker builder prune -af && echo "${CYAN}Docker build cache pruned.${RESET}" || echo "${YELLOW}⚠ No Docker build cache to prune or prune failed.${RESET}"
+	@docker buildx prune -af && echo "${CYAN}Docker Buildx cache pruned.${RESET}" || echo "${YELLOW}⚠ No Docker Buildx cache to prune or prune failed.${RESET}"
+	@docker network prune -f && echo "${CYAN}Docker networks pruned again (redundant for safety).${RESET}" || echo "${YELLOW}⚠ No Docker networks to prune or prune failed.${RESET}"
+	@echo "${GREEN}✔ Docker system prune complete.${RESET}"
+
+# Helper Targets & Proxies
+
+# Create .env file from .env.example if it doesn't exist
+env:
+	@if [ ! -f .env ]; then \
+		echo '${BLUE}Creating .env file...${RESET}'; \
+		cp .env.example .env; \
+		echo '${GREEN}✔ .env file created. Please review and customize it.${RESET}'; \
+	fi
+
+# Run a Composer command (e.g., make composer require laravel/sanctum)
+composer:
+	@echo '${CYAN}Running: composer $(filter-out $@,$(MAKECMDGOALS))${RESET}'
+	@docker compose $(DEV_COMPOSE_ARGS) run --rm php composer $(filter-out $@,$(MAKECMDGOALS))
+
+# Run an NPM command (e.g., make npm install)
+npm:
+	@echo '${CYAN}Running: npm $(filter-out $@,$(MAKECMDGOALS))${RESET}'
+	@docker compose $(DEV_COMPOSE_ARGS) run --rm vite npm $(filter-out $@,$(MAKECMDGOALS))
+
+# This allows running 'make dev ARGS="build --no-cache"' or 'make dev ARGS="up -d --build"'
+dev: env
+	@echo '${BLUE}Starting development environment with custom arguments...${RESET}'
+	@docker compose $(DEV_COMPOSE_FILES) $(ARGS)
+
+# Production Targets
 
 # Get a shell inside the PHP container
 exec-php:
@@ -80,99 +175,6 @@ exec-vite:
 monitor:
 	@echo '${BLUE}Monitoring Docker containers (requires ctop image)...${RESET}'
 	@docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest && echo '${GREEN}✔ ctop exited.${RESET}' || echo '${RED}Error: ctop failed to run or exited abnormally.${RESET}'
-
-# Production Targets
-
-# Build final production images
-build-prod:
-	@echo '${BLUE}Building final, optimized production images...${RESET}'
-	@docker compose $(PROD_COMPOSE_ARGS) build
-
-# Starts production environment using existing images and volumes
-up-prod:
-	@echo '${BLUE}Starting production environment...${RESET}'
-	@docker compose $(PROD_COMPOSE_ARGS) up -d
-
-# STOPS production environment and REMOVES VOLUMES (like app_code) to ensure a fresh deployment
-down-prod:
-	@echo '${BLUE}Stopping production services and removing volumes...${RESET}'
-	@docker compose $(PROD_COMPOSE_ARGS) down -v
-
-# A complete, fresh deployment cycle
-deploy-prod: build-prod down-prod up-prod
-	@echo '${GREEN}✔ Fresh production deployment complete.${RESET}'
-
-
-# Run the database seeding script
-db-seed:
-	@echo "${BLUE}Running database seeding script...${RESET}"
-	@docker compose $(DEV_COMPOSE_ARGS) exec php php database/seed.php
-
-# Generic Targets
-
-# Create .env from .env.example
-env:
-	@if [ ! -f .env ]; then \
-		echo '${BLUE}Creating .env file...${RESET}'; \
-		cp .env.example .env; \
-		echo '${GREEN}.env file created. Please review and edit it.${RESET}'; \
-	else \
-		echo '${YELLOW}.env file already exists. Skipping.${RESET}'; \
-	fi
-
-# Stop and remove everything: containers, networks, and VOLUMES
-clean:
-	@echo '${YELLOW}Cleaning up all project Docker resources...${RESET}'
-	@docker compose $(DEV_COMPOSE_ARGS) down -v --remove-orphans 2>/dev/null || true
-	@docker compose $(PROD_COMPOSE_ARGS) down -v --remove-orphans 2>/dev/null || true
-	@echo '${GREEN}Cleanup complete.${RESET}'
-
-# Purge ALL Docker system resources (containers, images, volumes, cache not in use)
-# USE WITH EXTREME CAUTION! This removes *all* Docker resources on your system, not just project-specific ones.
-destroy:
-	@bash -c '\
-		echo; \
-		echo "${RED}WARNING!"; \
-		echo; \
-		echo "${YELLOW}This will purge ALL Docker system resources. Use with extreme caution!${RESET}"; \
-		echo; \
-		echo "${RED}Are you sure? ${CYAN}(Y=yes, Any other key=no)${RESET}"; \
-		read -n 1 -s key; \
-		if [[ "$$key" == "y" || "$$key" == "Y" || "$$key" == "н" || "$$key" == "Н" ]]; then \
-			echo -e "\r${GREEN}✔ Cleanup confirmed.${RESET}"; \
-			make clean; \
-			echo -e "\r${BLUE}Cleaning project files...${RESET}"; \
-			echo -e "\r${BLUE}Cleaning Docker system...${RESET}"; \
-			docker compose down --volumes --remove-orphans && echo "${CYAN}Docker Compose services, volumes, and orphans removed.${RESET}" || echo "${YELLOW}⚠ Docker Compose cleanup failed.${RESET}"; \
-			docker ps -qa | xargs -r docker rm -f && echo "${CYAN}All stopped and running containers forcefully removed.${RESET}" || echo "${YELLOW}⚠ No containers to remove.${RESET}"; \
-			docker images -qa | xargs -r docker rmi -f && echo "${CYAN}All Docker images forcefully removed.${RESET}" || echo "${YELLOW}⚠ No Docker images to remove or removal failed.${RESET}"; \
-			docker system prune -af --volumes && echo "${CYAN}Docker system pruned (images, containers, volumes, networks).${RESET}" || echo "${YELLOW}⚠ Docker system prune failed or nothing to prune.${RESET}"; \
-			docker builder prune -af && echo "${CYAN}Docker build cache pruned.${RESET}" || echo "${YELLOW}⚠ No Docker build cache to prune or prune failed.${RESET}"; \
-			docker buildx prune -af && echo "${CYAN}Docker Buildx cache pruned.${RESET}" || echo "${YELLOW}⚠ No Docker Buildx cache to prune or prune failed.${RESET}"; \
-			docker network prune -f && echo "${CYAN}Docker networks pruned again (redundant for safety).${RESET}" || echo "${YELLOW}⚠ No Docker networks to prune or prune failed.${RESET}"; \
-			echo -e "\r${GREEN}✔ Docker system cleaned.${RESET}"; \
-		else \
-			echo -e "\r${YELLOW}Cleanup cancelled by user.${RESET}"; \
-		fi \
-	'
-
-# This allows running 'make dev ARGS="build --no-cache"' or 'make dev ARGS="up -d --build"'
-dev: env
-	@echo '${BLUE}Starting development environment with custom arguments...${RESET}'
-	@docker compose $(DEV_COMPOSE_FILES) $(ARGS)
-
-
-# --- Command Proxies ---
-
-# This allows running 'make composer require package' or 'make composer update'
-composer:
-	@echo '${CYAN}Running Composer command inside PHP container...${RESET}'
-	@docker compose $(DEV_COMPOSE_ARGS) run --rm php composer $(filter-out $@,$(MAKECMDGOALS))
-
-# This allows running 'make npm install package' or 'make npm run build'
-npm:
-	@echo '${CYAN}Running NPM command inside Vite container...${RESET}'
-	@docker compose $(DEV_COMPOSE_ARGS) run --rm vite npm $(filter-out $@,$(MAKECMDGOALS))
 
 # Catch-all for undefined targets to prevent errors and show help
 %::
