@@ -3,12 +3,12 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: .docker/nginx/Dockerfile
+      dockerfile: .docker/Dockerfile
+      target: nginx-prod
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - app_code:/var/www/html:ro
       - nginx_logs:/var/log/nginx
     depends_on:
       php:
@@ -17,7 +17,7 @@ services:
       - app-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "nginx -t || exit 1"]
+      test: ["CMD-SHELL", "nginx -t"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -26,13 +26,13 @@ services:
   php:
     build:
       context: .
-      dockerfile: .docker/php/Dockerfile
+      dockerfile: .docker/Dockerfile
+      target: prod
     env_file:
       - ./.env
     environment:
       IS_DEV: "false"
     volumes:
-      - app_code:/var/www/html
       - php_logs:/var/log/php
     depends_on:
       db:
@@ -71,7 +71,6 @@ networks:
     driver: bridge
 
 volumes:
-  app_code:
   nginx_logs:
   php_logs:
   db_data:
