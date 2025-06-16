@@ -2,18 +2,26 @@
 
 namespace Views\Sections\About;
 
+use Core\Container;
 use Services\SectionService;
+use Exception;
 use function Helpers\renderTemplate;
 
 class About
 {
-    public static function render($params = [])
+    /**
+     * Render the section with provided parameters.
+     *
+     * @param Container $container
+     * @return void
+     * @throws Exception
+     */
+    public static function render(Container $container): void
     {
-        extract($params);
-
-        renderTemplate(__DIR__ . '/template.php', [
+        renderTemplate(__DIR__ . '/template.php', params: [
             'collection' => SectionService::get('about', 'items'),
-            'section' => 'about'
+            'section' => 'about',
+            'metadata' => $container->getPageMetadata()
         ]);
     }
 }

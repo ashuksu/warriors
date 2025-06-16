@@ -2,19 +2,27 @@
 
 namespace Views\Sections\Catalog;
 
+use Core\Container;
 use Services\SectionService;
+use Exception;
 use function Helpers\renderTemplate;
 
 class Catalog
 {
-    public static function render($params = [])
+    /**
+     * Render the section with provided parameters.
+     *
+     * @param Container $container
+     * @return void
+     * @throws Exception
+     */
+    public static function render(Container $container): void
     {
-        extract($params);
-
         renderTemplate(__DIR__ . '/template.php', [
             'collection' => SectionService::get('catalog', 'items'),
             'section' => 'catalog',
             'title' => SectionService::get('catalog', 'title'),
+            'metadata' => $container->getPageMetadata()
         ]);
     }
 }
