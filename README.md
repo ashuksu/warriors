@@ -205,7 +205,6 @@ make migrate
 make seed
 ```
 
-
 <details>
   <summary>recommendations</summary>
 
