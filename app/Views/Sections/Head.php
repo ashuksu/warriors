@@ -2,6 +2,7 @@
 
 namespace Views\Sections;
 
+use Core\Container;
 use function Helpers\getPath;
 use function Helpers\renderTemplate;
 
@@ -17,14 +18,12 @@ class Head
      *
      * Outputs the DOCTYPE, HTML tag, and head section with all necessary meta-tags,
      * stylesheets, fonts, and scripts for the page
-     *
-     * @param array $params Parameters for the head section (expected to be the page's metadata array).
+     * @param Container $container
      * @return void
      */
-    public static function render(array $params = []): void
+    public static function render(Container $container): void
     {
-        // $params here contains the full page metadata from the database,
-        // passed from Layout::render($data) as $data['metadata'].
+        $params = $container->getPageMetadata();
         $schema = $params['schema'] ?? [];
         $noindex = $params['noindex'] ?? false;
         ?>

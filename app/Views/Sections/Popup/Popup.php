@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Views\Sections\Popup;
+namespace Views\Sections\Popup;
 
 use Services\SectionService;
 use function Helpers\renderTemplate;

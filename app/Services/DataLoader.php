@@ -2,7 +2,7 @@
 
 namespace Services;
 
-use Exception; // For error handling
+use Exception;
 
 /**
  * DataLoader class

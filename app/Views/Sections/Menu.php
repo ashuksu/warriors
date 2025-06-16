@@ -2,7 +2,7 @@
 
 namespace Views\Sections;
 
-use App\Helpers\Device;
+use Helpers\Device;
 use Services\SectionService;
 use Views\Components\Button;
 

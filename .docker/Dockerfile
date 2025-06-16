@@ -2,20 +2,23 @@
 FROM php:8.3-fpm-alpine AS dev
 RUN apk update && apk add --no-cache \
     $PHPIZE_DEPS git curl zip unzip libzip-dev libsodium-dev postgresql-dev \
-    imagemagick-dev libpng-dev libjpeg-turbo-dev freetype-dev icu-dev linux-headers \
+    imagemagick-dev libpng-dev libjpeg-turbo-dev freetype-dev icu-dev linux-headers autoconf php83-dev make \
     vips-dev build-base python3 \
     && pecl install xdebug \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-install -j$(nproc) \
     opcache zip pdo pdo_mysql pdo_pgsql gd intl bcmath sockets exif sodium pcntl \
+    && pecl install apcu && docker-php-ext-enable apcu \
     && rm -rf /var/cache/apk/* \
     && git config --global --add safe.directory /var/www/html
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 WORKDIR /var/www/html
 COPY composer.json composer.lock ./
-RUN composer install --no-interaction --no-progress --no-suggest
+RUN apk add --no-cache php82-pecl-apcu
+RUN  composer install --no-interaction --no-progress --no-suggest --ignore-platform-reqs \
+     || composer update --no-interaction --no-progress --no-suggest --ignore-platform-reqs
 COPY .docker/php/conf.d/php-dev.ini /usr/local/etc/php/conf.d/zz-dev-settings.ini
 COPY . .
 RUN chown -R www-data:www-data /var/www/html
@@ -26,10 +29,11 @@ CMD ["php-fpm"]
 FROM php:8.3-fpm-alpine AS prod_base
 RUN apk update && apk add --no-cache \
     curl git zip unzip libzip-dev libsodium-dev postgresql-dev \
-    imagemagick-dev libpng-dev libjpeg-turbo-dev freetype-dev icu-dev linux-headers \
+    imagemagick-dev libpng-dev libjpeg-turbo-dev freetype-dev icu-dev linux-headers autoconf php83-dev make \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     opcache zip pdo pdo_mysql pdo_pgsql gd intl bcmath sockets exif sodium pcntl \
+    && pecl install apcu && docker-php-ext-enable apcu \
     && rm -rf /var/cache/apk/*
 
 
@@ -38,7 +42,9 @@ FROM prod_base AS composer_prod
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader
+RUN apk add --no-cache php82-pecl-apcu
+RUN composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader \
+    ||composer update --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader
 
 
 # --- Stage: frontend_prod ---

@@ -2,13 +2,14 @@
 
 namespace Views;
 
-use App\Views\Sections\Popup\Popup;
-use Views\Components\Button;
-use Views\Components\Preloader;
+use Core\Container;
 use Views\Sections\Footer;
 use Views\Sections\Head;
 use Views\Sections\Header;
+use Views\Sections\Popup\Popup;
 use function Helpers\renderTemplate;
+use Views\Components\Button;
+use Views\Components\Preloader;
 
 /**
  * Main layout class for rendering the page structure
@@ -21,15 +22,13 @@ class Layout
      * Render the complete page layout
      *
      * Renders the head, header, content sections, footer, and additional components
-     *
-     * @param array $data Data to be passed to the layout and sections.
-     * Expected to contain 'sections' (array) and 'metadata' (array).
+     * @param Container $container
+     * @param array $sections
      * @return void
      */
-    public static function render(array $data = []): void
+    public static function render(Container $container, array $sections = []): void
     {
-        $sections = $data['sections'] ?? [];
-        $metadata = $data['metadata'] ?? [];
+        $metadata = $container->getPageMetadata();
 
         if (empty($metadata) || !isset($metadata['name']) || !isset($metadata['title'])) {
             $metadata = [
@@ -50,7 +49,7 @@ class Layout
             define('APP_TITLE', $metadata['title']);
         }
 
-        Head::render($metadata);
+        Head::render($container);
 
         ?>
 
@@ -74,7 +73,7 @@ class Layout
                     foreach ($sections as $section) {
                         $sectionClass = 'Views\\Sections\\' . ucfirst($section) . '\\' . ucfirst($section);
                         if (class_exists($sectionClass)) {
-                            $sectionClass::render($data);
+                            $sectionClass::render($container);
                         }
                     }
                 }
