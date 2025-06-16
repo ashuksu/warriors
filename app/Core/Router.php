@@ -2,167 +2,126 @@
 
 namespace Core;
 
-use Services\Database;
+use Services\{CacheService, Database};
 use Exception;
 
-/**
- * Router class handles URL routing and request dispatching
- */
 class Router
 {
-    /**
-     * Registered routes array
-     * @var array<string,array>
-     */
     private array $routes = [];
+    private Container $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+        $this->loadRoutes();
+    }
 
     /**
-     * Base path for routing
-     * @var string
-     */
-    private string $basePath;
-
-    /**
-     * Current route parameters, including page metadata
-     * @var array<string,mixed>
-     */
-    private array $params = [];
-
-    /**
-     * Router constructor
      * @throws Exception
      */
-    public function __construct()
+    private function loadRoutes(): void
     {
-        $this->basePath = defined('APP_PATH') ? APP_PATH : '/';
-        $this->initRoutes();
-    }
+        /** @var CacheService $cache */
+        $cache = $this->container->get(CacheService::class);
+        $cacheKey = 'app_routes';
 
-    /**
-     * Initialize routes by fetching page data from the database.
-     * This replaces the static PAGES constant.
-     *
-     * @throws Exception If a database query fails or no error page is defined.
-     */
-    private function initRoutes(): void
-    {
-        try {
-            $db = Database::getInstance();
-            $pages = $db->query("SELECT * FROM pages ORDER BY name ASC");
+        // Clear cache for testing purposes
+        if (getenv('CACHE_CLEAR') === 'true') {
+            $cache->delete($cacheKey);
+            error_log("Cache cleared for routes.");
+        }
+
+        $routes = $cache->get($cacheKey);
+
+        if ($routes === false) {
+            /** @var Database $db */
+            $db = $this->container->get(Database::class);
+            $pages = $db->query("SELECT * FROM pages");
 
             if (empty($pages)) {
-                throw new Exception("No pages found in the database. Please run db-seed.");
+                throw new Exception("No pages found in database. Run 'make seed'.");
             }
 
+            $routes = [];
             foreach ($pages as $page) {
-                // Decode JSONB fields back into arrays/objects
-                if (isset($page['schema_address'])) {
-                    $page['schema']['address'] = json_decode($page['schema_address'], true);
-                    unset($page['schema_address']);
-                }
-
-                if (isset($page['schema_same_as'])) {
-                    $page['schema']['sameAs'] = json_decode($page['schema_same_as'], true);
-                    unset($page['schema_same_as']);
-                }
-
-                // Reconstruct schema array for consistency with old PAGES structure
-                $page['schema'] = [
-                    'type'     => $page['schema_type'] ?? null,
-                    'category' => $page['schema_category'] ?? null,
-                    'address'  => $page['schema']['address'] ?? null,
-                    'sameAs'   => $page['schema']['sameAs'] ?? null,
-                ];
-                unset($page['schema_type'], $page['schema_category']);
-
-                $controllerName = ucfirst($page['name']);
-                $this->routes[$page['name']] = [
-                    'path'       => $page['name'] === 'home' ? '/' : "/{$page['name']}/",
-                    'controller' => "Controllers\\{$controllerName}Controller",
-                    'action'     => 'index',
-                    'page_name'  => $page['name'],
-                    'metadata'   => $page
+                $routeName = $page['name'];
+                $routes[$routeName] = [
+                    'path'       => $routeName === 'home' ? '/' : "/{$routeName}/",
+                    'controller' => "Controllers\\" . ucfirst($routeName) . "Controller",
+                    'metadata'   => $this->processPageMetadata($page)
                 ];
             }
 
-            // Ensure an 'error' route exists
-            if (!isset($this->routes['error'])) {
-                // If 'error' page is not in DB, define a fallback or throw.
-                // For now, let's assume it MUST be in DB as per previous PAGES constant.
-                throw new Exception("Error page not defined in the database.");
-            }
-
-        } catch (Exception $e) {
-            error_log("Failed to initialize routes from database: " . $e->getMessage());
-            throw new Exception("Application setup error: Unable to load page definitions. " . $e->getMessage());
+            // Cache routes for 1 hour
+            $cache->set($cacheKey, $routes, 3600);
+        } else {
+            error_log("Routes loaded from cache.");
         }
+
+        $this->routes = $routes;
     }
 
-    /**
-     * Get current request URI
-     * @return string Cleaned a URI path
-     */
+    private function processPageMetadata(array $page): array
+    {
+        return [
+            'name'        => $page['name'],
+            'title'       => $page['title'],
+            'description' => $page['description'],
+            'keywords'    => $page['keywords'],
+            'h1'          => $page['h1'],
+            'schema'      => [
+                'type'     => $page['schema_type'] ?? null,
+                'category' => $page['schema_category'] ?? null,
+                'address'  => !empty($page['schema_address']) ? json_decode($page['schema_address'], true) : null,
+                'sameAs'   => !empty($page['schema_same_as']) ? json_decode($page['schema_same_as'], true) : null,
+            ],
+            'noindex'     => (bool)$page['noindex'],
+        ];
+    }
+
     private function getUri(): string
     {
-        $uri = $_SERVER['REQUEST_URI'] ?? '/';
-        $uri = strtok($uri, '?');
-
-        if ($this->basePath !== '/') {
-            $uri = str_replace($this->basePath, '', $uri);
+        $uri = $_SERVER['REQUEST_URI'];
+        // Strip query parameters
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
         }
-        return trim($uri, '/');
+
+        return $uri;
     }
 
-    /**
-     * Match the route to registered routes
-     * @param string $uri Request URI to match
-     * @return bool Whether the route was matched
-     */
-    private function matchRoute(string $uri): bool
+    private function matchRoute(string $uri): ?array
     {
         foreach ($this->routes as $route) {
-            if (!isset($route['path'])) {
-                continue;
-            }
-            $path = trim($route['path'], '/');
-            if ($uri === $path) {
-                $this->params = $route;
-                return true;
+            if ($route['path'] === $uri || $route['path'] === $uri . '/') {
+                error_log("Route matched: " . $route['path']);
+                return $route;
             }
         }
-        return false;
+        error_log("No route matched for URI: " . $uri);
+        return null;
     }
 
-    /**
-     * Resolve and dispatch the current route
-     * @throws Exception When route/controller wasn't found
-     */
     public function resolve(): void
     {
         $uri = $this->getUri();
+        $route = $this->matchRoute($uri);
 
-        if (!$this->matchRoute($uri)) {
-            // Route wasn't found, use the 'error' page defined in the database
-            $this->params = $this->routes['error'];
-            // Set HTTP 404 response code
+        if ($route === null) {
+            $route = $this->routes['error'] ?? null;
+            if ($route === null) throw new Exception("Critical: 'error' page not defined.");
             http_response_code(404);
         }
 
-        $controller = $this->params['controller'];
-        $action = $this->params['action'];
-        // Pass the full metadata to the controller
-        $pageMetadata = $this->params['metadata'] ?? [];
+        $this->container->setPageMetadata($route['metadata']);
 
-        if (!class_exists($controller)) {
-            throw new Exception("Controller {$controller} not found");
+        $controllerName = $route['controller'];
+        if (!class_exists($controllerName)) {
+            throw new Exception("Controller {$controllerName} not found.");
         }
 
-        // Pass the page metadata directly to the BaseController constructor
-        $controllerInstance = new $controller($pageMetadata);
-        if (!method_exists($controllerInstance, $action)) {
-            throw new Exception("Action {$action} not found in {$controller}");
-        }
-
-        $controllerInstance->$action();
+        // Pass the container to the controller (Dependency Injection)
+        $controllerInstance = new $controllerName($this->container);
+        $controllerInstance->index();
     }
 }
