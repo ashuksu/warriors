@@ -123,10 +123,7 @@ create-migration:
 	@echo "${BLUE}Running database creating new migrations...${RESET}"
 	@docker compose $(COMPOSE_ARGS) exec php ./vendor/bin/phinx create $(name) -c phinx.php
 
-# Run the database seeding script (OLD method)
-db-seed:
-	@echo "${BLUE}Running database seeding script...${RESET}"
-	@docker compose $(DEV_COMPOSE_ARGS) exec php php database/seed.php
+# --- DANGER ZONE ---
 
 # Stop and remove all containers, networks, and VOLUMES for this project
 clean:
