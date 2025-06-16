@@ -205,6 +205,19 @@ make migrate
 make seed
 ```
 
+
+<details>
+  <summary>recommendations</summary>
+
+> Use `make create-migration [...name]` for creating a new migration (use CamelCase format).
+> Example: `make create-migration name=NewPageMigration`
+
+```bash
+make create-migration name=MigrationName
+```
+
+</details>
+
 ### Environment Configuration
 
 The `IS_DEV` variable controls environment-specific settings.

@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
-.PHONY: help up down restart up-prod down-prod build-prod restart-prod db-seed migrate seed clean destroy \
-	env composer npm dev exec-php exec-vite monitor \
+.PHONY: help up down restart up-prod down-prod build-prod restart-prod migrate seed create-migration \
+	clean destroy env composer npm dev exec-php exec-vite monitor \
     deploy wget wget-preparation gh-pages-deploy live-server-kill \
     gh-pages gh-pages-push-public gh-pages-push-root gh-pages-init gh-pages-gitignore
 
@@ -43,9 +43,9 @@ help:
 	@echo '  ${GREEN}make composer [...args]${RESET} - Run any Composer command (e.g., "make composer require laravel/pint").'
 	@echo '  ${GREEN}make npm [...args]${RESET}      - Run any NPM command (e.g., "make npm install lodash").'
 	@echo '  ${GREEN}make monitor${RESET}            - Monitor Docker containers (requires ctop image).'
-	@echo '  ${GREEN}make db-seed${RESET}            - Run the database seeding script to create schema and initial data.'
 	@echo '  ${GREEN}make migrate${RESET}            - Apply new database migrations.'
 	@echo '  ${GREEN}make seed${RESET}               - Populate the database with initial data.'
+	@echo '  ${GREEN}make create-migration [...name]${RESET} - Create a new migration (use CamelCase format).'
 	@echo ''
 	@echo '${BLUE}Production Commands:${RESET}'
 	@echo '  ${YELLOW}make build-prod${RESET}         - Build final, optimized production images.'
