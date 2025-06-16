@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace Helpers;
 
 /**
  * Simple in-memory file cache class.

@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-use App\Helpers\FileCache;
+use Helpers\FileCache;
 
 /**
  * Helper functions for the application

@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\Vite;
+use Helpers\Vite;
 
 ?>
 
