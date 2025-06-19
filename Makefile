@@ -74,7 +74,7 @@ help:
 # Start development environment (and build if needed)
 up: env
 	@echo '${BLUE}Starting development environment...${RESET}'
-	@docker compose $(DEV_COMPOSE_ARGS) up --build
+	@docker compose $(DEV_COMPOSE_ARGS) up --build --remove-orphans
 
 # Stop development environment
 down:
@@ -82,19 +82,17 @@ down:
 	@docker compose $(DEV_COMPOSE_ARGS) down
 
 # Restart development environment
-restart:
-	@$(MAKE) down
-	@$(MAKE) up
+restart: down up
 
 # Starts production environment using existing images and volumes
 up-prod:
 	@echo '${BLUE}Starting production environment in detached mode...${RESET}'
-	@docker compose $(PROD_COMPOSE_ARGS) up -d
+	@docker compose $(PROD_COMPOSE_ARGS) up -d --remove-orphans
 
 # Stop production environment
 down-prod:
 	@echo '${BLUE}Stopping production services...${RESET}'
-	@docker compose $(PROD_COMPOSE_ARGS) down --remove-orphans
+	@docker compose $(PROD_COMPOSE_ARGS) down
 
 # Build final, optimized production images
 build-prod:
@@ -129,8 +127,12 @@ create-migration:
 clean:
 	@echo '${RED}WARNING: This will remove all containers, networks, and project volumes!${RESET}'
 	@read -p "Are you sure? [y/N] " ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
-	@docker compose $(DEV_COMPOSE_ARGS) down -v --remove-orphans 2>/dev/null || true
-	@docker compose $(PROD_COMPOSE_ARGS) down -v --remove-orphans 2>/dev/null || true
+	@docker compose $(DEV_COMPOSE_ARGS) down -v 2>/dev/null || true
+	@docker compose $(PROD_COMPOSE_ARGS) down -v 2>/dev/null || true
+	@cd $(ROOT_DIR) && \
+	sudo rm -rf $(ROOT_DIR)/node_modules || { echo '${RED}Failed to delete node_modules/'; exit 1; } && \
+	sudo rm -rf $(ROOT_DIR)/vendor || { echo '${RED}Failed to delete vendor/'; exit 1; } && \
+	sudo rm -rf $(PUBLIC)/dist || { echo '${RED}Failed to delete public/dist/'; exit 1; }
 	@echo '${GREEN}✔ Project cleanup complete.${RESET}'
 
 # DANGER: Prune ALL Docker system resources (containers, images, volumes, cache not in use, etc.)
@@ -142,7 +144,6 @@ destroy:
 	echo "${YELLOW}This will purge ALL unused Docker resources on your system, not just for this project.${RESET}"; \
 	read -p "Are you absolutely sure you want to proceed? [y/N] " ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
 	@echo "${BLUE}Starting system-wide Docker prune...${RESET}"
-	@docker compose down --volumes --remove-orphans && echo "${CYAN}Docker Compose services, volumes, and orphans removed.${RESET}" || echo "${YELLOW}⚠ Docker Compose cleanup failed.${RESET}"
 	@docker ps -qa | xargs -r docker rm -f && echo "${CYAN}All stopped and running containers forcefully removed.${RESET}" || echo "${YELLOW}⚠ No containers to remove.${RESET}"
 	@docker images -qa | xargs -r docker rmi -f && echo "${CYAN}All Docker images forcefully removed.${RESET}" || echo "${YELLOW}⚠ No Docker images to remove or removal failed.${RESET}"
 	@docker system prune -af --volumes && echo "${CYAN}Docker system pruned (images, containers, volumes, networks).${RESET}" || echo "${YELLOW}⚠ Docker system prune failed or nothing to prune.${RESET}"
