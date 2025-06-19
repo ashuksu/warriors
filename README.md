@@ -183,7 +183,7 @@ make exec-php
 make exec-vite
 ```
 
-  * Monitor Docker containers (requires `ctop` image):
+* Monitor Docker containers (requires `ctop` image):
 
 ```bash
 make monitor
