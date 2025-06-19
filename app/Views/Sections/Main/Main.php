@@ -1,12 +1,12 @@
 <?php
 
-namespace Views\Sections\Main;
+namespace App\Views\Sections\Main;
 
-use Core\Container;
-use Services\SectionService;
+use App\Core\Container;
+use App\Services\SectionService;
 use Exception;
-use function Helpers\renderTemplate;
-use function Helpers\getPath;
+use function App\Helpers\renderTemplate;
+use function App\Helpers\getPath;
 
 class Main
 {

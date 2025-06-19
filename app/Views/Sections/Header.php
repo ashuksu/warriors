@@ -1,11 +1,11 @@
 <?php
 
-namespace Views\Sections;
+namespace App\Views\Sections;
 
-use Helpers\Device;
-use Views\Components\Button;
-use Views\Components\Image;
-use function Helpers\getPath;
+use App\Helpers\Device;
+use App\Views\Components\Button;
+use App\Views\Components\Image;
+use function App\Helpers\getPath;
 
 /**
  * Header section class

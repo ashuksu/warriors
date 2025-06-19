@@ -17,7 +17,7 @@ $uniqId = ($item['id'] ?? '') . uniqid();
 
             <?php
 
-            use Views\Components\Button;
+            use App\Views\Components\Button;
 
             echo Button::render([
                 'class' => 'button--close button--transparent',

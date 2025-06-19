@@ -1,8 +1,8 @@
 <?php
 
-namespace Helpers;
+namespace App\Helpers;
 
-use Helpers\FileCache;
+use App\Helpers\FileCache;
 
 /**
  * Helper functions for the application

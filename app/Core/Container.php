@@ -1,8 +1,8 @@
 <?php
 
-namespace Core;
+namespace App\Core;
 
-use Services\{CacheService, Database};
+use App\Services\{CacheService, Database};
 use Exception;
 
 /**

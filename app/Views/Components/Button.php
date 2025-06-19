@@ -1,8 +1,8 @@
 <?php
 
-namespace Views\Components;
+namespace App\Views\Components;
 
-use Services\ConfigVarResolver;
+use App\Services\ConfigVarResolver;
 
 /**
  * Button component class

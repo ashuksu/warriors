@@ -5,7 +5,7 @@
 
     <?php
 
-    use Views\Components\Image;
+    use App\Views\Components\Image;
 
     echo Image::render([
         'url' => $image ?? '#',
@@ -22,7 +22,7 @@
 
 <?php
 
-use Views\Components\Button;
+use App\Views\Components\Button;
 
 echo Button::render([
     'url' => $button['url'] ?? APP_PATH,

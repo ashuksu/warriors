@@ -1,9 +1,9 @@
 <?php
 
-namespace Views\Sections;
+namespace App\Views\Sections;
 
-use Views\Components\Image;
-use function Helpers\getPath;
+use App\Views\Components\Image;
+use function App\Helpers\getPath;
 
 /**
  * Footer section class

@@ -1,10 +1,10 @@
 <?php
 
-namespace Views\Sections;
+namespace App\Views\Sections;
 
-use Helpers\Device;
-use Services\SectionService;
-use Views\Components\Button;
+use App\Helpers\Device;
+use App\Services\SectionService;
+use App\Views\Components\Button;
 
 /**
  * Menu section class

@@ -1,9 +1,9 @@
 <?php
 
-namespace Views\Sections\Popup;
+namespace App\Views\Sections\Popup;
 
-use Services\SectionService;
-use function Helpers\renderTemplate;
+use App\Services\SectionService;
+use function App\Helpers\renderTemplate;
 
 class Popup
 {

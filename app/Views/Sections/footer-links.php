@@ -1,5 +1,5 @@
 <?php
-use Helpers\Vite;
+use App\Helpers\Vite;
 ?>
 
 <!-- External libraries are loaded in Head.php with proper optimization -->

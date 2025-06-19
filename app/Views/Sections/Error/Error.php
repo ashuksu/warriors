@@ -1,11 +1,11 @@
 <?php
 
-namespace Views\Sections\Error;
+namespace App\Views\Sections\Error;
 
-use Core\Container;
-use Services\SectionService;
+use App\Core\Container;
+use App\Services\SectionService;
 use Exception;
-use function Helpers\renderTemplate;
+use function App\Helpers\renderTemplate;
 
 class Error
 {

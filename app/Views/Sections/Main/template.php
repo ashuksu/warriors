@@ -12,7 +12,7 @@
 
                     <?php
 
-                    use Views\Components\Button;
+                    use App\Views\Components\Button;
 
                     if ($isPopups) {
                         foreach ($popups as $item) {
@@ -36,7 +36,7 @@
 
                     <?php
 
-                    use Views\Components\Image;
+                    use App\Views\Components\Image;
 
                     echo Image::render([
                         'url' => $imagePath ?? '#',

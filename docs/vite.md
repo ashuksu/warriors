@@ -214,7 +214,7 @@ Use the `getAssetPath` method to include assets in your templates:
 ```php
 
 <?php
-use Helpers\Vite;
+use App\Helpers\Vite;
 ?>
 ```
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Views\Components;
+namespace App\Views\Components;
 
-use function Helpers\getPath;
-use function Helpers\fileExists;
-use function Helpers\validateExternalUrl;
+use function App\Helpers\getPath;
+use function App\Helpers\fileExists;
+use function App\Helpers\validateExternalUrl;
 
 /**
  * Responsive image component with WebP support

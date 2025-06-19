@@ -5,7 +5,7 @@
 
                 <?php
 
-                use Views\Components\Image;
+                use App\Views\Components\Image;
 
                 echo Image::render([
                     'url' => $image ?? '#',

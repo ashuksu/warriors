@@ -1,6 +1,6 @@
 <?php
 
-namespace Services;
+namespace App\Services;
 
 /**
  * Utility class for resolving config variables in strings

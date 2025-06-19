@@ -1,6 +1,6 @@
 <?php
 
-namespace Services;
+namespace App\Services;
 
 /**
  * A simple caching service wrapping APCu functions.

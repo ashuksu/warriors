@@ -1,10 +1,10 @@
 <?php
 
-namespace Views\Sections;
+namespace App\Views\Sections;
 
-use Core\Container;
-use function Helpers\getPath;
-use function Helpers\renderTemplate;
+use App\Core\Container;
+use function App\Helpers\getPath;
+use function App\Helpers\renderTemplate;
 
 /**
  * Head section class

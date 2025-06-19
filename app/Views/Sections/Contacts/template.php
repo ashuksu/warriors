@@ -9,7 +9,7 @@
 
                 <?php
 
-                use function Helpers\renderTemplate;
+                use function App\Helpers\renderTemplate;
 
                 if (!empty($collection) && is_array($collection)) {
                     foreach ($collection as $item) {

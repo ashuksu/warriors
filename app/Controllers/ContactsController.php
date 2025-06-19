@@ -1,8 +1,8 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Core\Container;
+use App\Core\Container;
 
 /**
  * Controller for the contacts page

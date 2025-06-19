@@ -1,15 +1,15 @@
 <?php
 
-namespace Views;
+namespace App\Views;
 
-use Core\Container;
-use Views\Sections\Footer;
-use Views\Sections\Head;
-use Views\Sections\Header;
-use Views\Sections\Popup\Popup;
-use function Helpers\renderTemplate;
-use Views\Components\Button;
-use Views\Components\Preloader;
+use App\Core\Container;
+use App\Views\Sections\Footer;
+use App\Views\Sections\Head;
+use App\Views\Sections\Header;
+use App\Views\Sections\Popup\Popup;
+use function App\Helpers\renderTemplate;
+use App\Views\Components\Button;
+use App\Views\Components\Preloader;
 
 /**
  * Main layout class for rendering the page structure

@@ -1,9 +1,9 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Core\Container;
-use Views\Layout;
+use App\Core\Container;
+use App\Views\Layout;
 
 abstract class BaseController
 {

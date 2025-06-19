@@ -1,6 +1,6 @@
 <?php
 
-use Views\Components\Button;
+use App\Views\Components\Button;
 
 ?>
 

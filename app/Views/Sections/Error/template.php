@@ -7,8 +7,8 @@
 
             <?php
 
-            use function Helpers\renderTemplate;
-            use function Helpers\getPath;
+            use function App\Helpers\renderTemplate;
+            use function App\Helpers\getPath;
 
             if (!empty($item) && is_array($item)) {
 

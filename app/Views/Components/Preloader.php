@@ -1,9 +1,9 @@
 <?php
 
-namespace Views\Components;
+namespace App\Views\Components;
 
-use Views\Components\Image;
-use function Helpers\getPath;
+use App\Views\Components\Image;
+use function App\Helpers\getPath;
 
 /**
  * Component for rendering preloader

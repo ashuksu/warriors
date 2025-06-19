@@ -1,6 +1,6 @@
 <?php
 
-use Core\{Container, Router};
+use App\Core\{Container, Router};
 
 /**
  * Application Entry Point
