@@ -171,6 +171,7 @@ make composer install
 
 ```bash
 # For apdating dependencies after changes in `composer.json` you can use:
+make composer update
 make composer dump-autoload
 ```
 
