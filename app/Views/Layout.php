@@ -71,7 +71,7 @@ class Layout
                 <?php
                 if (!empty($sections) && is_array($sections)) {
                     foreach ($sections as $section) {
-                        $sectionClass = 'Views\\Sections\\' . ucfirst($section) . '\\' . ucfirst($section);
+                        $sectionClass = 'App\\Views\\Sections\\' . ucfirst($section) . '\\' . ucfirst($section);
                         if (class_exists($sectionClass)) {
                             $sectionClass::render($container);
                         }

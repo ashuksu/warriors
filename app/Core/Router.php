@@ -47,7 +47,7 @@ class Router
                 $routeName = $page['name'];
                 $routes[$routeName] = [
                     'path'       => $routeName === 'home' ? '/' : "/{$routeName}/",
-                    'controller' => "Controllers\\" . ucfirst($routeName) . "Controller",
+                    'controller' => "App\\Controllers\\" . ucfirst($routeName) . "Controller",
                     'metadata'   => $this->processPageMetadata($page)
                 ];
             }
