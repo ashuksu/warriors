@@ -138,6 +138,8 @@ Your development environment is now running!
 * **Web Application:** [localhost](http://localhost) served by Nginx, proxying to PHP-FPM and Vite Dev Server.
 * **Vite Dev Server:** [localhost:5173](http://localhost:5173) for HMR and direct asset serving.
 
+> After `make up` you need to install Composer dependencies and build NPM assets inside the containers.
+
 *Sources*
 
 1.  See [More details](docs/docker.md#installation) for detailed instructions on Docker setup.
@@ -160,16 +162,41 @@ respective containers:
 * Run any Composer command:
 
 ```bash
+# For installing Composer dependencies
+make composer install
+```
+
+<details>
+  <summary>recommendations</summary>
+
+```bash
+# For apdating dependencies after changes in `composer.json` you can use:
+make composer dump-autoload
+```
+
+```bash
 # Example: require a new PHP package
 make composer require phpleague/flysystem
 ```
 
+</details>
+
 * Run any NPM command:
+
+```bash
+# For building NPM assets
+make npm build
+```
+
+<details>
+  <summary>recommendations</summary>
 
 ```bash
 # Example: install a new JS package
 make npm install dayjs
 ```
+
+</details>
 
 * Open a shell in the PHP container:
 
