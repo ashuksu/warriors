@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Core\Container;
+
 /**
  * Controller for the contacts page
  *
@@ -9,6 +11,11 @@ namespace Controllers;
  */
 class ContactsController extends BaseController
 {
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+    }
+
     /**
      * Render sections: contacts, info
      *
@@ -16,6 +23,10 @@ class ContactsController extends BaseController
      */
     public function index(): void
     {
+        if (!defined('PAGE')) {
+            define('PAGE', 'contacts');
+        }
+
         $this->render([PAGE, 'info']);
     }
 }

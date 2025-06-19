@@ -5,20 +5,27 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Core\\": "app/Core/",
-            "Services\\": "app/Services/",
             "Controllers\\": "app/Controllers/",
+            "Core\\": "app/Core/",
+            "Helpers\\": "app/Helpers/",
+            "Services\\": "app/Services/",
             "Views\\": "app/Views/"
         },
         "files": [
             "config/config.php",
-            "app/Helpers/helpers.php"
+            "app/Helpers/helpers.php",
+            "app/Helpers/Vite.php"
         ]
     },
     "require": {
         "php": "^8.0",
         "vlucas/phpdotenv": "^5.6",
         "ext-pdo": "*",
-        "ext-pdo_pgsql": "*"
+        "ext-pdo_pgsql": "*",
+        "ext-apcu": "*"
+    },
+    "require-dev": {
+        "robmorgan/phinx": "^0.13.4",
+        "symfony/var-dumper": "^6.4"
     }
 }

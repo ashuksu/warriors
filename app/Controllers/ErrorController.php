@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Core\Container;
+
 /**
  * Controller for the error page (404)
  *
@@ -9,6 +11,11 @@ namespace Controllers;
  */
 class ErrorController extends BaseController
 {
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+    }
+
     /**
      * Render error section
      *
@@ -16,6 +23,10 @@ class ErrorController extends BaseController
      */
     public function index(): void
     {
+        if (!defined('PAGE')) {
+            define('PAGE', 'error');
+        }
+
         $this->render([PAGE]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Views\Sections;
 
-use App\Helpers\Device;
+use Helpers\Device;
 use Views\Components\Button;
 use Views\Components\Image;
 use function Helpers\getPath;
