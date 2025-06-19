@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Core\Container;
+
 /**
  * Controller for the catalog page
  *
@@ -9,6 +11,11 @@ namespace Controllers;
  */
 class CatalogController extends BaseController
 {
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+    }
+
     /**
      * Render sections: catalog, info
      *
@@ -16,6 +23,10 @@ class CatalogController extends BaseController
      */
     public function index(): void
     {
+        if (!defined('PAGE')) {
+            define('PAGE', 'catalog');
+        }
+
         $this->render([PAGE, 'info']);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Core\Container;
+
 /**
  * Controller for the home page
  *
@@ -9,6 +11,11 @@ namespace Controllers;
  */
 class HomeController extends BaseController
 {
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+    }
+
     /**
      * Render sections: main, about, faq, info
      *
@@ -16,6 +23,10 @@ class HomeController extends BaseController
      */
     public function index(): void
     {
+        if (!defined('PAGE')) {
+            define('PAGE', 'home');
+        }
+
         $this->render(['main', 'about', 'faq', 'info']);
     }
 }

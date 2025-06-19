@@ -23,13 +23,15 @@ A modern, containerized (Docker support) PHP application template featuring Vite
 * Local Image Caching
 * Device-based Triggers (mobile/tablet/desktop)
 * Semi-Automated GitHub Pages Deployment
+* Database migrations with `Phinx`
+* Caching with `APCu`
 
 **Tech Stack:**
 
 * **Frontend:** `JavaScript` `HTML5` `CSS3` `SCSS`
-* **Build & Style:** `Vite` `npm` `Make` `Autoprefixer` `Sharp` `Node.js`
+* **Build & Style:** `Vite` `npm` `Make` `Autopreload` `Sharp` `Node.js`
 * **Template Engine:** `PHP`
-* **Backend Tools:** `Nginx` `PHP-FPM` `Composer` `PostgreSQL`
+* **Backend Tools:** `Nginx` `PHP-FPM` `Composer` `PostgreSQL` `Phinx` `APCu`
 * **DevOps:** `Docker` `GitHub Pages` `Git`
 * **Documentation:** `Markdown` `PHPDoc` `JSDoc`
 
@@ -181,7 +183,7 @@ make exec-php
 make exec-vite
 ```
 
-  * Monitor Docker containers (requires `ctop` image):
+* Monitor Docker containers (requires `ctop` image):
 
 ```bash
 make monitor
@@ -189,13 +191,31 @@ make monitor
 
 ### Database Management
 
-The development environment includes a PostgreSQL database.
+The development environment includes a PostgreSQL database and uses Phinx for database migrations.
 
-* Run the database seeding script to create schema and initial data:
+* Apply new database migrations:
 
 ```bash
-make db-seed
+make migrate
 ```
+
+* Run the database seeding script to populate the database with initial data:
+
+```bash
+make seed
+```
+
+<details>
+  <summary>recommendations</summary>
+
+> Use `make create-migration [...name]` for creating a new migration (use CamelCase format).
+> Example: `make create-migration name=NewPageMigration`
+
+```bash
+make create-migration name=MigrationName
+```
+
+</details>
 
 ### Environment Configuration
 

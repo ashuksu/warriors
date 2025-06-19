@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
-.PHONY: help up down restart up-prod down-prod build-prod restart-prod db-seed clean destroy \
-	env composer npm dev exec-php exec-vite monitor \
+.PHONY: help up down restart up-prod down-prod build-prod restart-prod migrate seed create-migration \
+	clean destroy env composer npm dev exec-php exec-vite monitor \
     deploy wget wget-preparation gh-pages-deploy live-server-kill \
     gh-pages gh-pages-push-public gh-pages-push-root gh-pages-init gh-pages-gitignore
 
@@ -43,7 +43,9 @@ help:
 	@echo '  ${GREEN}make composer [...args]${RESET} - Run any Composer command (e.g., "make composer require laravel/pint").'
 	@echo '  ${GREEN}make npm [...args]${RESET}      - Run any NPM command (e.g., "make npm install lodash").'
 	@echo '  ${GREEN}make monitor${RESET}            - Monitor Docker containers (requires ctop image).'
-	@echo '  ${GREEN}make db-seed${RESET}            - Run the database seeding script to create schema and initial data.'
+	@echo '  ${GREEN}make migrate${RESET}            - Apply new database migrations.'
+	@echo '  ${GREEN}make seed${RESET}               - Populate the database with initial data.'
+	@echo '  ${GREEN}make create-migration [...name]${RESET} - Create a new migration (use CamelCase format).'
 	@echo ''
 	@echo '${BLUE}Production Commands:${RESET}'
 	@echo '  ${YELLOW}make build-prod${RESET}         - Build final, optimized production images.'
@@ -104,10 +106,24 @@ build-prod:
 restart-prod: build-prod down-prod up-prod
 	@echo '${GREEN}✔ Fresh production deployment complete.${RESET}'
 
-# Run the database seeding script
-db-seed:
-	@echo "${BLUE}Running database seeding script...${RESET}"
-	@docker compose $(DEV_COMPOSE_ARGS) exec php php database/seed.php
+# --- Database Commands ---
+
+# Apply database migrations
+migrate:
+	@echo "${BLUE}Running database migrations...${RESET}"
+	@docker compose $(DEV_COMPOSE_ARGS) exec php sh -c "composer dump-autoload && ./vendor/bin/phinx migrate -c phinx.php"
+
+# Seed database
+seed:
+	@echo "${BLUE}Running database seeder...${RESET}"
+	@docker compose $(DEV_COMPOSE_ARGS) exec php ./vendor/bin/phinx seed:run -c phinx.php
+
+# Create a new migration `make create-migration name=MigrationName`
+create-migration:
+	@echo "${BLUE}Running database creating new migrations...${RESET}"
+	@docker compose $(COMPOSE_ARGS) exec php ./vendor/bin/phinx create $(name) -c phinx.php
+
+# --- DANGER ZONE ---
 
 # Stop and remove all containers, networks, and VOLUMES for this project
 clean:
@@ -177,9 +193,9 @@ monitor:
 	@docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest && echo '${GREEN}✔ ctop exited.${RESET}' || echo '${RED}Error: ctop failed to run or exited abnormally.${RESET}'
 
 # Catch-all for undefined targets to prevent errors and show help
-%::
-	@echo "Target '$@' not defined."
-	@$(MAKE) help
+#%::
+	@#echo "Target '$@' not defined."
+	@#$(MAKE) help
 
 # Static Site Generation & Deployment
 

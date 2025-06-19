@@ -2,19 +2,27 @@
 
 namespace Views\Sections\Faq;
 
+use Core\Container;
 use Services\SectionService;
+use Exception;
 use function Helpers\renderTemplate;
 
 class Faq
 {
-    public static function render($params = [])
+    /**
+     * Render the section with provided parameters.
+     *
+     * @param Container $container
+     * @return void
+     * @throws Exception
+     */
+    public static function render(Container $container): void
     {
-        extract($params);
-
-        renderTemplate(__DIR__ . '/template.php', [
+        renderTemplate(__DIR__ . '/template.php', params: [
             'collection' => SectionService::get('faq', 'items'),
             'section' => 'faq',
-            'title' => SectionService::get('faq', 'title')
+            'title' => SectionService::get('faq', 'title'),
+            'metadata' => $container->getPageMetadata()
         ]);
 
     }
