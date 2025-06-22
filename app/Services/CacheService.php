@@ -3,7 +3,7 @@
 namespace App\Services;
 
 /**
- * A simple caching service wrapping APCu functions.
+ * A simple, high-performance caching service wrapping APCu.
  */
 class CacheService
 {
@@ -11,8 +11,7 @@ class CacheService
 
     public function __construct()
     {
-        // Enable APCu only if the extension is loaded and not in CLI mode (unless enabled).
-        $this->isEnabled = extension_loaded('apcu') && (function_exists('apcu_enabled') ? apcu_enabled() : true);
+        $this->isEnabled = extension_loaded('apcu') && apcu_enabled();
     }
 
     /**
@@ -20,12 +19,11 @@ class CacheService
      * @param string $key
      * @return mixed
      */
-    public function get(string $key): mixed
+    public function get(string $key, $default = null): mixed
     {
-        if (!$this->isEnabled) {
-            return false;
-        }
-        return apcu_fetch($key, $success);
+        if (!$this->isEnabled) return $default;
+        $value = apcu_fetch($key, $success);
+        return $success ? $value : $default;
     }
 
     /**
@@ -37,9 +35,7 @@ class CacheService
      */
     public function set(string $key, mixed $data, int $ttl = 3600): bool
     {
-        if (!$this->isEnabled) {
-            return false;
-        }
+        if (!$this->isEnabled) return false;
         return apcu_store($key, $data, $ttl);
     }
 

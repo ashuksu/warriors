@@ -1,29 +1,39 @@
 <?php
 
-use App\Core\{Container, Router};
+declare(strict_types=1);
+
+use App\Core\Container;
+use App\Core\Router;
+use App\Services\ConfigService;
+use Throwable;
 
 /**
- * Application Entry Point
- *
- * This file serves as the main entry point for the application.
- * It initializes the router and resolves the current request.
+ * Application Entry Point.
+ * Handles incoming requests and routes them to the appropriate controller.
  */
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
 try {
-    $container = Container::getInstance();
-    $router = new Router($container);
-    $router->resolve();
-} catch (Exception $e) {
-    error_log($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+    /** @var Container $container */
+    $container = require_once __DIR__ . '/../bootstrap/app.php';
 
-    if (defined('IS_DEV') && IS_DEV) {
-        echo "<h1>An error occurred:</h1>";
-        echo "<p>" . $e->getMessage() . "</p>";
-        echo "<p>File: " . $e->getFile() . ":" . $e->getLine() . "</p>";
+    /** @var Router $router */
+    $router = $container->get(Router::class);
+    $router->resolve();
+
+} catch (Throwable $e) {
+    http_response_code(500);
+    error_log($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+
+    /** @var ConfigService $configService */
+    $configService = $container->get(ConfigService::class);
+
+    if ($configService->get('is_dev')) {
+        header('Content-Type: text/plain; charset=utf-8');
+        echo "Application Error:\n\n";
+        echo $e->getMessage() . "\n\n";
+        echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n\n";
+        echo $e->getTraceAsString();
     } else {
-        echo "<h1>An error occurred.</h1>";
-        echo "<p>Please try again later.</p>";
+        echo "<h1>An unexpected error occurred</h1>";
+        echo "<p>We are sorry for the inconvenience. Please try again later.</p>";
     }
 }
