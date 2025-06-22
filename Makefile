@@ -110,16 +110,19 @@ restart-prod: build-prod down-prod up-prod
 migrate:
 	@echo "${BLUE}Running database migrations...${RESET}"
 	@docker compose $(DEV_COMPOSE_ARGS) exec php sh -c "composer dump-autoload && ./vendor/bin/phinx migrate -c phinx.php"
+	#@docker compose $(DEV_COMPOSE_ARGS) exec -u www-data php sh -c "composer dump-autoload && ./vendor/bin/phinx migrate -c phinx.php"
 
 # Seed database
 seed:
 	@echo "${BLUE}Running database seeder...${RESET}"
 	@docker compose $(DEV_COMPOSE_ARGS) exec php ./vendor/bin/phinx seed:run -c phinx.php
+	#@docker compose $(DEV_COMPOSE_ARGS) exec -u www-data php ./vendor/bin/phinx seed:run -c phinx.php
 
 # Create a new migration `make create-migration name=MigrationName`
 create-migration:
 	@echo "${BLUE}Running database creating new migrations...${RESET}"
 	@docker compose $(COMPOSE_ARGS) exec php ./vendor/bin/phinx create $(name) -c phinx.php
+	#@docker compose $(DEV_COMPOSE_ARGS) exec -u www-data php ./vendor/bin/phinx create $(name) -c phinx.php
 
 # --- DANGER ZONE ---
 
@@ -166,6 +169,7 @@ env:
 composer:
 	@echo '${CYAN}Running: composer $(filter-out $@,$(MAKECMDGOALS))${RESET}'
 	@docker compose $(DEV_COMPOSE_ARGS) run --rm php composer $(filter-out $@,$(MAKECMDGOALS))
+	#@docker compose $(DEV_COMPOSE_ARGS) run --rm -u www-data php composer $(filter-out $@,$(MAKECMDGOALS))
 
 # Run an NPM command (e.g., make npm install)
 npm:
