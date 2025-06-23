@@ -4,7 +4,7 @@
 
         <?php
 
-        use Views\Components\Button;
+        use App\Views\Components\Button;
 
         echo Button::render([
             'url' => '#faq-content-' . $index ?? '',

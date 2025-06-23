@@ -1,28 +1,37 @@
 <?php
 
-namespace Views\Sections\Contacts;
+namespace App\Views\Sections\Contacts;
 
-use Core\Container;
-use Services\SectionService;
+use App\Core\Container;
+use App\Services\TemplateService;
+use App\Services\ContentService;
 use Exception;
-use function Helpers\renderTemplate;
 
+/**
+ * Contacts section view.
+ */
 class Contacts
 {
     /**
-     * Render the section with provided parameters.
+     * Renders the Contacts section.
      *
-     * @param Container $container
+     * @param Container $container The DI container.
      * @return void
      * @throws Exception
      */
     public static function render(Container $container): void
     {
-        renderTemplate(__DIR__ . '/template.php', [
-            'collection' => SectionService::get('contacts', 'items'),
+        /** @var TemplateService $templateService */
+        $templateService = $container->get(TemplateService::class);
+
+        /** @var ContentService $contentService */
+        $contentService = $container->get(ContentService::class);
+
+        $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'contacts',
-            'title' => SectionService::get(PAGE, 'title'),
-            'metadata' => $container->getPageMetadata()
+            'collection' => $contentService->get('section', 'contacts', 'items'),
+            'title' => $contentService->get('section', 'catalog', 'title'),
+            'templateService' => $templateService,
         ]);
     }
 }

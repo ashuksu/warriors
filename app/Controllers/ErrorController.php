@@ -1,8 +1,9 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Core\Container;
+use App\Core\Container;
+use Exception;
 
 /**
  * Controller for the error page (404)
@@ -20,13 +21,10 @@ class ErrorController extends BaseController
      * Render error section
      *
      * @return void
+     * @throws Exception
      */
     public function index(): void
     {
-        if (!defined('PAGE')) {
-            define('PAGE', 'error');
-        }
-
-        $this->render([PAGE]);
+        $this->render(['error']);
     }
 }

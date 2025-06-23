@@ -8,15 +8,11 @@
 			<div class="catalog__grid">
 
                 <?php
-
-                use function Helpers\renderTemplate;
-                use function Helpers\getPath;
-
                 if (!empty($collection) && is_array($collection)) {
                     foreach ($collection as $item) {
-                        renderTemplate($itemPath ?? __DIR__ . '/item.php', [
+                        $templateService->render($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
-                            'image' => getPath('dist/assets/images/items/' . ($item['image'] ?? '')),
+                            'image' => $pathService->getPath('dist/assets/images/items/' . ($item['image'] ?? '')),
                         ]);
                     }
                 }

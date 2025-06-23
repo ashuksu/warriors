@@ -1,12 +1,16 @@
 # OVERRIDE - DEVELOPMENT
 services:
   nginx:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: nginx
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html:cached
-      - nginx_logs:/var/log/nginx
+      - .:/var/www/html:ro,cached
       - ./.docker/nginx/conf.d/default-dev.conf:/etc/nginx/conf.d/default.conf:ro
+      - nginx_logs:/var/log/nginx
     depends_on:
       php:
         condition: service_healthy
@@ -21,10 +25,12 @@ services:
       target: dev
     environment:
       IS_DEV: "true"
+      XDEBUG_MODE: "develop,debug"
+      XDEBUG_CONFIG: "client_host=host.docker.internal client_port=9003"
     volumes:
       - .:/var/www/html:cached
-      - php_logs:/var/log/php
       - ~/.composer/cache:/root/.composer/cache
+      - php_logs:/var/log/php
 
   db:
     ports:

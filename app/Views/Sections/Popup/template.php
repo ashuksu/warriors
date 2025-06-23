@@ -1,4 +1,7 @@
 <?php
+
+use App\Views\Components\Button;
+
 $uniqId = ($item['id'] ?? '') . uniqid();
 ?>
 
@@ -16,9 +19,6 @@ $uniqId = ($item['id'] ?? '') . uniqid();
 			</h2>
 
             <?php
-
-            use Views\Components\Button;
-
             echo Button::render([
                 'class' => 'button--close button--transparent',
                 'attr' => 'data-element="popup-close"',

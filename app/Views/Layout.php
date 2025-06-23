@@ -1,19 +1,21 @@
 <?php
 
-namespace Views;
+namespace App\Views;
 
-use Core\Container;
-use Views\Sections\Footer;
-use Views\Sections\Head;
-use Views\Sections\Header;
-use Views\Sections\Popup\Popup;
-use function Helpers\renderTemplate;
-use Views\Components\Button;
-use Views\Components\Preloader;
+use App\Core\Container;
+use App\Services\ConfigService;
+use App\Services\TemplateService;
+use App\Services\PathService;
+use App\Views\Sections\Footer;
+use App\Views\Sections\Head;
+use App\Views\Sections\Header;
+use App\Views\Sections\Popup\Popup;
+use App\Views\Components\Button;
+use App\Views\Components\Preloader;
+use Exception;
 
 /**
  * Main layout class for rendering the page structure
- *
  * Handles the overall page layout including header, footer, and content sections
  */
 class Layout
@@ -22,70 +24,58 @@ class Layout
      * Render the complete page layout
      *
      * Renders the head, header, content sections, footer, and additional components
-     * @param Container $container
-     * @param array $sections
+     * @param Container $container The DI container.
+     * @param array $sections An array of section names to render.
      * @return void
+     * @throws Exception
      */
     public static function render(Container $container, array $sections = []): void
     {
-        $metadata = $container->getPageMetadata();
+        $pageData = $container->getPageData();
 
-        if (empty($metadata) || !isset($metadata['name']) || !isset($metadata['title'])) {
-            $metadata = [
-                'name' => 'default',
-                'title' => 'Default Title',
-                'h1' => 'Welcome',
-                'description' => 'Default description',
-                'keywords' => 'default, keywords'
-            ];
-            error_log("Warning: Layout::render called without valid metadata.");
-        }
+        /** @var TemplateService $templateService */
+        $templateService = $container->get(TemplateService::class);
 
-        if (!defined('PAGE')) {
-            define('PAGE', $metadata['name']);
-        }
-
-        if (!defined('APP_TITLE')) {
-            define('APP_TITLE', $metadata['title']);
-        }
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         Head::render($container);
-
         ?>
 
-       <body data-style="default" class="<?= 'page-' . PAGE ?>" itemscope itemtype="https://schema.org/WebPage">
-       <div class="wrapper">
+        <body data-style="default" class="<?= 'page-' . ($pageData['name'] ?? 'static') ?>" itemscope itemtype="https://schema.org/WebPage">
+        <div class="wrapper">
 
             <?php
+            echo Preloader::render(['attr' => 'data-delay="0.1"', 'pathService' => $pathService]);
 
-            echo Preloader::render(['attr' => 'data-delay="0.1"']);
-
-            Header::render();
+            Header::render($container);
             ?>
 
-			<main id="content" class="content" role="<?= PAGE ?? 'main' ?>">
-				<h1 hidden>
-                    <?= $metadata['h1'] ?? $metadata['title'] ?>
-				</h1>
+            <main id="content" class="content" role="<?= $pageData['name'] ?? 'main' ?>">
+                <h1 hidden>
+                    <?= $pageData['h1'] ?? $pageData['title'] ?>
+                </h1>
 
                 <?php
                 if (!empty($sections) && is_array($sections)) {
                     foreach ($sections as $section) {
-                        $sectionClass = 'Views\\Sections\\' . ucfirst($section) . '\\' . ucfirst($section);
+                        $sectionClass = 'App\\Views\\Sections\\' . ucfirst($section) . '\\' . ucfirst($section);
                         if (class_exists($sectionClass)) {
                             $sectionClass::render($container);
+                        } else {
+                            error_log("Layout: Section class '{$sectionClass}' not found for rendering.");
                         }
                     }
                 }
                 ?>
 
-			</main>
+            </main>
 
             <?php
-            Footer::render();
+            Footer::render($container);
             ?>
 
-		</div>
+        </div>
 
         <?php
         echo Button::render([
@@ -97,13 +87,13 @@ class Layout
             'aria-hidden' => true
         ]);
 
-        Popup::render();
+        Popup::render($container);
 
-        renderTemplate(__DIR__ . '/Sections/footer-links.php');
+        $templateService->render(__DIR__ . '/Sections/footer-links.php', ['pathService' => $pathService]);
         ?>
 
-		</body>
-		</html>
+        </body>
+        </html>
 
         <?php
     }

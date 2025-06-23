@@ -1,24 +1,23 @@
 <?php
 
-namespace Views\Components;
+namespace App\Views\Components;
 
-use Views\Components\Image;
-use function Helpers\getPath;
+use App\Views\Components\Image;
+use Exception;
 
 /**
- * Component for rendering preloader
+ * Component for rendering preloader.
  */
 class Preloader
 {
     /**
-     * Render preloader element
+     * Renders preloader element
      *
-     * @param array $params {
      * @type string $id Preloader ID
      * @type string $class CSS classes
      * @type string $attr Additional HTML attributes
-     * }
      * @return string Rendered HTML
+     * @throws Exception
      */
     public static function render(array $params = []): string
     {
@@ -36,7 +35,7 @@ class Preloader
 
             <?php
             echo Image::render([
-                'url' => getPath('dist/assets/images/loader.webp'),
+                'url' => $pathService->getPath('dist/assets/images/loader.webp'),
                 'alt' => 'loader',
                 'width' => 100,
                 'height' => 100,
