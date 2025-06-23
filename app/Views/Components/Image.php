@@ -4,7 +4,7 @@ namespace App\Views\Components;
 
 use App\Core\Container;
 use App\Services\ConfigService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use Exception;
 
 /**
@@ -43,7 +43,7 @@ class Image
      * fetchpriority?:string,	Resource loading priority
      * decoding?: string,		Image decoding mode
      * noLazy?:					bool Disable lazy loading
-     * viteService:				ViteService
+     * pathService:				PathService
      * @return string HTML image tag
      * @throws Exception
      */
@@ -53,8 +53,8 @@ class Image
 
         $container = Container::getInstance();
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $alt = !empty($params['alt']) ? htmlspecialchars($params['alt'], ENT_QUOTES) : 'image';
         $width = $params['width'] ?? 600;
@@ -70,7 +70,7 @@ class Image
             || !isset($pathInfo['extension'])) {
 
             return self::renderImage(
-                $viteService->getAssetPath(self::BROKEN_IMAGE_PATH),
+                $pathService->getPath(self::BROKEN_IMAGE_PATH),
                 $alt,
                 $width,
                 $height,
@@ -82,7 +82,7 @@ class Image
         $originalExt = strtolower($pathInfo['extension']);
 
         // Handle external URLs
-        if ($viteService->validateExternalUrl($url)) {
+        if ($pathService->validateExternalUrl($url)) {
             return self::renderImage(
                 htmlspecialchars($url, ENT_QUOTES),
                 $alt,
@@ -93,7 +93,7 @@ class Image
             );
         }
 
-        $fallbackImage = self::updateImage($url) === false ? $viteService->getAssetPath(self::BROKEN_IMAGE_PATH) : self::updateImage($url);
+        $fallbackImage = self::updateImage($url) === false ? $pathService->getPath(self::BROKEN_IMAGE_PATH) : self::updateImage($url);
 
         $statusSrc = (self::updateImage($url) !== false && $fallbackImage === self::transformAssetUrl($url)) ? self::DIST_STATUS_ATTR : '';
 
@@ -151,10 +151,10 @@ class Image
     {
         $container = Container::getInstance();
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
-        return self::$fallbackImagePath ?: $viteService->getAssetPath(self::BROKEN_IMAGE_PATH);
+        return self::$fallbackImagePath ?: $pathService->getPath(self::BROKEN_IMAGE_PATH);
     }
 
     /**
@@ -165,17 +165,17 @@ class Image
     {
         $container = Container::getInstance();
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $result = false;
-        $Image = $viteService->fileExists($url);
-        $originalImage = $viteService->fileExists(self::transformAssetUrl($url));
+        $Image = $pathService->fileExists($url);
+        $originalImage = $pathService->fileExists(self::transformAssetUrl($url));
 
         if ($Image !== false) {
-            $result = $viteService->getAssetPath($Image);
+            $result = $pathService->getPath($Image);
         } else if ($originalImage !== false) {
-            $result = $viteService->getAssetPath($originalImage);
+            $result = $pathService->getPath($originalImage);
         }
 
         return $result;
@@ -266,8 +266,8 @@ class Image
     {
         $container = Container::getInstance();
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $filePathList = [];
         $fallbackCount = 0;
@@ -276,7 +276,7 @@ class Image
             $filePathList[$size] = $pathInfo['dirname'] . '/' . $pathInfo['filename'] .
                 '-' . $size . '.' . self::EXT;
 
-            if (!$viteService->fileExists($filePathList[$size])) {
+            if (!$pathService->fileExists($filePathList[$size])) {
                 $filePathList[$size] = self::getFallbackImagePath();
                 $fallbackCount++;
             }

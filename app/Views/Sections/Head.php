@@ -5,7 +5,7 @@ namespace App\Views\Sections;
 use App\Core\Container;
 use App\Services\ConfigService;
 use App\Services\TemplateService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use Exception;
 
 /**
@@ -33,8 +33,8 @@ class Head
         /** @var TemplateService $templateService */
         $templateService = $container->get(TemplateService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $schema = $pageData['schema'] ?? [];
         $noindex = $pageData['noindex'] ?? false;
@@ -67,7 +67,7 @@ class Head
 			<meta property="og:url" content="<?= 'https://' . $configService->get('domain') . '/' . ($pageData['name'] === 'home' ? '' : $pageData['name']) ?>">
 			<meta property="og:type" content="<?= $schema['type'] ?? 'website' ?>">
 			<meta property="og:locale" content="en_US">
-			<meta property="og:image" content="<?= $viteService->getAssetPath('dist/assets/images/logo/logo-1.svg') ?>">
+			<meta property="og:image" content="<?= $pathService->getPath('dist/assets/images/logo/logo-1.svg') ?>">
 
 			<!-- Twitter Card tags -->
 			<meta name="twitter:card" content="summary_large_image">
@@ -104,7 +104,7 @@ class Head
 			<?php endif; ?>
 
 			<!-- Favicon and canonical -->
-            <link rel="shortcut icon" href="<?= $viteService->getAssetPath('favicon.ico') ?>">
+            <link rel="shortcut icon" href="<?= $pathService->getPath('favicon.ico') ?>">
             <link rel="canonical" href="<?= 'https://' . $configService->get('domain') . '/' . ($pageData['name'] === 'home' ? '' : $pageData['name']) ?>">
 
 			<?php

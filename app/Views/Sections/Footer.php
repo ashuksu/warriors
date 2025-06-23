@@ -4,7 +4,7 @@ namespace App\Views\Sections;
 
 use App\Core\Container;
 use App\Services\ConfigService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use App\Views\Components\Image;
 use Exception;
 
@@ -28,8 +28,8 @@ class Footer
         /** @var ConfigService $configService */
         $configService = $container->get(ConfigService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
         ?>
 
 		<footer id="footer" class="footer" role="contentinfo">
@@ -39,7 +39,7 @@ class Footer
 
                         <?php
                         echo Image::render([
-                            'url' => $viteService->getAssetPath('dist/assets/images/logo/logo-3.svg'),
+                            'url' => $pathService->getPath('dist/assets/images/logo/logo-3.svg'),
                             'alt' => 'logo-footer',
                             'width' => 70,
                             'height' => 70,

@@ -9,7 +9,7 @@
             if (!empty($item) && is_array($item)) {
                 $templateService->render($itemPath ?? __DIR__ . '/item.php', [
                     'text' => $item['text'] ?? '',
-                    'image' => $viteService->getAssetPath('dist/assets/images/' . ($item['image']['image'] ?? '')),
+                    'image' => $pathService->getPath('dist/assets/images/' . ($item['image']['image'] ?? '')),
                     'item' => $item['image'] ?? '',
                     'button' => $item['button'] ?? '',
                     'configService' => $configService

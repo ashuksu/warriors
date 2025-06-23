@@ -5,7 +5,7 @@ namespace App\Views;
 use App\Core\Container;
 use App\Services\ConfigService;
 use App\Services\TemplateService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use App\Views\Sections\Footer;
 use App\Views\Sections\Head;
 use App\Views\Sections\Header;
@@ -36,8 +36,8 @@ class Layout
         /** @var TemplateService $templateService */
         $templateService = $container->get(TemplateService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         Head::render($container);
         ?>
@@ -46,7 +46,7 @@ class Layout
         <div class="wrapper">
 
             <?php
-            echo Preloader::render(['attr' => 'data-delay="0.1"', 'viteService' => $viteService]);
+            echo Preloader::render(['attr' => 'data-delay="0.1"', 'pathService' => $pathService]);
 
             Header::render($container);
             ?>
@@ -89,7 +89,7 @@ class Layout
 
         Popup::render($container);
 
-        $templateService->render(__DIR__ . '/Sections/footer-links.php', ['viteService' => $viteService]);
+        $templateService->render(__DIR__ . '/Sections/footer-links.php', ['pathService' => $pathService]);
         ?>
 
         </body>

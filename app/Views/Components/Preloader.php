@@ -35,7 +35,7 @@ class Preloader
 
             <?php
             echo Image::render([
-                'url' => $viteService->getAssetPath('dist/assets/images/loader.webp'),
+                'url' => $pathService->getPath('dist/assets/images/loader.webp'),
                 'alt' => 'loader',
                 'width' => 100,
                 'height' => 100,

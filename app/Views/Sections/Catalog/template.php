@@ -12,7 +12,7 @@
                     foreach ($collection as $item) {
                         $templateService->render($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
-                            'image' => $viteService->getAssetPath('dist/assets/images/items/' . ($item['image'] ?? '')),
+                            'image' => $pathService->getPath('dist/assets/images/items/' . ($item['image'] ?? '')),
                         ]);
                     }
                 }

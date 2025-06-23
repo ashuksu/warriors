@@ -11,7 +11,7 @@ use Exception;
  * Service for Vite asset integration.
  * Handles asset path resolution for development and production builds.
  */
-class ViteService
+class PathService
 {
     private string $manifestFile;
     private ?array $manifest = null;
@@ -43,13 +43,13 @@ class ViteService
      * @return string URL to the processed asset.
      * @throws RuntimeException If Vite manifest is not found in production mode.
      */
-    public function getAssetPath(string $file): string
+    public function getPath(string $file): string
     {
         if ($this->isDev) {
             return $this->viteDevServer . $file;
         }
 
-        $manifest = $this->getManifest();
+        $manifest = $this->getViteManifest();
 
         if ($manifest === null) {
             throw new RuntimeException('Vite manifest file not found in production. Please run `npm run build` first.');
@@ -77,7 +77,7 @@ class ViteService
      *
      * @return array|null Manifest data as an array, or null if a file does not exist.
      */
-    private function getManifest(): ?array
+    private function getViteManifest(): ?array
     {
         if ($this->manifest !== null) {
             return $this->manifest;

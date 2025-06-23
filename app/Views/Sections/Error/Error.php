@@ -6,7 +6,7 @@ use App\Core\Container;
 use App\Services\ConfigService;
 use App\Services\TemplateService;
 use App\Services\ContentService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use Exception;
 
 /**
@@ -32,15 +32,15 @@ class Error
         /** @var ContentService $contentService */
         $contentService = $container->get(ContentService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'error',
             'item' => $contentService->get('section', 'error'),
             'title' => $contentService->get('section', 'error', 'title'),
             'templateService' => $templateService,
-            'viteService' => $viteService,
+            'pathService' => $pathService,
             'configService' => $configService
         ]);
     }

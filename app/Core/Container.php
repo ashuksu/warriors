@@ -8,7 +8,7 @@ use App\Services\DatabaseService;
 use App\Services\DataLoaderService;
 use App\Services\TemplateService;
 use App\Services\ContentService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use App\Services\DeviceService;
 use App\Core\Router;
 use Exception;
@@ -53,7 +53,7 @@ class Container
             $c->get(CacheService::class),
             $c->get(ConfigService::class)
         ));
-        $this->singleton(ViteService::class, fn($c) => new ViteService(
+        $this->singleton(PathService::class, fn($c) => new PathService(
             $c->get(ConfigService::class),
             $c->get(CacheService::class)
         ));

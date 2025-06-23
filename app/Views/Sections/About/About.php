@@ -5,7 +5,7 @@ namespace App\Views\Sections\About;
 use App\Core\Container;
 use App\Services\TemplateService;
 use App\Services\ContentService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use Exception;
 
 /**
@@ -28,14 +28,14 @@ class About
         /** @var ContentService $contentService */
         $contentService = $container->get(ContentService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'about',
             'collection' => $contentService->get('section', 'about', 'items'),
             'templateService' => $templateService,
-            'viteService' => $viteService
+            'pathService' => $pathService
         ]);
     }
 }

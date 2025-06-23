@@ -5,7 +5,7 @@ namespace App\Views\Sections\Main;
 use App\Core\Container;
 use App\Services\TemplateService;
 use App\Services\ContentService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use Exception;
 
 /**
@@ -28,8 +28,8 @@ class Main
         /** @var ContentService $contentService */
         $contentService = $container->get(ContentService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         $popups = $contentService->get('section', 'popup', 'items');
         $image = $contentService->get('section','main', 'image');
@@ -38,7 +38,7 @@ class Main
             'section' => 'main',
             'item' => $contentService->get('section', 'main'),
             'image' => $contentService->get('section', 'main', 'image'),
-            'imagePath' => $viteService->getAssetPath('dist/assets/images/' . ($image['image'] ?? '')),
+            'imagePath' => $pathService->getPath('dist/assets/images/' . ($image['image'] ?? '')),
             'popups' => $popups,
             'isPopups' => !empty($popups) && is_array($popups)
         ]);

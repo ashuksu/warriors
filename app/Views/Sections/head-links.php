@@ -2,13 +2,13 @@
 
 use App\Core\Container;
 use App\Services\ConfigService;
-use App\Services\ViteService;
+use App\Services\PathService;
 
 /** @var ConfigService $configService */
 $configService = $container->get(ConfigService::class);
 
-/** @var ViteService $viteService */
-$viteService = $container->get(ViteService::class);
+/** @var PathService $pathService */
+$pathService = $container->get(PathService::class);
 
 $pageData = $container->getPageData();
 $pageDataName = $pageData['name'] ?? 'home';
@@ -33,31 +33,31 @@ $uniqId = ($item['id'] ?? '') . uniqid();
 <?php endif; ?>
 
 <!-- Styles: critical (loaded immediately, blocks' rendering) -->
-<link rel="stylesheet" href="<?= $viteService->getAssetPath('src/styles/critical.scss') ?>">
+<link rel="stylesheet" href="<?= $pathService->getPath('src/styles/critical.scss') ?>">
 
 <!-- Styles: main, not important and interactive elements, popup (async loaded, lower priority than "high", be applied before "high") -->
-<link rel="preload" href="<?= $viteService->getAssetPath('src/styles/main.scss') ?>" as="style" onload="this.rel='stylesheet'"
+<link rel="preload" href="<?= $pathService->getPath('src/styles/main.scss') ?>" as="style" onload="this.rel='stylesheet'"
 	  fetchpriority="low">
 <noscript>
-	<link rel="stylesheet" href="<?= $viteService->getAssetPath('src/styles/main.scss') ?>">
+	<link rel="stylesheet" href="<?= $pathService->getPath('src/styles/main.scss') ?>">
 </noscript>
 
 <!-- Styles: page, important elements (async loaded, higher priority than "low", be applied after "low") -->
-<!-- TODO: $viteService->getAssetPath('src/styles/page_' . $pageDataName . '.scss') -->
-<link rel="preload" href="<?= $viteService->getAssetPath('src/styles/page_home.scss') ?>" as="style"
+<!-- TODO: $pathService->getPath('src/styles/page_' . $pageDataName . '.scss') -->
+<link rel="preload" href="<?= $pathService->getPath('src/styles/page_home.scss') ?>" as="style"
 	  onload="this.rel='stylesheet'">
-<!-- TODO: $viteService->getAssetPath('src/styles/page_' . $pageDataName . '.scss') -->
+<!-- TODO: $pathService->getPath('src/styles/page_' . $pageDataName . '.scss') -->
 <noscript>
-	<link rel="stylesheet" href="<?= $viteService->getAssetPath('src/styles/page_home.scss') ?>">
+	<link rel="stylesheet" href="<?= $pathService->getPath('src/styles/page_home.scss') ?>">
 </noscript>
 
 <!-- Styles: first-screen, important elements (blocks rendering) -->
-<!--- TODO: $viteService->getAssetPath('src/styles/page_' . $pageDataName . '_critical.scss') -->
-<link rel="stylesheet" href="<?= $viteService->getAssetPath('src/styles/page_home_critical.scss') ?>">
+<!--- TODO: $pathService->getPath('src/styles/page_' . $pageDataName . '_critical.scss') -->
+<link rel="stylesheet" href="<?= $pathService->getPath('src/styles/page_home_critical.scss') ?>">
 
 <!-- Prefetch resources that will be needed soon -->
-<link rel="prefetch" href="<?= $viteService->getAssetPath('src/js/modules/Popup.js') ?>" as="script">
-<link rel="prefetch" href="<?= $viteService->getAssetPath('src/js/modules/utils/Toggle.js') ?>" as="script">
+<link rel="prefetch" href="<?= $pathService->getPath('src/js/modules/Popup.js') ?>" as="script">
+<link rel="prefetch" href="<?= $pathService->getPath('src/js/modules/utils/Toggle.js') ?>" as="script">
 
 <!-- Load WOW.js with defer and low priority to ensure it doesn't block critical resources -->
 <script defer src="https://cdn.jsdelivr.net/npm/wowjs@1.1.3/dist/wow.min.js" fetchpriority="low"></script>

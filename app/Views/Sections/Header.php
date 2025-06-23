@@ -4,7 +4,7 @@ namespace App\Views\Sections;
 
 use App\Core\Container;
 use App\Services\DeviceService;
-use App\Services\ViteService;
+use App\Services\PathService;
 use App\Services\ConfigService;
 use App\Views\Components\Button;
 use App\Views\Components\Image;
@@ -30,8 +30,8 @@ class Header
         /** @var ConfigService $configService */
         $configService = $container->get(ConfigService::class);
 
-        /** @var ViteService $viteService */
-        $viteService = $container->get(ViteService::class);
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
 
         /** @var DeviceService $deviceService */
         $deviceService = $container->get(DeviceService::class);
@@ -44,7 +44,7 @@ class Header
 
                         <?php
                         echo Image::render([
-                            'url' => $viteService->getAssetPath('dist/assets/images/logo/logo-1.svg'),
+                            'url' => $pathService->getPath('dist/assets/images/logo/logo-1.svg'),
                             'alt' => 'logo',
                             'width' => 30,
                             'height' => 30,

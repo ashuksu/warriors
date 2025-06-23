@@ -7,7 +7,7 @@
                 $templateService->render(__DIR__ . '/item.php', [
                     'item' => $item,
                     'isReverse' => $index % 2 !== 0,
-                    'image' => $viteService->getAssetPath('dist/assets/images/' . ($item['image'] ?? ''))
+                    'image' => $pathService->getPath('dist/assets/images/' . ($item['image'] ?? ''))
                 ]);
             }
         }
