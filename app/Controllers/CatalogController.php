@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Container;
+use Exception;
 
 /**
  * Controller for the catalog page
@@ -20,13 +21,10 @@ class CatalogController extends BaseController
      * Render sections: catalog, info
      *
      * @return void
+     * @throws Exception
      */
     public function index(): void
     {
-        if (!defined('PAGE')) {
-            define('PAGE', 'catalog');
-        }
-
-        $this->render([PAGE, 'info']);
+        $this->render(['catalog', 'info']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Container;
+use Exception;
 
 /**
  * Controller for the home page
@@ -20,13 +21,10 @@ class HomeController extends BaseController
      * Render sections: main, about, faq, info
      *
      * @return void
+     * @throws Exception
      */
     public function index(): void
     {
-        if (!defined('PAGE')) {
-            define('PAGE', 'home');
-        }
-
         $this->render(['main', 'about', 'faq', 'info']);
     }
 }
