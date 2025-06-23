@@ -47,8 +47,6 @@ class ContentService
 
             $this->cache->set($cacheKey, $resolvedContent, $this->configService->get('cache_ttl', 3600));
             error_log("ContentService: '{$type}.{$name}' loaded, resolved and cached.");
-        } else {
-            error_log("ContentService: '{$type}.{$name}' loaded from cache.");
         }
 
         return $this->navigateContent($resolvedContent, $key, $id);

@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Core\Container;
 use App\Core\Router;
 use App\Services\ConfigService;
-use Throwable;
 
 /**
  * Application Entry Point.

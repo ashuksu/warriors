@@ -66,7 +66,6 @@ class Router
             error_log("Router: Routes loaded from database and cached.");
         } else {
             $routes = $cachedRoutes;
-            error_log("Router: Routes loaded from cache.");
         }
 
         $this->routes = $routes;
