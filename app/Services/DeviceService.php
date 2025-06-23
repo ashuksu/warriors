@@ -1,76 +1,92 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Services;
 
 /**
- * Device detection helper class.
+ * Service for detecting a user device type.
+ * Determines if the device is mobile, tablet, or desktop based on User-Agent and HTTP headers.
  */
-class Device
+class DeviceService
 {
     /**
-     * @var array|null Caches device info.
+     * @var array|null Caches device information for the current request.
      */
-    private static ?array $deviceInfo = null;
+    private ?array $deviceInfo = null;
+
+    /**
+     * Constructs the DeviceService.
+     * Device detection is performed on instantiation if not already cached.
+     */
+    public function __construct()
+    {
+        // Device info is calculated once per instance/request.
+        // If instantiated via singleton in Container, it's calculated once per app run.
+        $this->getDeviceInfo();
+    }
 
     /**
      * Resets cached detection results.
+     * This is primarily for testing purposes or if device context changes during a request.
      */
-    public static function resetCache(): void
+    public function resetCache(): void
     {
-        self::$deviceInfo = null;
+        $this->deviceInfo = null;
     }
 
     /**
-     * Checks if a device is a phone.
+     * Checks if the detected device is a phone.
+     *
+     * @return bool True if the device is identified as a phone (not a tablet).
      */
-    public static function ispPhone(): bool
+    public function isPhone(): bool
     {
-        $info = self::getDeviceInfo();
-        return $info['ispPhone'];
+        return $this->deviceInfo['isPhone'];
     }
 
     /**
-     * Checks if a device is a tablet.
+     * Checks if the detected device is a tablet.
+     *
+     * @return bool True if the device is identified as a tablet.
      */
-    public static function isTablet(): bool
+    public function isTablet(): bool
     {
-        $info = self::getDeviceInfo();
-        return $info['isTablet'];
+        return $this->deviceInfo['isTablet'];
     }
 
     /**
-     * Checks if a device is mobile (phone or tablet).
+     * Checks if the detected device is mobile (either phone or tablet).
+     *
+     * @return bool True if the device is mobile.
      */
-    public static function isMobile(): bool
+    public function isMobile(): bool
     {
-        $info = self::getDeviceInfo();
-        return $info['isMobile'];
+        return $this->deviceInfo['isMobile'];
     }
 
     /**
-     * Checks if device is desktop.
+     * Checks if the detected device is a desktop.
+     *
+     * @return bool True if the device is a desktop.
      */
-    public static function isDesktop(): bool
+    public function isDesktop(): bool
     {
-        $info = self::getDeviceInfo();
-        return $info['isDesktop'];
+        return $this->deviceInfo['isDesktop'];
     }
 
     /**
-     * Retrieves detailed device information, performs detection if not cached.
-     * Analyzes User-Agent and HTTP headers.
+     * Retrieves detailed device information, performing detection if not already cached.
+     * Analyzes the User-Agent string and relevant HTTP headers.
+     *
+     * @return void An associative array containing 'isMobile', 'isTablet', 'isPhone', 'isDesktop', and 'userAgent'.
      */
-    private static function getDeviceInfo(): array
+    private function getDeviceInfo(): void
     {
-        if (self::$deviceInfo !== null) {
-            return self::$deviceInfo;
+        if ($this->deviceInfo !== null) {
+            return;
         }
 
-        // Ensure $_SERVER['HTTP_USER_AGENT'] is set, default to empty string if not.
-        // This is crucial for CLI environments or if the header is somehow missing.
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
-        // Tablet detection (sorted alphabetically)
         $tabletRegex = '/
             (android(?!.*mobile))
             |(fablet)
@@ -86,11 +102,10 @@ class Device
             |(tablet)
             |(transformer)
             |(windows nt.*touch)
-        /ix'; // Original comments removed from inside the regex string
+        /ix';
 
         $isTabletDetected = (bool)preg_match($tabletRegex, $userAgent);
 
-        // Mobile phone detection (after tablet, sorted alphabetically)
         $mobileRegex = '/
             (android(?!.*(tab|pad|transformer|fablet)).*mobile)
             |(avantgo)
@@ -126,34 +141,32 @@ class Device
             |(webos.*mobile)
             |(windows ce)
             |(xiino)
-        /ix'; // Original comments removed from inside the regex string
+        /ix';
 
         $isPhoneDetected = (bool)preg_match($mobileRegex, $userAgent);
 
-        // Additional mobile indicators from HTTP headers
         $isMobileByHeaders = isset($_SERVER['HTTP_X_WAP_PROFILE']) ||
             isset($_SERVER['HTTP_PROFILE']) ||
             isset($_SERVER['X-OPERAMINI-PHONE-UA']) ||
             (isset($_SERVER['HTTP_ACCEPT']) && stripos($_SERVER['HTTP_ACCEPT'], 'wap') !== false);
 
         // Final determination logic:
-        // A device is a "tablet" if $isTabletDetected.
+        // A device is a "tablet" of $isTabletDetected.
         // A device is a "phone" if $isPhoneDetected AND it wasn't already classified as a tablet.
         // A device is "mobile" if it's a tablet OR a phone OR if headers strongly indicate mobile (and it's not already classified as a tablet).
 
         $isActualPhone = $isPhoneDetected && !$isTabletDetected; // A device specifically identified as a phone, not a tablet
 
-        $isMobile = $isTabletDetected || $isActualPhone || ($isMobileByHeaders && !$isTabletDetected);
+        $isMobile = $isTabletDetected || $isActualPhone || $isMobileByHeaders;
         $isDesktop = !$isMobile;
 
-        self::$deviceInfo = [
-            'isMobile' => $isMobile,        // True for tablets and phones
+        $this->deviceInfo = [
+            'isMobile' => $isMobile,         // True for tablets and phones
             'isTablet' => $isTabletDetected, // True only for tablets
             'isPhone' => $isActualPhone,     // True only for phones (not tablets)
             'isDesktop' => $isDesktop,
             'userAgent' => $userAgent
         ];
 
-        return self::$deviceInfo;
     }
 }
