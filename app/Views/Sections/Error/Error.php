@@ -23,6 +23,9 @@ class Error
      */
     public static function render(Container $container): void
     {
+        /** @var ConfigService $configService */
+        $configService = $container->get(ConfigService::class);
+
         /** @var TemplateService $templateService */
         $templateService = $container->get(TemplateService::class);
 
@@ -31,9 +34,6 @@ class Error
 
         /** @var ViteService $viteService */
         $viteService = $container->get(ViteService::class);
-
-        /** @var ConfigService $configService */
-        $configService = $container->get(ConfigService::class);
 
         $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'error',

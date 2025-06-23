@@ -43,14 +43,12 @@ class Layout
         $viteService = $container->get(ViteService::class);
 
         Head::render($container);
-
         ?>
 
         <body data-style="default" class="<?= 'page-' . ($pageData['name'] ?? 'static') ?>" itemscope itemtype="https://schema.org/WebPage">
         <div class="wrapper">
 
             <?php
-
             echo Preloader::render([
 					'attr' => 'data-delay="0.1"',
 					'viteService' => $viteService
