@@ -2,16 +2,12 @@
     <div class="container">
 
         <?php
-
-        use function App\Helpers\renderTemplate;
-        use function App\Helpers\getPath;
-
         if (!empty($collection) && is_array($collection)) {
             foreach ($collection as $index => $item) {
-                renderTemplate($itemPath ?? __DIR__ . '/item.php', [
+                $templateService->render(__DIR__ . '/item.php', [
                     'item' => $item,
                     'isReverse' => $index % 2 !== 0,
-                    'image' => getPath('dist/assets/images/' . ($item['image'] ?? '')),
+                    'image' => $viteService->getAssetPath('dist/assets/images/' . ($item['image'] ?? ''))
                 ]);
             }
         }

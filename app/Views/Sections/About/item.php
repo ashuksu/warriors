@@ -1,4 +1,4 @@
-<div class="about__card inner-style wow pixFadeUp" data-reverse="<?= $isReverse ?? '' ?>" data-wow-delay="0.2s">
+<div class="about__card inner-style wow pixFadeUp" data-reverse="<?= $isReverse ? '1' : '' ?>" data-wow-delay="0.2s">
 	<div class="row">
 		<div class="col col-md-6 mb-1 mb-md-0">
 			<div class="image">
