@@ -209,27 +209,27 @@ export default defineConfig({
 > load them in your templates.
 > Except for those that are connected in modules
 
-Use the `getAssetPath` method to include assets in your templates:
+Use the `getPath` method to include assets in your templates:
 
 ```php
 
 <?php
-use Helpers\Vite;
+use App\Helpers\Vite;
 ?>
 ```
 
 ```php
 
 <!-- CSS files -->
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/css/style.css') ?>">
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/critical.scss') ?>">
+<link rel="stylesheet" href="<?= Vite::getPath('src/css/style.css') ?>">
+<link rel="stylesheet" href="<?= Vite::getPath('src/styles/critical.scss') ?>">
 
 <!-- JavaScript modules -->
-<script type="module" src="<?= Vite::getAssetPath('src/js/modules/Menu.js') ?>"></script>
-<script type="module" src="<?= Vite::getAssetPath('src/js/modules/utils/Toggle.js') ?>"></script>
+<script type="module" src="<?= Vite::getPath('src/js/modules/Menu.js') ?>"></script>
+<script type="module" src="<?= Vite::getPath('src/js/modules/utils/Toggle.js') ?>"></script>
 
 <!-- Library CSS files -->
-<link rel="stylesheet" href="<?= Vite::getAssetPath('src/styles/libs/animate.min.css') ?>">
+<link rel="stylesheet" href="<?= Vite::getPath('src/styles/libs/animate.min.css') ?>">
 ```
 
 ### Development vs Production

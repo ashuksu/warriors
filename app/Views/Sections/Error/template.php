@@ -6,17 +6,13 @@
 			</h2>
 
             <?php
-
-            use function Helpers\renderTemplate;
-            use function Helpers\getPath;
-
             if (!empty($item) && is_array($item)) {
-
-                renderTemplate($itemPath ?? __DIR__ . '/item.php', [
+                $templateService->render($itemPath ?? __DIR__ . '/item.php', [
                     'text' => $item['text'] ?? '',
-                    'image' => getPath('dist/assets/images/' . ($item['image']['image'] ?? '')),
+                    'image' => $pathService->getPath('dist/assets/images/' . ($item['image']['image'] ?? '')),
                     'item' => $item['image'] ?? '',
-                    'button' => $item['button'] ?? ''
+                    'button' => $item['button'] ?? '',
+                    'configService' => $configService
                 ]);
             }
             ?>

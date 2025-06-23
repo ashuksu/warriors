@@ -1,35 +1,44 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+declare(strict_types=1);
 
-// Include your application's autoloader
-require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/app/Helpers/helpers.php';
-require_once __DIR__ . '/app/Helpers/Vite.php';
+use Dotenv\Dotenv;
+use Throwable;
+
+if (!defined('PROJECT_ROOT')) {
+    $projectRoot = __DIR__;
+    while (!file_exists($projectRoot . '/vendor/autoload.php') && $projectRoot !== '/') {
+        $projectRoot = dirname($projectRoot);
+    }
+    define('PROJECT_ROOT', $projectRoot);
+}
+
+require_once PROJECT_ROOT . '/vendor/autoload.php';
 
 try {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv = Dotenv::createImmutable(PROJECT_ROOT);
     $dotenv->load();
-} catch (\Throwable $e) {
-    // It's okay if .env doesn't exist, we'll use fallbacks.
+} catch (Throwable $e) {
+    // It's okay if .env doesn't exist, environment variables from Docker or system will be used.
+    error_log("Dotenv failed to load: " . $e->getMessage());
 }
 
 return [
     'paths' => [
         'migrations' => '%%PHINX_CONFIG_DIR%%/database/migrations',
-        'seeds' => '%%PHINX_CONFIG_DIR%%/database/seeds'
+        'seeds'      => '%%PHINX_CONFIG_DIR%%/database/seeds'
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',
-        'default_environment' => 'development',
+        'default_environment'     => 'development',
         'development' => [
-            'adapter' => getenv('DB_CONNECTION') ?: 'pgsql',
-            'host' => getenv('DB_HOST') ?: 'db',
-            'name' => getenv('DB_DATABASE') ?: 'myapp_db',
-            'user' => getenv('DB_USERNAME') ?: 'myuser',
-            'pass' => getenv('DB_PASSWORD') ?: 'mypassword',
-            'port' => getenv('DB_PORT') ?: '5432',
-            'charset' => 'utf8',
+            'adapter'   => getenv('DB_CONNECTION') ?: 'pgsql',
+            'host'      => getenv('DB_HOST') ?: 'db',
+            'name'      => getenv('DB_DATABASE') ?: 'myapp_db',
+            'user'      => getenv('DB_USERNAME') ?: 'myuser',
+            'pass'      => getenv('DB_PASSWORD') ?: 'mypassword',
+            'port'      => getenv('DB_PORT') ?: '5432',
+            'charset'   => 'utf8',
         ]
     ],
     'version_order' => 'creation'

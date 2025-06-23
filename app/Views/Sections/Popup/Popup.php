@@ -1,23 +1,41 @@
 <?php
 
-namespace Views\Sections\Popup;
+namespace App\Views\Sections\Popup;
 
-use Services\SectionService;
-use function Helpers\renderTemplate;
+use App\Core\Container;
+use App\Services\ContentService;
+use App\Services\TemplateService;
+use Exception;
 
+/**
+ * Popup section view.
+ */
 class Popup
 {
-    public static function render($params = [])
+    /**
+     * Renders the Popup section.
+     *
+     * @param Container $container The DI container.
+     * @return void
+     * @throws Exception
+     */
+    public static function render(Container $container): void
     {
-        extract($params);
+        /** @var ContentService $contentService */
+        $contentService = $container->get(ContentService::class);
 
-        $popups = SectionService::get('popup', 'items');
+        /** @var TemplateService $templateService */
+        $templateService = $container->get(TemplateService::class);
+
+        $popups = $contentService->get('section', 'popup', 'items');
 
         if (!empty($popups) && is_array($popups)) {
-            foreach ($popups as $item) {
-                renderTemplate(__DIR__ . '/template.php', [
-                    'item' => $item,
-                    'button' => $item['button'],
+            foreach ($popups as $itemPopup) {
+                $templateService->render(__DIR__ . '/template.php', params: [
+                    'item' => $itemPopup,
+                    'button' => $itemPopup['button'],
+                    'container' => $container,
+                    'templateService' => $templateService
                 ]);
             }
         }

@@ -1,8 +1,9 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Core\Container;
+use App\Core\Container;
+use Exception;
 
 /**
  * Controller for the contacts page
@@ -20,13 +21,10 @@ class ContactsController extends BaseController
      * Render sections: contacts, info
      *
      * @return void
+     * @throws Exception
      */
     public function index(): void
     {
-        if (!defined('PAGE')) {
-            define('PAGE', 'contacts');
-        }
-
-        $this->render([PAGE, 'info']);
+        $this->render(['contacts', 'info']);
     }
 }

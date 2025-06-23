@@ -1,13 +1,15 @@
 <?php
 
-namespace Views\Sections;
+namespace App\Views\Sections;
 
-use Views\Components\Image;
-use function Helpers\getPath;
+use App\Core\Container;
+use App\Services\ConfigService;
+use App\Services\PathService;
+use App\Views\Components\Image;
+use Exception;
 
 /**
  * Footer section class
- *
  * Handles rendering of the site footer with logo, copyright information, and links
  */
 class Footer
@@ -17,25 +19,27 @@ class Footer
      *
      * Outputs the footer with logo, copyright text, and external links
      *
-     * @param array $params Parameters for the footer section
+     * @param Container $container The DI container.
      * @return void
+     * @throws Exception
      */
-    public static function render($params = [])
+    public static function render(Container $container): void
     {
-        extract($params);
+        /** @var ConfigService $configService */
+        $configService = $container->get(ConfigService::class);
 
-        // Default link if not provided
-        $LINK = $LINK ?? 'https://github.com/ashuksu';
+        /** @var PathService $pathService */
+        $pathService = $container->get(PathService::class);
         ?>
 
 		<footer id="footer" class="footer" role="contentinfo">
 			<div class="container">
 				<div class="inner inner-style footer__inner">
-					<a href="<?= APP_PATH ?>" class="logo">
+					<a href="<?= $configService->get('app_path') ?>" class="logo">
 
                         <?php
                         echo Image::render([
-                            'url' => getPath('dist/assets/images/logo/logo-3.svg'),
+                            'url' => $pathService->getPath('dist/assets/images/logo/logo-3.svg'),
                             'alt' => 'logo-footer',
                             'width' => 70,
                             'height' => 70,
@@ -46,7 +50,7 @@ class Footer
 					<p class="footer__text">
 						Copyright © <?= date("Y"); ?>
 					</p>
-					<a href="<?= $LINK ?>"
+					<a href="https://github.com/ashuksu"
 					   class="footer__link link"
 					   target="_blank"
 					   rel="noopener noreferrer"

@@ -1,32 +1,39 @@
 <?php
 
-namespace Views\Sections;
+namespace App\Views\Sections;
 
-use Helpers\Device;
-use Services\SectionService;
-use Views\Components\Button;
+use App\Core\Container;
+use App\Services\ConfigService;
+use App\Services\ContentService;
+use App\Services\DeviceService;
+use App\Views\Components\Button;
+use Exception;
 
 /**
- * Menu section class
- *
- * Handles rendering of the site navigation menu with links and popup button
+ * Menu section view.
  */
 class Menu
 {
     /**
-     * Render the menu section
+     * Renders the Menu section.
      *
-     * Outputs the navigation menu with close button, menu links, and popup button
-     *
-     * @param array $params Parameters for the menu section
+     * @param Container $container The DI container.
      * @return void
+     * @throws Exception
      */
-    public static function render($params = [])
+    public static function render(Container $container): void
     {
-        extract($params);
+       /** @var ConfigService $configService */
+        $configService = $container->get(ConfigService::class);
 
-        $popup = SectionService::get('popup', 'items', 'p002');
-        $menu = SectionService::get('menu', 'items');
+        /** @var ContentService $contentService */
+        $contentService = $container->get(ContentService::class);
+
+        /** @var DeviceService $deviceService */
+        $deviceService = $container->get(DeviceService::class);
+
+        $popup = $contentService->get('section', 'popup', 'items', 'p002');
+        $menu = $contentService->get('section', 'menu', 'items');
         ?>
 
 		<nav id="menu" class="menu" data-block="menu" role="navigation" aria-label="Main Menu">
@@ -34,7 +41,7 @@ class Menu
             <?php
             echo Button::render([
                 'class' => 'button--close button--transparent',
-                'attr' => 'data-element="menu-close"' . (Device::isDesktop() ? ' hidden' : ''),
+                'attr' => 'data-element="menu-close"' . ($deviceService->isDesktop() ? ' hidden' : ''),
                 'aria-label' => 'Close Main Menu',
                 'aria-expanded' => true,
                 'aria-controls' => 'menu',
@@ -49,7 +56,7 @@ class Menu
                         $hash = $item['hash'] ?? '';
                         $id = $item['id'] ?? '';
                         $name = $item['name'] ?? '';
-                        $url = APP_PATH . $hash . $id;
+                        $url = $configService->get('app_path') . $hash . $id;
                         ?>
 
 						<a href="<?= $url ?>"
@@ -66,15 +73,17 @@ class Menu
 			</div>
 
             <?php
-            echo Button::render([
-                'url' => '#popup-' . ($popup['id'] ?? ''),
-                'attr' => 'data-element="popup-open"' . (Device::isDesktop() ? ' hidden' : ''),
-                'content' => 'Open ' . ($popup['name'] ?? ''),
-                'aria-label' => 'Open ' . ($popup['name'] ?? '') . ' Popup',
-                'aria-expanded' => false,
-                'aria-controls' => 'popup-' . ($popup['id'] ?? ''),
-                'role' => 'button'
-            ]);
+			if ($popup) {
+				echo Button::render([
+					'url' => '#popup-' . ($popup['id'] ?? ''),
+					'attr' => 'data-element="popup-open"' . ($deviceService->isDesktop() ? ' hidden' : ''),
+					'content' => 'Open ' . ($popup['name'] ?? ''),
+					'aria-label' => 'Open ' . ($popup['name'] ?? '') . ' Popup',
+					'aria-expanded' => false,
+					'aria-controls' => 'popup-' . ($popup['id'] ?? ''),
+					'role' => 'button'
+				]);
+			}
             ?>
 
 		</nav>

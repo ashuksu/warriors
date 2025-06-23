@@ -12,17 +12,17 @@
 
                     <?php
 
-                    use Views\Components\Button;
+                    use App\Views\Components\Button;
 
                     if ($isPopups) {
-                        foreach ($popups as $item) {
+                        foreach ($popups as $popupItem) {
                             echo Button::render([
-                                'url' => '#popup-' . ($item['id'] ?? ''),
+                                'url' => '#popup-' . ($popupItem['id'] ?? ''),
                                 'attr' => 'data-element="popup-open"',
-                                'content' => 'Open popup ' . ($item['name'] ?? 'Dialog'),
-                                'aria-label' => 'Open popup ' . ($item['name'] ?? 'Dialog'),
+                                'content' => 'Open popup ' . ($popupItem['name'] ?? 'Dialog'),
+                                'aria-label' => 'Open popup ' . ($popupItem['name'] ?? 'Dialog'),
                                 'aria-expanded' => false,
-                                'aria-controls' => 'popup-' . ($item['id'] ?? ''),
+                                'aria-controls' => 'popup-' . ($popupItem['id'] ?? ''),
                                 'role' => 'button'
                             ]);
                         }
@@ -36,7 +36,7 @@
 
                     <?php
 
-                    use Views\Components\Image;
+                    use App\Views\Components\Image;
 
                     echo Image::render([
                         'url' => $imagePath ?? '#',
