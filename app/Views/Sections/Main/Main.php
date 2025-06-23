@@ -32,6 +32,7 @@ class Main
         $viteService = $container->get(ViteService::class);
 
         $popups = $contentService->get('section', 'popup', 'items');
+        $image = $contentService->get('section','main', 'image');
 
         $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'main',
