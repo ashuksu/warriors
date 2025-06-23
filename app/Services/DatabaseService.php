@@ -13,10 +13,6 @@ class DatabaseService
 {
     private ?PDO $pdo = null;
 
-    /**
-     * @param ConfigService $config The configuration service.
-     * @throws Exception If the database connection fails.
-     */
     public function __construct(ConfigService $config)
     {
         $dbConfig = $config->get('database');
@@ -35,10 +31,9 @@ class DatabaseService
     }
 
     /**
-     * Get the underlying PDO connection object.
-     * Useful for direct PDO operations like exec() for schema files.
+     * Gets the underlying PDO connection.
      *
-     * @return PDO|null The PDO instance, or null if not connected.
+     * @return PDO|null PDO instance or null.
      */
     public function getConnection(): ?PDO
     {
@@ -46,17 +41,17 @@ class DatabaseService
     }
 
     /**
-     * Execute an SQL query and return all results.
+     * Executes an SQL query and returns all results.
      *
-     * @param string $sql The SQL query string.
-     * @param array $params Optional array of parameters for a prepared statement.
-     * @return array The fetched results as an associative array.
+     * @param string $sql SQL query string.
+     * @param array $params Optional parameters.
+     * @return array Fetched results.
      * @throws Exception If query execution fails.
      */
     public function query(string $sql, array $params = []): array
     {
         if ($this->pdo === null) {
-            throw new Exception("PDO instance is null. Database connection might have failed.");
+            throw new Exception("PDO instance is null.");
         }
 
         try {
@@ -70,17 +65,17 @@ class DatabaseService
     }
 
     /**
-     * Execute a SQL statement (INSERT, UPDATE, DELETE).
+     * Executes an SQL statement (INSERT, UPDATE, DELETE).
      *
-     * @param string $sql The SQL statement string.
-     * @param array $params Optional array of parameters for a prepared statement.
-     * @return int The number of affected rows.
+     * @param string $sql SQL statement string.
+     * @param array $params Optional parameters.
+     * @return int Number of affected rows.
      * @throws Exception If statement execution fails.
      */
     public function execute(string $sql, array $params = []): int
     {
         if ($this->pdo === null) {
-            throw new Exception("PDO instance is null. Database connection might have failed.");
+            throw new Exception("PDO instance is null.");
         }
 
         try {
@@ -94,10 +89,10 @@ class DatabaseService
     }
 
     /**
-     * Get the last inserted ID.
+     * Gets the last inserted ID.
      *
-     * @param string|null $name The name of the sequence object from which the ID should be returned.
-     * @return string|false The ID of the last inserted row or sequence value, or false on failure.
+     * @param string|null $name Sequence name.
+     * @return string|false Last inserted ID or false on failure.
      */
     public function lastInsertId(?string $name = null): string|false
     {
