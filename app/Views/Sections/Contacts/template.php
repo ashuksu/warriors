@@ -8,12 +8,9 @@
 			<div class="row contacts__list wow pixFadeUp" data-wow-delay="0.3s">
 
                 <?php
-
-                use function App\Helpers\renderTemplate;
-
                 if (!empty($collection) && is_array($collection)) {
                     foreach ($collection as $item) {
-                        renderTemplate($itemPath ?? __DIR__ . '/item.php', [
+                        $templateService->render($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
                         ]);
                     }
