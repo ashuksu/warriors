@@ -3,25 +3,35 @@
 namespace App\Views\Sections\Info;
 
 use App\Core\Container;
-use App\Services\SectionService;
+use App\Services\TemplateService;
+use App\Services\ContentService;
 use Exception;
-use function App\Helpers\renderTemplate;
 
+/**
+ * Info section view.
+ */
 class Info
 {
     /**
-     * Render the section with provided parameters.
+     * Renders the Info section.
      *
-     * @param Container $container
+     * @param Container $container The DI container.
      * @return void
      * @throws Exception
      */
     public static function render(Container $container): void
     {
-        renderTemplate(__DIR__ . '/template.php', params: [
-            'item' => SectionService::get('info', 'items', 'info-' . PAGE),
+        $pageData = $container->getPageData();
+
+        /** @var TemplateService $templateService */
+        $templateService = $container->get(TemplateService::class);
+
+        /** @var ContentService $contentService */
+        $contentService = $container->get(ContentService::class);
+
+        $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'info',
-            'metadata' => $container->getPageMetadata()
+            'item' => $contentService->get('section', 'info', 'items', 'info-' . $pageData['name'] ?? 'home')
         ]);
     }
 }
