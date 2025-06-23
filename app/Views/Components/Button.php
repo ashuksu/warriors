@@ -2,8 +2,6 @@
 
 namespace App\Views\Components;
 
-use App\Services\ConfigVarResolver;
-
 /**
  * Button component class
  *
@@ -15,19 +13,18 @@ class Button
      * Renders a button using an anchor tag with configurable options
      *
      * @param array{
-     *     url?: string,
-     *     class?: string,
-     *     attr?: string,
-     *     content?: string,
-     *     tag?: string,
-     *     aria-label?: string,
-     *     aria-expanded?: string|bool,
-     *     aria-controls?: string,
-     *     role?: string,
-     *     aria-hidden?: bool
-     * } $params Button configuration
-     *
-     * @return string HTML button
+     * url?: string,
+     * class?: string,
+     * attr?: string,
+     * content?: string,
+     * tag?: string,
+     * aria-label?: string,
+     * aria-expanded?: string|bool,
+     * aria-controls?: string,
+     * role?: string,
+     * aria-hidden?: bool,
+     * } $params Button configuration.
+     * @return string Rendered HTML button or anchor tag.
      */
     public static function render(array $params = []): string
     {
@@ -35,10 +32,12 @@ class Button
 
         // default params
         $url = $url ?? '#';
+        $url = htmlspecialchars($url, ENT_QUOTES);
         $class = isset($class) ? "button {$class}" : 'button';
+        $class = htmlspecialchars($class, ENT_QUOTES);
         $attr = $attr ?? '';
         $content = $content ?? '';
-        $tag = $tag ?? 'link';
+        $tag = $tag ?? 'link'; // 'link' for <a>, 'button' for <button>
 
         // ADDED: Accessibility attributes
         $ariaLabel = !empty($params['aria-label']) ? 'aria-label="' . htmlspecialchars($params['aria-label'], ENT_QUOTES) . '"' : '';
@@ -47,50 +46,37 @@ class Button
         $role = !empty($params['role']) ? 'role="' . htmlspecialchars($params['role'], ENT_QUOTES) . '"' : '';
         $ariaHidden = isset($params['aria-hidden']) ? 'aria-hidden="' . ($params['aria-hidden'] ? 'true' : 'false') . '"' : '';
 
-        // Resolve variables in URL
-        if (is_string($url) && strpos($url, '$') !== false) {
-            // If the entire URL is a variable (like "$LINK"), extract the variable name and get its value
-            if (preg_match('/^\$([A-Za-z_][A-Za-z0-9_]*)$/', $url, $matches)) {
-                $varName = $matches[1];
-                if (isset($GLOBALS[$varName])) {
-                    $url = $GLOBALS[$varName];
-                }
-            } else {
-                // Otherwise, use the ConfigVarResolver to resolve any variables in the URL
-                $url = ConfigVarResolver::getInstance()->resolveValue($url);
-            }
-        }
+        ob_start();
+		?>
 
-        $url = htmlspecialchars($url, ENT_QUOTES);
-        $class = htmlspecialchars($class, ENT_QUOTES);
-
-        ob_start(); ?>
         <?php if ($tag === 'button'): ?>
 
-		<button class="<?= $class ?>"
-            <?= $attr ?>
-            <?= $ariaLabel ?>
-            <?= $ariaExpanded ?>
-            <?= $ariaControls ?>
-            <?= $role ?>
-		>
-            <?= $content ?>
-		</button>
+			<button class="<?= $class ?>"
+				<?= $attr ?>
+				<?= $ariaLabel ?>
+				<?= $ariaExpanded ?>
+				<?= $ariaControls ?>
+				<?= $role ?>
+			>
+				<?= $content ?>
+			</button>
 
-    <?php else: ?>
+		<?php else: /* tag is 'link' */ ?>
 
-		<a href="<?= $url ?>"
-		   class="<?= $class ?>"
-            <?= $attr ?>
-            <?= $ariaLabel ?>
-            <?= $ariaExpanded ?>
-            <?= $ariaControls ?>
-            <?= $role ?>
-            <?= $ariaHidden ?>>
-            <?= $content ?>
-		</a>
+			<a href="<?= $url ?>"
+			   class="<?= $class ?>"
+				<?= $attr ?>
+				<?= $ariaLabel ?>
+				<?= $ariaExpanded ?>
+				<?= $ariaControls ?>
+				<?= $role ?>
+				<?= $ariaHidden ?>
+			>
+				<?= $content ?>
+			</a>
 
-    <?php endif;
+		<?php endif;
+
         return ob_get_clean();
     }
 }
