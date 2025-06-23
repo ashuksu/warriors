@@ -2,14 +2,16 @@
 
 namespace App\Views\Sections;
 
-use App\Helpers\Device;
+use App\Core\Container;
+use App\Services\DeviceService;
+use App\Services\ViteService;
+use App\Services\ConfigService;
 use App\Views\Components\Button;
 use App\Views\Components\Image;
-use function App\Helpers\getPath;
+use Exception;
 
 /**
  * Header section class
- *
  * Handles rendering of the site header with logo, menu button, and navigation
  */
 class Header
@@ -19,22 +21,30 @@ class Header
      *
      * Outputs the header with logo, menu button, and navigation menu
      *
-     * @param array $params Parameters for the header section
+     * @param Container $container The DI container.
      * @return void
+     * @throws Exception
      */
-    public static function render($params = [])
+    public static function render(Container $container): void
     {
-        extract($params);
+        /** @var ConfigService $configService */
+        $configService = $container->get(ConfigService::class);
+
+        /** @var ViteService $viteService */
+        $viteService = $container->get(ViteService::class);
+
+        /** @var DeviceService $deviceService */
+        $deviceService = $container->get(DeviceService::class);
         ?>
 
 		<header id="header" class="header" role="banner">
 			<div class="container">
 				<div class="header__inner">
-					<a href="<?= APP_PATH ?>" class="logo">
+					<a href="<?= $configService->get('app_path') ?>" class="logo">
 
                         <?php
                         echo Image::render([
-                            'url' => getPath('dist/assets/images/logo/logo-1.svg'),
+                            'url' => $viteService->getAssetPath('dist/assets/images/logo/logo-1.svg'),
                             'alt' => 'logo',
                             'width' => 30,
                             'height' => 30,
@@ -45,16 +55,16 @@ class Header
                     <?php
                     echo Button::render([
                         'class' => 'button button--menu button--transparent',
-                        'attr' => 'data-element="menu-open"' . (Device::isDesktop() ? ' hidden' : ''),
+                        'attr' => 'data-element="menu-open"' . ($deviceService->isDesktop() ? ' hidden' : ''),
                         'content' => '<i></i>',
-                        'aria-hidden' => Device::isDesktop(),
+                        'aria-hidden' => $deviceService->isDesktop(),
                         'aria-label' => 'Open Main Menu',
                         'aria-expanded' => false,
                         'aria-controls' => 'menu',
                         'role' => 'button'
                     ]);
 
-                    Menu::render([]);
+                    Menu::render($container);
                     ?>
 
 				</div>
