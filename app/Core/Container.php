@@ -53,7 +53,10 @@ class Container
             $c->get(CacheService::class),
             $c->get(ConfigService::class)
         ));
-        $this->singleton(ViteService::class, fn($c) => new ViteService($c->get(ConfigService::class)));
+        $this->singleton(ViteService::class, fn($c) => new ViteService(
+            $c->get(ConfigService::class),
+            $c->get(CacheService::class)
+        ));
         $this->singleton(DeviceService::class, fn($c) => new DeviceService());
         $this->singleton(Router::class, fn($c) => new Router($c));
     }
