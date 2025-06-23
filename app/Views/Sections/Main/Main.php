@@ -3,33 +3,43 @@
 namespace App\Views\Sections\Main;
 
 use App\Core\Container;
-use App\Services\SectionService;
+use App\Services\TemplateService;
+use App\Services\ContentService;
+use App\Services\ViteService;
 use Exception;
-use function App\Helpers\renderTemplate;
-use function App\Helpers\getPath;
 
+/**
+ * Main section view.
+ */
 class Main
 {
     /**
-     * Render the section with provided parameters.
+     * Renders the Main section.
      *
-     * @param Container $container
+     * @param Container $container The DI container.
      * @return void
      * @throws Exception
      */
     public static function render(Container $container): void
     {
-        $popups = SectionService::get('popup', 'items');
-        $image = SectionService::get('main', 'image');
+        /** @var TemplateService $templateService */
+        $templateService = $container->get(TemplateService::class);
 
-        renderTemplate(__DIR__ . '/template.php', params: [
-            'item' => SectionService::get('main'),
+        /** @var ContentService $contentService */
+        $contentService = $container->get(ContentService::class);
+
+        /** @var ViteService $viteService */
+        $viteService = $container->get(ViteService::class);
+
+        $popups = $contentService->get('section', 'popup', 'items');
+
+        $templateService->render(__DIR__ . '/template.php', params: [
             'section' => 'main',
-            'image' => $image,
-            'imagePath' => getPath('dist/assets/images/' . ($image['image'] ?? '')),
+            'item' => $contentService->get('section', 'main'),
+            'image' => $contentService->get('section', 'main', 'image'),
+            'imagePath' => $viteService->getAssetPath('dist/assets/images/' . ($image['image'] ?? '')),
             'popups' => $popups,
-            'isPopups' => !empty($popups) && is_array($popups),
-            'metadata' => $container->getPageMetadata()
+            'isPopups' => !empty($popups) && is_array($popups)
         ]);
     }
 }
