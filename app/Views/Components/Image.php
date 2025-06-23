@@ -2,9 +2,10 @@
 
 namespace App\Views\Components;
 
-use function App\Helpers\getPath;
-use function App\Helpers\fileExists;
-use function App\Helpers\validateExternalUrl;
+use App\Core\Container;
+use App\Services\ConfigService;
+use App\Services\ViteService;
+use Exception;
 
 /**
  * Responsive image component with WebP support
@@ -32,22 +33,29 @@ class Image
     /**
      * Render a responsive image with appropriate attributes
      *
-     * @param array{
-     * url?: string,            Path to image or external URL
+     * url?: string,            Path image or external URL
      * alt?: string,            Alt text for the image
-     * width?: int,            Image width
+     * width?: int,				Image width
      * height?: int,            Image height
-     * attr?: string,            Additional HTML attributes
-     * srcset?: string,        Custom srcset attribute
-     * sizes?: string,        Custom sizes attribute
-     * fetchpriority?:string,    Resource loading priority
-     * decoding?: string,        Image decoding mode
-     * noLazy?:                bool Disable lazy loading
-     * } $params
+     * attr?: string,			Additional HTML attributes
+     * srcset?: string,			Custom srcset attribute
+     * sizes?: string,			Custom sizes attribute
+     * fetchpriority?:string,	Resource loading priority
+     * decoding?: string,		Image decoding mode
+     * noLazy?:					bool Disable lazy loading
+     * viteService:				ViteService
      * @return string HTML image tag
+     * @throws Exception
      */
     public static function render(array $params = []): string
     {
+        extract($params);
+
+        $container = Container::getInstance();
+
+        /** @var ViteService $viteService */
+        $viteService = $container->get(ViteService::class);
+
         $alt = !empty($params['alt']) ? htmlspecialchars($params['alt'], ENT_QUOTES) : 'image';
         $width = $params['width'] ?? 600;
         $height = $params['height'] ?? 600;
@@ -62,18 +70,19 @@ class Image
             || !isset($pathInfo['extension'])) {
 
             return self::renderImage(
-                getPath(self::BROKEN_IMAGE_PATH),
+                $viteService->getAssetPath(self::BROKEN_IMAGE_PATH),
                 $alt,
                 $width,
                 $height,
                 $attr,
-                $params);
+                $params
+			);
         }
 
         $originalExt = strtolower($pathInfo['extension']);
 
         // Handle external URLs
-        if (validateExternalUrl($url)) {
+        if ($viteService->validateExternalUrl($url)) {
             return self::renderImage(
                 htmlspecialchars($url, ENT_QUOTES),
                 $alt,
@@ -84,7 +93,7 @@ class Image
             );
         }
 
-        $fallbackImage = self::updateImage($url) === false ? getPath(self::BROKEN_IMAGE_PATH) : self::updateImage($url);
+        $fallbackImage = self::updateImage($url) === false ? $viteService->getAssetPath(self::BROKEN_IMAGE_PATH) : self::updateImage($url);
 
         $statusSrc = (self::updateImage($url) !== false && $fallbackImage === self::transformAssetUrl($url)) ? self::DIST_STATUS_ATTR : '';
 
@@ -129,32 +138,44 @@ class Image
     /**
      * Set fallback image path
      */
-    public static function setFallbackImagePath(string $path): void
+    private static function setFallbackImagePath(string $path): void
     {
         self::$fallbackImagePath = $path;
     }
 
     /**
-     * Get fallback image path
+     * Get a fallback image path
+     * @throws Exception
      */
-    public static function getFallbackImagePath(): string
+    private static function getFallbackImagePath(): string
     {
-        return self::$fallbackImagePath ?: getPath(self::BROKEN_IMAGE_PATH);
+        $container = Container::getInstance();
+
+        /** @var ViteService $viteService */
+        $viteService = $container->get(ViteService::class);
+
+        return self::$fallbackImagePath ?: $viteService->getAssetPath(self::BROKEN_IMAGE_PATH);
     }
 
     /**
-     * Get updated image path of BROKEN_IMAGE
+     * Get an updated image path of BROKEN_IMAGE
+     * @throws Exception
      */
-    public static function updateImage(string $url): string|bool
+    private static function updateImage(string $url): string|bool
     {
+        $container = Container::getInstance();
+
+        /** @var ViteService $viteService */
+        $viteService = $container->get(ViteService::class);
+
         $result = false;
-        $Image = fileExists($url);
-        $originalImage = fileExists(self::transformAssetUrl($url));
+        $Image = $viteService->fileExists($url);
+        $originalImage = $viteService->fileExists(self::transformAssetUrl($url));
 
         if ($Image !== false) {
-            $result = getPath($Image);
+            $result = $viteService->getAssetPath($Image);
         } else if ($originalImage !== false) {
-            $result = getPath($originalImage);
+            $result = $viteService->getAssetPath($originalImage);
         }
 
         return $result;
@@ -220,7 +241,9 @@ class Image
     {
         $loadingAttrs = self::getLoadingAttributes($params);
 
-        ob_start(); ?>
+        ob_start();
+		?>
+
 		<img src="<?= htmlspecialchars($src, ENT_QUOTES) ?>"
             <?= $responsiveAttrs['srcset'] ?? '' ?>
             <?= $responsiveAttrs['sizes'] ?? '' ?>
@@ -237,9 +260,15 @@ class Image
 
     /**
      * Get file paths for original and processed images
+     * @throws Exception
      */
     private static function getOptimizedFilesPaths(array $pathInfo): string|array
     {
+        $container = Container::getInstance();
+
+        /** @var ViteService $viteService */
+        $viteService = $container->get(ViteService::class);
+
         $filePathList = [];
         $fallbackCount = 0;
 
@@ -247,7 +276,7 @@ class Image
             $filePathList[$size] = $pathInfo['dirname'] . '/' . $pathInfo['filename'] .
                 '-' . $size . '.' . self::EXT;
 
-            if (!fileExists($filePathList[$size])) {
+            if (!$viteService->fileExists($filePathList[$size])) {
                 $filePathList[$size] = self::getFallbackImagePath();
                 $fallbackCount++;
             }
