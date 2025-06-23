@@ -17,9 +17,10 @@ class CacheService
     /**
      * Fetch an item from the cache.
      * @param string $key
+     * @param mixed|null $default
      * @return mixed
      */
-    public function get(string $key, $default = null): mixed
+    public function get(string $key, mixed $default = null): mixed
     {
         if (!$this->isEnabled) return $default;
         $value = apcu_fetch($key, $success);
