@@ -108,11 +108,7 @@ class Head
             <link rel="canonical" href="<?= 'https://' . $configService->get('domain') . '/' . ($pageData['name'] === 'home' ? '' : $pageData['name']) ?>">
 
 			<?php
-            $templateService->render(__DIR__ . '/head-links.php', [
-                'configService' => $configService,
-                'viteService' => $viteService,
-                'pageDataName' => $pageData['name'] ?? 'home'
-            ]);
+            $templateService->render(__DIR__ . '/head-links.php', ['container' => $container]);
 			?>
 
 		</head>

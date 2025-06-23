@@ -1,3 +1,21 @@
+<?php
+
+use App\Core\Container;
+use App\Services\ConfigService;
+use App\Services\ViteService;
+
+/** @var ConfigService $configService */
+$configService = $container->get(ConfigService::class);
+
+/** @var ViteService $viteService */
+$viteService = $container->get(ViteService::class);
+
+$pageData = $container->getPageData();
+$pageDataName = $pageData['name'] ?? 'home';
+
+$uniqId = ($item['id'] ?? '') . uniqid();
+?>
+
 <!-- Preconnect to external domains to improve performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

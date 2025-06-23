@@ -33,9 +33,6 @@ class Layout
     {
         $pageData = $container->getPageData();
 
-        /** @var ConfigService $configService */
-        $configService = $container->get(ConfigService::class);
-
         /** @var TemplateService $templateService */
         $templateService = $container->get(TemplateService::class);
 
@@ -49,10 +46,7 @@ class Layout
         <div class="wrapper">
 
             <?php
-            echo Preloader::render([
-					'attr' => 'data-delay="0.1"',
-					'viteService' => $viteService
-			]);
+            echo Preloader::render(['attr' => 'data-delay="0.1"', 'viteService' => $viteService]);
 
             Header::render($container);
             ?>
@@ -95,10 +89,7 @@ class Layout
 
         Popup::render($container);
 
-        $templateService->render(__DIR__ . '/Sections/footer-links.php', [
-            'configService' => $configService,
-            'viteService' => $viteService
-        ]);
+        $templateService->render(__DIR__ . '/Sections/footer-links.php', ['viteService' => $viteService]);
         ?>
 
         </body>
