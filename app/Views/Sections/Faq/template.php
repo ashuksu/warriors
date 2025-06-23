@@ -7,12 +7,9 @@
             <div class="faq__list">
 
                 <?php
-
-                use function App\Helpers\renderTemplate;
-
                 if (!empty($collection) && is_array($collection)) {
                     foreach ($collection as $index => $item) {
-                        renderTemplate($itemPath ?? __DIR__ . '/item.php', [
+                        $templateService->render($itemPath ?? __DIR__ . '/item.php', [
                             'item' => $item,
                             'index' => $index,
                             'setActiveClass' => $index === 0 ? 'active' : ''

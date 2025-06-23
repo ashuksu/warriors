@@ -3,27 +3,35 @@
 namespace App\Views\Sections\Faq;
 
 use App\Core\Container;
-use App\Services\SectionService;
+use App\Services\TemplateService;
+use App\Services\ContentService;
 use Exception;
-use function App\Helpers\renderTemplate;
 
+/**
+ * Faq section view.
+ */
 class Faq
 {
     /**
-     * Render the section with provided parameters.
+     * Renders the Faq section.
      *
-     * @param Container $container
+     * @param Container $container The DI container.
      * @return void
      * @throws Exception
      */
     public static function render(Container $container): void
     {
-        renderTemplate(__DIR__ . '/template.php', params: [
-            'collection' => SectionService::get('faq', 'items'),
-            'section' => 'faq',
-            'title' => SectionService::get('faq', 'title'),
-            'metadata' => $container->getPageMetadata()
-        ]);
+        /** @var TemplateService $templateService */
+        $templateService = $container->get(TemplateService::class);
 
+        /** @var ContentService $contentService */
+        $contentService = $container->get(ContentService::class);
+
+        $templateService->render(__DIR__ . '/template.php', params: [
+            'section' => 'faq',
+            'collection' => $contentService->get('section', 'faq', 'items'),
+            'title' => $contentService->get('section', 'faq', 'title'),
+            'templateService' => $templateService
+        ]);
     }
 }
