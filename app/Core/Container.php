@@ -5,10 +5,11 @@ namespace App\Core;
 use App\Services\ConfigService;
 use App\Services\CacheService;
 use App\Services\DatabaseService;
-//use App\Services\ViteService;
-//use App\Services\DeviceService;
-//use App\Services\SectionProvider;
-//use App\Services\TemplateService;
+use App\Services\DataLoaderService;
+use App\Services\TemplateService;
+use App\Services\ContentService;
+use App\Services\ViteService;
+use App\Services\DeviceService;
 use App\Core\Router;
 use Exception;
 
@@ -20,11 +21,8 @@ class Container
     private static ?self $instance = null;
     private array $factories = [];
     private array $instances = [];
-    private array $pageContext = [];
+    private array $currentPageData = [];
 
-    /**
-     * Private constructor for a Singleton pattern.
-     */
     private function __construct() {}
 
     /**
@@ -48,19 +46,20 @@ class Container
         $this->singleton(ConfigService::class, fn($c) => new ConfigService());
         $this->singleton(CacheService::class, fn($c) => new CacheService());
         $this->singleton(DatabaseService::class, fn($c) => new DatabaseService($c->get(ConfigService::class)));
-//        TODO: temporarily commented out services
-//        $this->singleton(ViteService::class, fn($c) => new ViteService($c->get(ConfigService::class)));
-//        $this->singleton(DeviceService::class, fn($c) => new DeviceService());
-//        $this->singleton(SectionProvider::class, fn($c) => new SectionProvider(
-//            $c->get(DatabaseService::class),
-//            $c->get(CacheService::class)
-//        ));
-//        $this->singleton(TemplateService::class, fn($c) => new TemplateService($c));
+        $this->singleton(DataLoaderService::class, fn($c) => new DataLoaderService($c->get(DatabaseService::class)));
+        $this->singleton(TemplateService::class, fn($c) => new TemplateService($c));
+        $this->singleton(ContentService::class, fn($c) => new ContentService(
+            $c->get(DataLoaderService::class),
+            $c->get(CacheService::class),
+            $c->get(ConfigService::class)
+        ));
+        $this->singleton(ViteService::class, fn($c) => new ViteService($c->get(ConfigService::class)));
+        $this->singleton(DeviceService::class, fn($c) => new DeviceService());
         $this->singleton(Router::class, fn($c) => new Router($c));
     }
 
     /**
-     * Binds a service factory to be resolved as a new instance each time.
+     * Binds a service factory to be resolved as a fresh instance each time.
      *
      * @param string $class The class name or identifier.
      * @param callable $factory The factory function.
@@ -107,22 +106,23 @@ class Container
     }
 
     /**
-     * Sets page-specific metadata.
+     * Sets the complete data for the current page.
+     * This includes metadata, content, and any other page-specific attributes.
      *
-     * @param array $metadata Page metadata.
+     * @param array $pageData The associative array of page data.
      */
-    public function setPageMetadata(array $metadata): void
+    public function setPageData(array $pageData): void
     {
-        $this->pageContext = $metadata;
+        $this->currentPageData = $pageData;
     }
 
     /**
-     * Retrieves page-specific metadata.
+     * Retrieves the complete data for the current page.
      *
-     * @return array Page metadata.
+     * @return array The associative array of page data.
      */
-    public function getPageMetadata(): array
+    public function getPageData(): array
     {
-        return $this->pageContext;
+        return $this->currentPageData;
     }
 }
