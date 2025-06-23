@@ -10,7 +10,6 @@ declare(strict_types=1);
 use App\Core\Container;
 use Dotenv\Dotenv;
 use App\Services\ConfigService;
-use Throwable;
 
 if (!defined('PROJECT_ROOT')) {
     define('PROJECT_ROOT', dirname(__DIR__));
