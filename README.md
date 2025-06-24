@@ -248,6 +248,7 @@ make create-migration name=MigrationName
 ### Environment Configuration
 
 The `IS_DEV` variable controls environment-specific settings.
+Our application now leverages Dependency Injection (DI) containers for managing services and configuration variables, ensuring better organization and testability.
 
 Running in Development Mode (`.env`):
 

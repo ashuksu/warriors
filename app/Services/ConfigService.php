@@ -11,9 +11,14 @@ class ConfigService
 
     public function __construct()
     {
+        $projectRoot = __DIR__;
+        while (!file_exists($projectRoot . '/vendor/autoload.php') && $projectRoot !== '/') {
+            $projectRoot = dirname($projectRoot);
+        }
+
         $this->config = [
             'app_path' => $_ENV['APP_PATH'] ?? '/',
-            'project_root' => $_ENV['PROJECT_ROOT'] ?? dirname(dirname(__DIR__)),
+            'project_root' => $projectRoot,
             'domain' => $_ENV['DOMAIN'] ?? 'localhost',
             'is_dev' => ($_ENV['IS_DEV'] ?? 'false') === 'true',
             'cache_clear' => ($_ENV['CACHE_CLEAR'] ?? 'false') === 'true',
@@ -30,7 +35,7 @@ class ConfigService
                 'server'        => $_ENV['VITE_DEV_SERVER'] ?? 'http://localhost:5173/',
                 'client'        => ($_ENV['VITE_DEV_SERVER'] ?? 'http://localhost:5173/') . '@vite/client',
                 'dist'          => ($_ENV['APP_PATH'] ?? '/') . 'dist/',
-                'manifest_file' => ($_ENV['PROJECT_ROOT'] ?? dirname(dirname(__DIR__))) . '/public/dist/.vite/manifest.json',
+                'manifest_file' => $projectRoot . '/public/dist/.vite/manifest.json',
                 'enable_full_reload' => ($_ENV['ENABLE_FULL_RELOAD'] ?? 'false') === 'true',
                 'enable_hmr' => ($_ENV['ENABLE_HMR'] ?? 'false') === 'true',
             ],
@@ -52,19 +57,7 @@ class ConfigService
             ],
             'images' => [
                 'allowed_domains' => array_filter(array_map('trim', explode(',', $_ENV['ALLOWED_IMAGE_DOMAINS'] ?? ''))),
-            ],
-            'upload_limits' => [
-                'max_file_size' => $_ENV['MAX_UPLOAD_FILESIZE'] ?? '64M',
-                'post_max_size' => $_ENV['POST_MAX_SIZE'] ?? '64M',
-            ],
-            'php_settings' => [
-                'memory_limit' => $_ENV['PHP_MEMORY_LIMIT'] ?? '512M',
-                'max_execution_time' => (int)($_ENV['PHP_MAX_EXECUTION_TIME'] ?? 60),
-                'date_timezone' => $_ENV['PHP_DATE_TIMEZONE'] ?? 'Europe/Stockholm',
-            ],
-            'analytics' => [
-                'ga_tracking_id' => $_ENV['GA_TRACKING_ID'] ?? null,
-            ],
+            ]
         ];
     }
 

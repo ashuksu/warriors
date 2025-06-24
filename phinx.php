@@ -3,20 +3,16 @@
 declare(strict_types=1);
 
 use Dotenv\Dotenv;
-use Throwable;
 
-if (!defined('PROJECT_ROOT')) {
-    $projectRoot = __DIR__;
-    while (!file_exists($projectRoot . '/vendor/autoload.php') && $projectRoot !== '/') {
-        $projectRoot = dirname($projectRoot);
-    }
-    define('PROJECT_ROOT', $projectRoot);
+$projectRoot = __DIR__;
+while (!file_exists($projectRoot . '/vendor/autoload.php') && $projectRoot !== '/') {
+    $projectRoot = dirname($projectRoot);
 }
 
-require_once PROJECT_ROOT . '/vendor/autoload.php';
+require_once $projectRoot . '/vendor/autoload.php';
 
 try {
-    $dotenv = Dotenv::createImmutable(PROJECT_ROOT);
+    $dotenv = Dotenv::createImmutable($projectRoot);
     $dotenv->load();
 } catch (Throwable $e) {
     // It's okay if .env doesn't exist, environment variables from Docker or system will be used.

@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 use App\Core\Container;
 use Dotenv\Dotenv;
-use App\Services\ConfigService;
 
-if (!defined('PROJECT_ROOT')) {
-    define('PROJECT_ROOT', dirname(__DIR__));
+$projectRoot = __DIR__;
+while (!file_exists($projectRoot . '/vendor/autoload.php') && $projectRoot !== '/') {
+    $projectRoot = dirname($projectRoot);
 }
 
-require_once PROJECT_ROOT . '/vendor/autoload.php';
+require_once $projectRoot. '/vendor/autoload.php';
 
 try {
-    $dotenv = Dotenv::createImmutable(PROJECT_ROOT);
+    $dotenv = Dotenv::createImmutable($projectRoot);
     $dotenv->load();
 } catch (Throwable $e) {
     error_log("Dotenv failed to load: " . $e->getMessage());
