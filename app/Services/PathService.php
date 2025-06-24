@@ -18,6 +18,7 @@ class PathService
     private bool $isDev;
     private string $viteDevServer;
     private string $appPath;
+    private string $projectRoot;
     private string $distPath;
     private ConfigService $configService;
     private CacheService $cacheService;
@@ -26,11 +27,27 @@ class PathService
     {
         $this->configService = $configService;
         $this->cacheService = $cacheService;
-        $this->isDev = $configService->get('is_dev');
-        $this->viteDevServer = $configService->get('vite.server');
-        $this->manifestFile = $configService->get('vite.manifest_file');
         $this->appPath = $configService->get('app_path');
+        $this->projectRoot = $configService->get('project_root');
         $this->distPath = $configService->get('vite.dist');
+        $this->manifestFile = $configService->get('vite.manifest_file');
+        $this->viteDevServer = $configService->get('vite.server');
+        $this->isDev = $configService->get('is_dev');
+    }
+
+    /**
+     * Get the appropriate asset path based on the application environment.
+     *
+     * In development mode (IS_DEV defined and true), it prepends the Vite development
+     * server URL. Otherwise, it uses the application's base path.
+     *
+     * @param string $path The relative path to the asset (e.g., 'dist/css/style.css').
+     * @return string The full, resolved URL or path to the asset.
+     */
+    function getPath(string $path): string
+    {
+        if ($this->isDev) return $this->viteDevServer . $path;
+        return $this->appPath . $path;
     }
 
     /**
@@ -43,7 +60,7 @@ class PathService
      * @return string URL to the processed asset.
      * @throws RuntimeException If Vite manifest is not found in production mode.
      */
-    public function getPath(string $file): string
+    public function getAssetPath(string $file): string
     {
         if ($this->isDev) {
             return $this->viteDevServer . $file;
@@ -130,8 +147,8 @@ class PathService
 
         if (isset($_SERVER['DOCUMENT_ROOT']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $cleanPath))) {
             $fullLocalPath = $_SERVER['DOCUMENT_ROOT'] . '/' . $cleanPath;
-        } else if (str_starts_with($cleanPath, 'src/') && (file_exists($this->configService->get('project_root') . $cleanPath))) {
-            $fullLocalPath = $this->configService->get('project_root') . $cleanPath;
+        } else if (str_starts_with($cleanPath, 'src/') && (file_exists($this->projectRoot . $cleanPath))) {
+            $fullLocalPath = $this->projectRoot . $cleanPath;
         }
 
         $fullLocalPath = str_replace('//', '/', $fullLocalPath);

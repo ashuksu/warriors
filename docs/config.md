@@ -50,7 +50,6 @@ cp .env.example .env
 | Variable          | Default value                  | Description                                                                                                                         |
 |-------------------|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `APP_PATH`        | `/`                            | The base path for the application                                                                                                   |
-| `PROJECT_ROOT`    | parent directory of config     | Absolute path to the project root<br/> * the root directory of the project                                                          |
 | `VITE_DEV_SERVER` | `http://localhost:5173/`       | The URL of the Vite `development` server<br/> * for local only                                                                      |
 | `VITE_DEV_CLIENT` | `VITE_DEV_SERVER@vite/client`  | The URL of the Vite client<br/> * used for hot module reload in dev mode                                                            |
 | `ASSETS_PATH`     | depends on `IS_DEV`            | The base path for assets<br/> * `VITE_DEV_SERVER` in dev mode,<br/> * `APP_PATH` in production                                      |
