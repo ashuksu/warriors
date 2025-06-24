@@ -281,11 +281,14 @@ export default defineConfig(({mode}) => {
             emptyOutDir: true,
             rollupOptions: {
                 input: {
-                    script: './src/js/script.js',
+                    critical: './src/styles/critical.scss',
                     main: './src/styles/main.scss',
+                    page_catalog: './src/styles/page_catalog.scss',
+                    page_contacts: './src/styles/page_contacts.scss',
+                    page_error: './src/styles/page_error.scss',
                     page_home: './src/styles/page_home.scss',
                     page_home_critical: './src/styles/page_home_critical.scss',
-                    critical: './src/styles/critical.scss'
+                    script: './src/js/script.js'
                 },
                 output: {
                     manualChunks(id) {
@@ -297,8 +300,8 @@ export default defineConfig(({mode}) => {
                         const chunk = Object.entries(moduleChunks).find(([path]) => id.includes(path));
                         return chunk ? chunk[1] : undefined;
                     },
-                    entryFileNames: 'js/[name].[hash].js',
-                    chunkFileNames: 'js/[name].[hash].js',
+                    entryFileNames: 'js/[name].[hash].min.js',
+                    chunkFileNames: 'js/[name].[hash].min.js',
                     assetFileNames: ({name}) => {
                         if (/\.(css|scss)$/.test(name ?? '')) {
                             return 'styles/[name].[hash].min[extname]';
@@ -306,7 +309,7 @@ export default defineConfig(({mode}) => {
                         if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
                             return 'assets/images/[name].[hash][extname]';
                         }
-                        return 'assets/[name]-[hash].min[extname]';
+                        return 'assets/[name].[hash].min[extname]';
                     }
                 }
             }

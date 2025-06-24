@@ -1,5 +1,5 @@
-//@use "modules/info";
 @use "modules";
+@forward "modules/info";
 @forward "modules/compnents/contacts-card";
 
 .contacts {
