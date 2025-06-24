@@ -125,8 +125,11 @@ create-migration:
 
 # Stop and remove all containers, networks, and VOLUMES for this project
 clean:
-	@echo '${RED}WARNING: This will remove all containers, networks, and project volumes!${RESET}'
-	@read -p "Are you sure? [y/N] " ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
+	@echo '${RED}WARNING!${RESET}'
+	@echo '${RED}This will remove all project data (containers, volumes, dist/, vendor/, node_modules/)!${RESET}'
+	@read -p "${YELLOW}Are you sure? ${CYAN}[y/N] ${RESET}" ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
+	@$(MAKE) down
+	@$(MAKE) down-prod
 	@docker compose $(DEV_COMPOSE_ARGS) down -v 2>/dev/null || true
 	@docker compose $(PROD_COMPOSE_ARGS) down -v 2>/dev/null || true
 	@cd $(ROOT_DIR) && \
@@ -140,9 +143,9 @@ clean:
 destroy:
 	@$(MAKE) clean
 	@echo; \
-	echo "${RED}███ DANGER ZONE! ███"; \
-	echo "${YELLOW}This will purge ALL unused Docker resources on your system, not just for this project.${RESET}"; \
-	read -p "Are you absolutely sure you want to proceed? [y/N] " ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
+	echo "${RED}███ DANGER ZONE! ███${RESET}"; \
+	echo "${RED}This will purge ALL unused Docker resources on your system, not just for this project.${RESET}"; \
+	read -p "${YELLOW}Are you absolutely sure? ${CYAN}[y/N] ${RESET}" ans && [ $${ans:-N} = y ] || (echo "Cancelled." && exit 1)
 	@echo "${BLUE}Starting system-wide Docker prune...${RESET}"
 	@docker ps -qa | xargs -r docker rm -f && echo "${CYAN}All stopped and running containers forcefully removed.${RESET}" || echo "${YELLOW}⚠ No containers to remove.${RESET}"
 	@docker images -qa | xargs -r docker rmi -f && echo "${CYAN}All Docker images forcefully removed.${RESET}" || echo "${YELLOW}⚠ No Docker images to remove or removal failed.${RESET}"
@@ -204,18 +207,18 @@ deploy: wget-preparation wget
 	@echo '${BLUE}Deployment Decision${RESET}'
 	@echo
 	@bash -c '\
-		echo "${YELLOW}Would you like to deploy the generated static site to GitHub Pages?${RESET}"; \
-		echo ; \
-		echo "${CYAN}Press: ${YELLOW}Enter=yes, Any other key=no${RESET}"; \
+		echo "${YELLOW}ATTENTION!${RESET}"; \
+		echo "${YELLOW}You are about to deploy the generated static site to GitHub Pages.${RESET}"; \
+		echo "Are you sure? ${CYAN}[y/N] ${RESET}"; \
 		read -n 1 -s key; \
-		if [[ -z "$$key" ]]; then \
+		if [[ "$$key" == "y" || "$$key" == "Y" || "$$key" == "н" || "$$key" == "Н" ]]; then \
 			printf "\r${GREEN}✔ Deploy selected.${RESET}\n"; \
 			make live-server-kill; \
 			make down; \
 			make gh-pages-push-public; \
 			echo "${CYAN}${GREEN}✔ Static site generation and deployment process completed!${RESET}"; \
 		else \
-			printf "\r${YELLOW}Deploy cancelled by user.${RESET}\n"; \
+			printf "\r${CYAN}Deploy cancelled by user.${RESET}\n"; \
 			make live-server-kill; \
 			make down; \
 			echo "${CYAN}${GREEN}✔ Static site generation!${RESET}"; \
@@ -238,7 +241,7 @@ wget:
 	@$(MAKE) live-server || echo "${RED}Can't start live-server${RESET}"
 
 # Static Preparation
-wget-preparation: down build-prod up-prod
+wget-preparation: restart-prod
 	@echo '${GREEN}✔ Docker production environment is up and running at ${APP_URL} in background!${RESET}'
 	@$(MAKE) npm run build || echo "${RED}Some issues with ${YELLOW}'make npm run build'.${RESET}"
 	@echo '${GREEN}✔ Production assets built.${RESET}'

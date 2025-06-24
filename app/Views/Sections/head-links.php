@@ -13,7 +13,13 @@ $pathService = $container->get(PathService::class);
 $pageData = $container->getPageData();
 $pageDataName = $pageData['name'] ?? 'home';
 
-$uniqId = ($item['id'] ?? '') . uniqid();
+/**
+ * Set `$criticalStylePath` if a critical CSS file exists for the current page.
+ * Add page names (e.g., 'home', 'contacts') to the array if a critical CSS file is available for them.
+ */
+$criticalStylePath = in_array($pageDataName, ['home'])
+	? $pathService->getAssetPath('src/styles/page_' . $pageDataName . '_critical.scss')
+	: false;
 ?>
 
 <!-- Preconnect to external domains to improve performance -->
@@ -32,7 +38,7 @@ $uniqId = ($item['id'] ?? '') . uniqid();
 	<script type="module" src="<?= $configService->get('vite.client') ?>"></script>
 <?php endif; ?>
 
-<!-- Styles: critical (loaded immediately, blocks' rendering) -->
+<!-- Critical Styles: critical (loaded immediately, blocks' rendering) -->
 <link rel="stylesheet" href="<?= $pathService->getAssetPath('src/styles/critical.scss') ?>">
 
 <!-- Styles: main, not important and interactive elements, popup (async loaded, lower priority than "high", be applied before "high") -->
@@ -43,17 +49,16 @@ $uniqId = ($item['id'] ?? '') . uniqid();
 </noscript>
 
 <!-- Styles: page, important elements (async loaded, higher priority than "low", be applied after "low") -->
-<!-- TODO: $pathService->getAssetPath('src/styles/page_' . $pageDataName . '.scss') -->
-<link rel="preload" href="<?= $pathService->getAssetPath('src/styles/page_home.scss') ?>" as="style"
+<link rel="preload" href="<?= $pathService->getAssetPath('src/styles/page_' . $pageDataName . '.scss') ?>" as="style"
 	  onload="this.rel='stylesheet'">
-<!-- TODO: $pathService->getAssetPath('src/styles/page_' . $pageDataName . '.scss') -->
 <noscript>
-	<link rel="stylesheet" href="<?= $pathService->getAssetPath('src/styles/page_home.scss') ?>">
+	<link rel="stylesheet" href="<?= $pathService->getAssetPath('src/styles/page_' . $pageDataName . '.scss') ?>">
 </noscript>
 
-<!-- Styles: first-screen, important elements (blocks rendering) -->
-<!--- TODO: $pathService->getAssetPath('src/styles/page_' . $pageDataName . '_critical.scss') -->
-<link rel="stylesheet" href="<?= $pathService->getAssetPath('src/styles/page_home_critical.scss') ?>">
+<?php if ($criticalStylePath): ?>
+	<!-- Critical Page Styles: first-screen, important elements (blocks rendering) -->
+	<link rel="stylesheet" href="<?= $criticalStylePath ?>">
+<?php endif; ?>
 
 <!-- Prefetch resources that will be needed soon -->
 <link rel="prefetch" href="<?= $pathService->getAssetPath('src/js/modules/Popup.js') ?>" as="script">
