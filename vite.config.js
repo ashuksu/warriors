@@ -321,6 +321,9 @@ export default defineConfig(({mode}) => {
             host: '0.0.0.0',
             hmr: env.ENABLE_HMR === 'true',
             origin: env.VITE_DEV_SERVER || 'http://localhost:5173',
+            allowedHosts: [
+                'warriors-drho.onrender.com',
+            ],
         }
     };
 });
