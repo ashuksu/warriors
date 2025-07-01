@@ -132,9 +132,9 @@ class ContentService
      */
     private function resolveSingleVariable(string $name): ?string
     {
-        foreach (['contacts', 'social', null] as $scope) {
+        foreach (['database', 'vite', 'contacts', 'social', null] as $scope) {
             $key = $scope ? "{$scope}.{$name}" : $name;
-            $val = $this->configService->get($key);
+            $val = $this->configService->get(strtolower($key));
             if ($val !== null) {
                 return $val;
             }
