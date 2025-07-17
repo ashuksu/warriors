@@ -1,0 +1,40 @@
+<mvc:View
+    controllerName="project_d.controller.HelloPanel"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <Panel
+        headerText="{i18n>homePaneTitle}"
+        class="sapUiResponsiveMargin"
+        width="auto"
+    >
+        <content>
+            <Button
+                id="helloDialogButton"
+                icon="sap-icon://action"
+                text="{i18n>openDialogButtonText}"
+                press=".onOpenDialog"
+                class="sapUiSmallMarginEnd myCustomButton"
+            />
+            <Button
+                text="{= ${i18n>buttonText}.replaceAll('{0}', ${/recipient/do}) }"
+                icon="sap-icon://activate"
+                press=".onShowHello"
+                class="sapUiSmallMarginEnd myCustomButton"
+            />
+            <Input
+                value="{/recipient/name}"
+                placeholder="{i18n>inputPlaceholder}"
+                valueLiveUpdate="true"
+                width="60%"
+            />
+            <FormattedText
+                htmlText="{
+                    parts: ['i18n>inputDescription', '/recipient/name'],
+                    formatter: '.formatting'
+                }"
+                class="sapUiSmallMargin sapThemeHightlight-asColor myCustomText"
+            />
+        </content>
+    </Panel>
+</mvc:View>

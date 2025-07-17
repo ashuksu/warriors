@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/UIComponent","sap/ui/model/json/JSONModel"],(e,t)=>{"use strict";return e.extend("project_d.Component",{metadata:{interfaces:["sap.ui.core.IAsyncContentCreation"],manifest:"json"},init(){e.prototype.init.apply(this,arguments);const n={recipient:{name:"Name",do:"Press here"}};const o=new t(n);this.setModel(o)}})});
+//# sourceMappingURL=Component.js.map

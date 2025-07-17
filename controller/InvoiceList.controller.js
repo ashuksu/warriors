@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/model/json/JSONModel"],function(e,n){"use strict";return e.extend("project_d.controller.InvoiceList",{onInit(){const e=new n({currency:"EUR"});this.getView().setModel(e,"view")}})});
+//# sourceMappingURL=InvoiceList.controller.js.map

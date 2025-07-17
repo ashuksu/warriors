@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# Vite
+*.local
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Tests and vendors
+test/
+vendor/

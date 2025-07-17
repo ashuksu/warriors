@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="project_d.controller.InvoiceList"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <List
+        headerText="{i18n>invoiceListTitle}"
+        class="sapUiResponsiveMargin"
+        width="auto"
+        items="{invoice>/Invoices}"
+    >
+        <items>
+            <ObjectListItem
+                core:require="{
+					Currency: 'sap/ui/model/type/Currency'
+				}"
+                title="{invoice>Quantity} x {invoice>ProductName}"
+                number="{
+					parts: [
+						'invoice>ExtendedPrice',
+						'view>/currency'
+					],
+					type: 'Currency',
+					formatOptions: {
+						showMeasure: false
+					}
+				}"
+                numberUnit="{view>/currency}"
+                numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : ${invoice>ExtendedPrice} > 9 ? 'Warning' : ${invoice>ExtendedPrice} > 8 ? 'Success' : ${invoice>ExtendedPrice} &lt; 3 ?  'None' : 'Information' }"
+            >
+                <firstStatus>
+                    <ObjectStatus
+                        core:require="{
+							CurrencyStatus: 'project_d/model/CurrencyStatus'
+						}"
+                        text="{
+							path: 'invoice>Status',
+							formatter: 'CurrencyStatus.statusText.bind($controller)'
+						}"
+                    />
+                </firstStatus>
+            </ObjectListItem>
+        </items>
+    </List>
+</mvc:View>

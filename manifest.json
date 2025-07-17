@@ -1,0 +1,65 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "project_d",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [
+        ""
+      ],
+      "fallbackLocale": ""
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "type": "application",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "project_d.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
+        }
+      },
+      "invoice": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "data/Invoices.json"
+      }
+    },
+    "rootView": {
+      "viewName": "project_d.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    }
+  }
+}
