@@ -1,0 +1,1 @@
+.info__inner{background:var(--gradient)}.info__button{align-self:center}.info__button.link{max-width:max-content}.contacts__card-inner{display:flex;align-items:flex-start;flex-direction:column;height:100%;max-width:70rem;padding:3rem;border-radius:3rem;background:var(--gradient-light);box-shadow:0 -5px 20px #3333}.contacts__inner,.contacts__list{gap:3rem 0}

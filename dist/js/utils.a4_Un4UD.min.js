@@ -1,0 +1,1 @@
+function s(n){document.querySelectorAll(n).forEach(r=>{const t=r.getAttribute("href");if(!t)return;const a=t.startsWith("#")?t.substring(1):t,e=document.getElementById(a);if(!e)return;const o=e.dataset.maxHeight??100;r.hidden=e.scrollHeight<o})}export{s as default};
